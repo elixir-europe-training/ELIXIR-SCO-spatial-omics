@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Set GHCR image name based on repository, and convert to lowercase
+      # Step 1: Set GHCR image name based on repository
       - name: Set GHCR image name
         id: set-ghcr
         run: |
