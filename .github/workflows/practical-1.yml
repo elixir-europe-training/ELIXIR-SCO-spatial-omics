@@ -1,4 +1,4 @@
-name: Build and Push Docker Image to Docker Hub
+name: Build and Push Docker Image to GHCR
 
 on:
   push:
@@ -12,12 +12,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Run workflow only in the forked repo
-      - name: Check if running in the forked repo
+      # Step 1: Set GHCR image name based on repository
+      - name: Set GHCR image name
+        id: set-ghcr
         run: |
-          if [[ "${{ github.repository }}" != "rasools/ELIXIR-SCO-spatial-transcriptomics" ]]; then
-            echo "This workflow only runs in the forked repository."
-            exit 0
+          if [[ "${{ github.repository }}" == "elixir-europe-training/ELIXIR-SCO-spatial-transcriptomics" ]]; then
+            echo "Using original repo namespace for GHCR"
+            echo "IMAGE_NAME=elixir-europe-training/ELIXIR-SCO-spatial-transcriptomics" >> $GITHUB_ENV
+          else
+            echo "Using fork owner's namespace for GHCR"
+            echo "IMAGE_NAME=${{ github.actor }}/ELIXIR-SCO-spatial-transcriptomics" >> $GITHUB_ENV
           fi
         shell: bash
 
@@ -29,14 +33,14 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # Step 4: Log in to Docker Hub
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+      # Step 4: Log in to GitHub Container Registry (GHCR)
+      - name: Log in to GHCR
+        run: |
+          echo "Logging into GHCR"
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        shell: bash
 
-      # Step 5: Build and push Docker image to Docker Hub
+      # Step 5: Build and push Docker image to GHCR
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -45,4 +49,4 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            docker.io/your-username/estc_2025/practical_1:latest
+            ghcr.io/${{ env.IMAGE_NAME }}:latest
