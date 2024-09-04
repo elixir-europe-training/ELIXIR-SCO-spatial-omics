@@ -3,8 +3,9 @@ name: Build Docker Image without Push
 on:
   push:
     branches:
-      - main
       - 1-developing-practical-1
+    paths:
+      - 'day_1/practical_1/**'
 
 jobs:
   build:
