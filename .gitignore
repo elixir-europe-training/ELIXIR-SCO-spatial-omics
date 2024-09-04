@@ -1,2 +1,6 @@
 /.quarto/
 .Rproj.user
+
+# Ignore all directories named "data"
+data/
+*/data/
