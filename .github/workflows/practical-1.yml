@@ -12,16 +12,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Set GHCR image name based on repository
+      # Step 1: Set GHCR image name based on repository, and convert to lowercase
       - name: Set GHCR image name
         id: set-ghcr
         run: |
           if [[ "${{ github.repository }}" == "elixir-europe-training/ELIXIR-SCO-spatial-transcriptomics" ]]; then
             echo "Using original repo namespace for GHCR"
-            echo "IMAGE_NAME=elixir-europe-training/ELIXIR-SCO-spatial-transcriptomics" >> $GITHUB_ENV
+            echo "IMAGE_NAME=elixir-europe-training/elixir-sco-spatial-transcriptomics" >> $GITHUB_ENV
           else
             echo "Using fork owner's namespace for GHCR"
-            echo "IMAGE_NAME=${{ github.actor }}/ELIXIR-SCO-spatial-transcriptomics" >> $GITHUB_ENV
+            echo "IMAGE_NAME=${{ github.actor }}/elixir-sco-spatial-transcriptomics" >> $GITHUB_ENV
           fi
         shell: bash
 
