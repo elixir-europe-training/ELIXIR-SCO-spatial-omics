@@ -1,14 +1,17 @@
 name: imaging_based_data_analysis_env
 channels:
   - conda-forge
+  - bioconda
   - defaults
 dependencies:
-  - python=3.8
-  - numpy
+  - python=3.9
+  - scanpy
+  - squidpy
   - pandas
   - scipy
   - scikit-learn
   - matplotlib
   - seaborn
+  - ipykernel
   - jupyterlab
   - pip
