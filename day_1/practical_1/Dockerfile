@@ -2,11 +2,11 @@ FROM jupyter/minimal-notebook:latest
 LABEL org.opencontainers.image.source=https://github.com/scilifelabdatacentre/serve-images
 
 ARG SERVE_BRANCH=develop
-WORKDIR /home/jovyan
+WORKDIR /home/jovyan/workdir
 
 COPY requirements.txt /tmp
 COPY imaging_based_data_analysis_env.yml /tmp
-COPY lab /home/jovyan/lab
+COPY lab /home/jovyan/workdir/lab
 COPY start-script.sh /usr/local/bin/start-script.sh
 
 USER root
@@ -24,8 +24,8 @@ RUN echo "conda activate imaging_based_data_analysis_env" >> /etc/profile.d/cond
 RUN /opt/conda/envs/imaging_based_data_analysis_env/bin/pip install ipykernel && \
     /opt/conda/envs/imaging_based_data_analysis_env/bin/python -m ipykernel install --name imaging_based_data_analysis_env --display-name "Python (imaging_based_data_analysis_env)"
 
-RUN chown -R jovyan:users /opt/conda /home/jovyan/.cache /home/jovyan/lab && \
-    chmod -R a+rwx /home/jovyan/lab && \
+RUN chown -R jovyan:users /opt/conda /home/jovyan/.cache /home/jovyan/workdir && \
+    chmod -R a+rwx /home/jovyan/workdir && \
     chmod +x /usr/local/bin/start-script.sh
 
 USER jovyan
