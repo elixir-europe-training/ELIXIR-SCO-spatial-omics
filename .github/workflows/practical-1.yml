@@ -40,7 +40,7 @@ jobs:
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
         shell: bash
 
-      # Step 5: Build and push Docker image to GHCR for multiple architectures
+      # Step 5: Build and push Docker image to GHCR
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
