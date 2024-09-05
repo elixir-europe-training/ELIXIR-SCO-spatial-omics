@@ -2,11 +2,13 @@ FROM jupyter/minimal-notebook:latest
 LABEL org.opencontainers.image.source=https://github.com/scilifelabdatacentre/serve-images
 
 ARG SERVE_BRANCH=develop
-WORKDIR /home/jovyan
+WORKDIR /home/jovyan/workdir
 
 COPY requirements.txt /tmp
 COPY imaging_based_data_analysis_env.yml /tmp
-COPY lab /home/jovyan/lab
+COPY workdir /home/jovyan/workdir
+COPY data /home/jovyan/data
+COPY group_work /home/jovyan/group_work
 COPY start-script.sh /usr/local/bin/start-script.sh
 
 USER root
@@ -24,8 +26,13 @@ RUN echo "conda activate imaging_based_data_analysis_env" >> /etc/profile.d/cond
 RUN /opt/conda/envs/imaging_based_data_analysis_env/bin/pip install ipykernel && \
     /opt/conda/envs/imaging_based_data_analysis_env/bin/python -m ipykernel install --name imaging_based_data_analysis_env --display-name "Python (imaging_based_data_analysis_env)"
 
-RUN chown -R jovyan:users /opt/conda /home/jovyan/.cache /home/jovyan/lab && \
-    chmod -R a+rwx /home/jovyan/lab && \
+# Ensure correct permissions for directories
+RUN chown -R jovyan:users /opt/conda /home/jovyan/.cache /home/jovyan/workdir && \
+    chmod -R a+rwx /home/jovyan/workdir && \
+    chown -R jovyan:users /home/jovyan/data && \
+    chmod -R a+rx /home/jovyan/data && \
+    chown -R jovyan:users /home/jovyan/group_work && \
+    chmod -R a+rwx /home/jovyan/group_work && \
     chmod +x /usr/local/bin/start-script.sh
 
 USER jovyan
