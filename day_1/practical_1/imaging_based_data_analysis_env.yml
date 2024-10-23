@@ -16,3 +16,21 @@ dependencies:
   - ipykernel
   - jupyterlab
   - pip
+  - pip:
+    - leidenalg
+    - anndata2ri
+    - rpy2
+    - jupyterlab-git
+    - jupyterlab-lsp
+    - jupyterlab-spreadsheet
+    - jupyterlab-topbar
+    - jupyterlab-system-monitor
+    - jupyterlab-toc
+    - jupyterlab-variableInspector
+    - jupyterlab-plotly
+    - jupyterlab-dash
+    - spatialdata-io
+    - scanpy
+    - squidpy
+    - anndata
+    - leidenalg
