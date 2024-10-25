@@ -1,12 +1,11 @@
 name: imaging_based_data_analysis_env
 channels:
-  - conda-forge
   - bioconda
+  - conda-forge
   - defaults
 dependencies:
   - python=3.9
   - scanpy
-  - squidpy
   - pandas
   - numpy
   - scipy
@@ -15,4 +14,14 @@ dependencies:
   - seaborn
   - ipykernel
   - jupyterlab
+  - spatialdata-io
+  - squidpy
+  - anndata
+  - leidenalg
+  - jupyterlab-git
+  - jupyterlab-lsp
+  - jupyterlab-topbar
+  - jupyterlab-system-monitor
+  - jupyterlab-dash
   - pip
+  - spatialdata_plot
