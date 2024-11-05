@@ -2,10 +2,133 @@
 title: "ELIXIR-SCO-spatial-transcriptomics"
 ---
 
-This is a Quarto website.
+<img src="https://raw.githubusercontent.com/sib-swiss/images-training/main/SPODA/ELIXIR/SCObanner.png" alt="SCO banner" style="width:500px;"/>
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+## Overview
+This course delves into the cutting-edge field of Spatial Omics, focusing on Spatially-Resolved Transcriptomics (SRT) technology which provides unprecedented insights into the spatial organization of gene expression within tissues. The rapid and recent advances in SRT technology are transforming our understanding of biological systems, and this course is designed to equip researchers with the tools to harness the power of SRT, adding significant value to biological knowledge and opening new avenues for scientific discovery.
 
-```{r}
-1 + 1
-```
+Participants will explore both imaging-based and sequencing-based SRT technologies, learning to navigate the entire workflow of SRT data analysis. The course covers essential topics such as pre-processing techniques for data cleaning, normalization, and quality control, methods for identifying and characterizing spatial domains within tissues, strategies for integrating SRT data with single-cell RNA sequencing data, and statistical approaches to analyze spatial patterns and relationships. Additionally, participants will investigate interactions between cells within their spatial context. By the end of this course, participants will be equipped with the knowledge and skills to construct a complete workflow for SRT data analysis, from raw data to meaningful biological insights. The course combines lectures with practical sessions, ensuring a balanced approach to theory and hands-on experience. 
+
+The course materials will be on the dedicated [GitHub page](https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics).
+
+## Audience
+This 3-day course is addressed to PhD students, postdocs, and researchers who are involved (or will be in the near future) in projects including spatially-resolved transcriptomics data, and want to acquire the skills to get started with spatial data analysis. 
+
+## Learning outcomes 
+At the end of the course, the participants will be able to:
+
+* Identify and recall key concepts and terminology related to imaging- and sequencing-based SRT technologies. 
+* Assess and evaluate quality of SRT data.
+* Perform standard SRT data analysis, including data cleaning, normalization, quality control.
+* Examine and interpret spatial patterns and relationships within SRT data using statistical and machine learning approaches.
+* Construct a comprehensive workflow for SRT data analysis, from raw data to meaningful biological insights.
+
+## Prerequisites
+
+### Knowledge / competencies
+
+Participants should be proficient in Python and R, for basic data analysis. 
+
+Participants should be familiar with NGS technologies, have experience with analyzing (spatial/single-cell) transcriptomics data as well as basic knowledge of machine learning.
+
+Participants should also have a basic understanding of working with command line tools on Unix-based systems. You can test your skills with Unix with the quiz <a href="https://docs.google.com/forms/d/e/1FAIpQLSd2BEWeOKLbIRGBT_aDEGPce1FOaVYBbhBiaqcaHoBKNB27MQ/viewform?usp=sf_link">here</a>. If you do not feel comfortable with UNIX commands, please take our <a href="https://edu.sib.swiss/pluginfile.php/2878/mod_resource/content/4/couselab-html/content.html" target="”_blank”">Unix fundamentals</a> e-learning module.
+
+
+### Technical
+Participants are required to bring your own laptop. 
+
+We will be mainly working on an Amazon Web Services (AWS) Elastic Cloud (EC2) server. Our Ubuntu server behaves like a ‘normal’ remote server, and can be approached through a web browser (safari, firefox, chrome etc.). All participants will be granted access to a personal workspace to be used during the course. The web interface will be approached through http (not https!), so make sure you can access http sites. You can validate it [here](http://neverssl.com/).
+
+Please perform these installations PRIOR to the course and contact us if you have any trouble.
+
+## Schedule - CET time zone
+
+**Day 1 (13:00 -17:00)**
+
+* Overview of technologies
+* Imaging-based data preprocessing 
+* Segmentation-free analysis 
+
+ **Day 2 (09:00 -17:00)**
+
+* Sequence-based data preprocessing 
+* Integration with scRNA-seq 
+* Multi-omics spatial data analysis
+
+ **Day 3 (09:00 -17:00)**
+
+* Graph representations and Niche reconstruction
+* Spatial domain identification/spatial annotation
+* Spatial statistics 
+
+ **Day  4 (09:00 -12:30)**
+
+* Cell-cell communication
+
+
+## The trainers
+
+The course will feature the following lecturers and trainers:
+
+* Lars Borm (Katholieke Universiteit (KU) Leuven & Vlaams Instituut voor Biotechnologie (VIB), BE)
+* Helena Crowell (Centro Nacional de Análisis Genómico (CNAG), ES)
+* Francesca Drummer (Helmholtz Zentrum München, DE)
+* George Gavrillidis (Centre for Research and Technology Hellas (CERTH), GR)
+* Geert van Geest (SIB Swiss Institute of Bioinformatics, CH)
+* Naveed Ishaque (Berlin Institute of Health (BIH), DE)
+* Ahmed Mahfouz (Leiden University Medical Center (LUMC), NL)
+* Mark Robinson (University of Zurich (UZH) & SIB, CH)
+* Yvan Saeys (University of Ghent (UGent) & Vlaams Instituut voor Biotechnologie (VIB), BE)
+* Rasool Saghaleyni (SciLifeLab, SE)
+* Anna Schaar (Helmholtz Zentrum München, DE)
+* Marco Varrone (University of Lausanne (UNIL) & SIB, CH)
+
+
+## Application
+
+Registration fees are **150 CHF** for academics and **750 CHF** for for-profit companies.
+
+Participants will be selected based on several criteria. Selection criteria include correct entry requirements, motivation to attend the course as well as gender and ELIXIR nodes balance.
+
+**To apply to this course and enter the selection process, please fill in this [questionnaire](https://forms.office.com/e/4BgWAvVCUg).** 
+
+Applications will close  **01/11/2024**. The applications selection will start  the week of the **05/11/2024**.  Accepted applicants will be notified by email by  during the week of the **11/11/2024** and they will have until **27/11/2024** to confirm their attendance by paying the fees within 5 days. 
+
+Deadline for free-of-charge cancellation is set to **27/11/2024**. Cancellation after this date will not be reimbursed. 
+
+## Venue and Time
+
+This course will take place at the University of Lausanne, in the Synathlon building of the campus. 
+
+The course will start the first day at 13:00. A lunch will be provided before the start of the course as well as at the end of the course on the last day.  
+
+All participants are invited to the social dinner, organized on 21 January 2024. 
+
+Precise information will be provided to the participants in due time.
+
+## Additional information
+
+This is an international course hosted by the SIB Swiss Institute of Bioinformatics (ELIXIR-CH) in collaboration with the [ELIXIR Single-Cell Omics community](https://elixir-europe.org/communities/single-cell-omics), and trainers’ own institutions and affiliations to ELIXIR nodes (KU Leuven, VIB, CNAG, Helmholtz Zentrum München, CERTH, SIB, BIH, LUMC, UZH, UGent, SciLifeLab, UNIL).
+
+Course organizers:  
+
+* Ahmed Mahfouz, Leiden University Medical Center (LUMC), ELIXIR - Netherlands
+* Diana Marek, SIB Training group, ELIXIR - Switzerland 
+* Patricia Palagi, SIB Training group, ELIXIR - Switzerland
+* Eija Korpelainen, CSC, ELIXIR - Finland
+
+
+This course is partially funded by an [ELIXIR Staff Exchange Programme](https://elixir-europe.org/internal-projects/staff-exchange-programme).
+
+
+We will recommend 0.75 ECTS credits for this course (given a passed assessment).
+
+You are welcome to register to the SIB courses mailing list to be informed of all future courses and workshops, as well as all important deadlines using the form [here](https://lists.sib.swiss/postorius/lists/courses.lists.sib.swiss/).
+ 
+Please note that participation in SIB courses is subject to our [general conditions](https://www.sib.swiss/training/terms-and-conditions).
+ 
+Course organizers and trainers abide by the [ELIXIR Code of Conduct](https://elixir-europe.org/events/code-of-conduct). Participants are also required to abide by the same code.
+
+<img src="https://raw.githubusercontent.com/sib-swiss/images-training/main/SPODA/ELIXIR/ELIXIR1.png" alt="ElLIXIR logo" style="height: 210px; width:300px;"/>
+
+<!--<img src="https://raw.githubusercontent.com/sib-swiss/images-training/main/SPODA/ELIXIR/ELIXIR1.png" alt="ElLIXIR logo"/> -->
