@@ -23,7 +23,7 @@ website:
         href: https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics/
         aria-label: GitHub
   sidebar:
-    logo: assets/white-orange-logo.png
+    logo: assets/ELIXIR1.png
 
 format:
   html:
