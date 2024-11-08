@@ -6,7 +6,7 @@ WORKDIR /home/jovyan/workdir
 
 COPY requirements.txt /tmp
 COPY imaging_based_data_analysis_env.yml /tmp
-COPY workdir /home/jovyan/workdir
+COPY day_1/practical_1/imaging_based_data_analysis.ipynb /home/jovyan/workdir
 COPY group_work /home/jovyan/group_work
 COPY start-script.sh /usr/local/bin/start-script.sh
 
