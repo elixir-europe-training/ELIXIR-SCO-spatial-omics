@@ -1,0 +1,14 @@
+{
+  "hash": "866a36170bb7e89338343ad1fd44b662",
+  "result": {
+    "markdown": "---\ntitle: \"ELIXIR-SCO-spatial-transcriptomics\"\n---\n\n\nThis is a Quarto website.\n\nTo learn more about Quarto websites visit <https://quarto.org/docs/websites>.\n\n\n::: {.cell hash='index_cache/html/unnamed-chunk-1_f163e66671f76d3a3512df88a27061b5'}\n\n```{.r .cell-code}\n1 + 1\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[1] 2\n```\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
