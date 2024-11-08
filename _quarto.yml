@@ -1,19 +1,42 @@
 project:
   type: website
+  execute-dir: project
 
 website:
   title: "ELIXIR-SCO-spatial-transcriptomics"
+  favicon: assets/elixir_favicon.ico
+  search: true
+  page-navigation: true
   navbar:
+    background: "#0c3450ff"
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
+      - text: "practicals"
+        menu:
+          - href: day_1/practical_1/workdir/imaging_based_data_analysis.ipynb
+            text: "Practical 1:  Imaging-based data analysis"
+          - href: day_2/practical_3/workdir/practical_3.ipynb
+            text: "Practical 3: Integration with scRNA-seq"
+    right:
+      - icon: github
+        href: https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics/
+        aria-label: GitHub
+  sidebar:
+    logo: assets/ELIXIR1.png
 
 format:
   html:
-    theme: cosmo
-    css: styles.css
+    code-link: true
+    theme: 
+      - default
+      - custom.scss
     toc: true
+
+execute:
+  freeze: auto 
+  cache: true
+  tidy: true
 
 
 

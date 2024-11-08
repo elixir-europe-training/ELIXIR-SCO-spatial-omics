@@ -1,4 +1,5 @@
 /.quarto/
 .Rproj.user
-
-data
+*_cache/
+*_files/
+_site/
