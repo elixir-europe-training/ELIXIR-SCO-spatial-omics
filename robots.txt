@@ -1,0 +1,1 @@
+Sitemap: https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/sitemap.xml

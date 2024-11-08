@@ -1,19 +1,5 @@
 [
   {
-    "objectID": "day_2/practical_3/workdir/practical_3.html",
-    "href": "day_2/practical_3/workdir/practical_3.html",
-    "title": "Computational analysis of spatial transcriptomics data",
-    "section": "",
-    "text": "1. Spatial data download and format\n2. Spatial imputation with SpaGE\n3. Spatial clusering with BANKSY\n4. Cell-cell communication with LIANA+"
-  },
-  {
-    "objectID": "day_2/practical_3/workdir/practical_3.html#brainomics-2.0---day-3",
-    "href": "day_2/practical_3/workdir/practical_3.html#brainomics-2.0---day-3",
-    "title": "Computational analysis of spatial transcriptomics data",
-    "section": "",
-    "text": "1. Spatial data download and format\n2. Spatial imputation with SpaGE\n3. Spatial clusering with BANKSY\n4. Cell-cell communication with LIANA+"
-  },
-  {
     "objectID": "index.html#overview",
     "href": "index.html#overview",
     "title": "ELIXIR-SCO-spatial-transcriptomics",
@@ -77,11 +63,18 @@
     "text": "Additional information\nThis is an international course hosted by the SIB Swiss Institute of Bioinformatics (ELIXIR-CH) in collaboration with the ELIXIR Single-Cell Omics community, and trainers’ own institutions and affiliations to ELIXIR nodes (KU Leuven, VIB, CNAG, Helmholtz Zentrum München, CERTH, SIB, BIH, LUMC, UZH, UGent, SciLifeLab, UNIL).\nCourse organizers:\n\nAhmed Mahfouz, Leiden University Medical Center (LUMC), ELIXIR - Netherlands\nDiana Marek, SIB Training group, ELIXIR - Switzerland\nPatricia Palagi, SIB Training group, ELIXIR - Switzerland\nEija Korpelainen, CSC, ELIXIR - Finland\n\nThis course is partially funded by an ELIXIR Staff Exchange Programme.\nWe will recommend 0.75 ECTS credits for this course (given a passed assessment).\nYou are welcome to register to the SIB courses mailing list to be informed of all future courses and workshops, as well as all important deadlines using the form here.\nPlease note that participation in SIB courses is subject to our general conditions.\nCourse organizers and trainers abide by the ELIXIR Code of Conduct. Participants are also required to abide by the same code."
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "day_2/practical_3/workdir/practical_3.html",
+    "href": "day_2/practical_3/workdir/practical_3.html",
+    "title": "Computational analysis of spatial transcriptomics data",
     "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
+    "text": "1. Spatial data download and format\n2. Spatial imputation with SpaGE\n3. Spatial clusering with BANKSY\n4. Cell-cell communication with LIANA+"
+  },
+  {
+    "objectID": "day_2/practical_3/workdir/practical_3.html#brainomics-2.0---day-3",
+    "href": "day_2/practical_3/workdir/practical_3.html#brainomics-2.0---day-3",
+    "title": "Computational analysis of spatial transcriptomics data",
+    "section": "",
+    "text": "1. Spatial data download and format\n2. Spatial imputation with SpaGE\n3. Spatial clusering with BANKSY\n4. Cell-cell communication with LIANA+"
   },
   {
     "objectID": "day_1/practical_1/workdir/imaging_based_data_analysis.html",
@@ -89,5 +82,12 @@
     "title": "Practical 1: Imaging-Based Data Analysis with Xenium (Mouse Brain, Cancer)",
     "section": "",
     "text": "Author: Rasool Saghaleyni\n\n# Import necessary libraries\nimport scanpy as sc\nimport squidpy as sq\nimport matplotlib.pyplot as plt\nimport numpy as np\nimport pandas as pd"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
   }
 ]
