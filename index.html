@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.361">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>ELIXIR-SCO-spatial-transcriptomics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./assets/elixir_favicon.ico" rel="icon">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">ELIXIR-SCO-spatial-transcriptomics</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" rel="" target="" aria-current="page">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-practicals" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">practicals</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-practicals">    
+        <li>
+    <a class="dropdown-item" href="./day_1/practical_1/workdir/imaging_based_data_analysis.html" rel="" target="">
+ <span class="dropdown-text">Practical 1: Imaging-based data analysis</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./day_2/practical_3/workdir/practical_3.html" rel="" target="">
+ <span class="dropdown-text">Practical 3: Integration with scRNA-seq</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics/" rel="" target=""><i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">ELIXIR-SCO-spatial-transcriptomics</li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./assets/white-orange-logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#audience" id="toc-audience" class="nav-link" data-scroll-target="#audience">Audience</a></li>
+  <li><a href="#learning-outcomes" id="toc-learning-outcomes" class="nav-link" data-scroll-target="#learning-outcomes">Learning outcomes</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a>
+  <ul class="collapse">
+  <li><a href="#knowledge-competencies" id="toc-knowledge-competencies" class="nav-link" data-scroll-target="#knowledge-competencies">Knowledge / competencies</a></li>
+  <li><a href="#technical" id="toc-technical" class="nav-link" data-scroll-target="#technical">Technical</a></li>
+  </ul></li>
+  <li><a href="#schedule---cet-time-zone" id="toc-schedule---cet-time-zone" class="nav-link" data-scroll-target="#schedule---cet-time-zone">Schedule - CET time zone</a></li>
+  <li><a href="#the-trainers" id="toc-the-trainers" class="nav-link" data-scroll-target="#the-trainers">The trainers</a></li>
+  <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application">Application</a></li>
+  <li><a href="#venue-and-time" id="toc-venue-and-time" class="nav-link" data-scroll-target="#venue-and-time">Venue and Time</a></li>
+  <li><a href="#additional-information" id="toc-additional-information" class="nav-link" data-scroll-target="#additional-information">Additional information</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">ELIXIR-SCO-spatial-transcriptomics</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p><img src="https://raw.githubusercontent.com/sib-swiss/images-training/main/SPODA/ELIXIR/SCObanner.png" alt="SCO banner" style="width:500px;"></p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>This course delves into the cutting-edge field of Spatial Omics, focusing on Spatially-Resolved Transcriptomics (SRT) technology which provides unprecedented insights into the spatial organization of gene expression within tissues. The rapid and recent advances in SRT technology are transforming our understanding of biological systems, and this course is designed to equip researchers with the tools to harness the power of SRT, adding significant value to biological knowledge and opening new avenues for scientific discovery.</p>
+<p>Participants will explore both imaging-based and sequencing-based SRT technologies, learning to navigate the entire workflow of SRT data analysis. The course covers essential topics such as pre-processing techniques for data cleaning, normalization, and quality control, methods for identifying and characterizing spatial domains within tissues, strategies for integrating SRT data with single-cell RNA sequencing data, and statistical approaches to analyze spatial patterns and relationships. Additionally, participants will investigate interactions between cells within their spatial context. By the end of this course, participants will be equipped with the knowledge and skills to construct a complete workflow for SRT data analysis, from raw data to meaningful biological insights. The course combines lectures with practical sessions, ensuring a balanced approach to theory and hands-on experience.</p>
+<p>The course materials will be on the dedicated <a href="https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics">GitHub page</a>.</p>
+</section>
+<section id="audience" class="level2">
+<h2 class="anchored" data-anchor-id="audience">Audience</h2>
+<p>This 3-day course is addressed to PhD students, postdocs, and researchers who are involved (or will be in the near future) in projects including spatially-resolved transcriptomics data, and want to acquire the skills to get started with spatial data analysis.</p>
+</section>
+<section id="learning-outcomes" class="level2">
+<h2 class="anchored" data-anchor-id="learning-outcomes">Learning outcomes</h2>
+<p>At the end of the course, the participants will be able to:</p>
+<ul>
+<li>Identify and recall key concepts and terminology related to imaging- and sequencing-based SRT technologies.</li>
+<li>Assess and evaluate quality of SRT data.</li>
+<li>Perform standard SRT data analysis, including data cleaning, normalization, quality control.</li>
+<li>Examine and interpret spatial patterns and relationships within SRT data using statistical and machine learning approaches.</li>
+<li>Construct a comprehensive workflow for SRT data analysis, from raw data to meaningful biological insights.</li>
+</ul>
+</section>
+<section id="prerequisites" class="level2">
+<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
+<section id="knowledge-competencies" class="level3">
+<h3 class="anchored" data-anchor-id="knowledge-competencies">Knowledge / competencies</h3>
+<p>Participants should be proficient in Python and R, for basic data analysis.</p>
+<p>Participants should be familiar with NGS technologies, have experience with analyzing (spatial/single-cell) transcriptomics data as well as basic knowledge of machine learning.</p>
+<p>Participants should also have a basic understanding of working with command line tools on Unix-based systems. You can test your skills with Unix with the quiz <a href="https://docs.google.com/forms/d/e/1FAIpQLSd2BEWeOKLbIRGBT_aDEGPce1FOaVYBbhBiaqcaHoBKNB27MQ/viewform?usp=sf_link">here</a>. If you do not feel comfortable with UNIX commands, please take our <a href="https://edu.sib.swiss/pluginfile.php/2878/mod_resource/content/4/couselab-html/content.html" target="”_blank”">Unix fundamentals</a> e-learning module.</p>
+</section>
+<section id="technical" class="level3">
+<h3 class="anchored" data-anchor-id="technical">Technical</h3>
+<p>Participants are required to bring your own laptop.</p>
+<p>We will be mainly working on an Amazon Web Services (AWS) Elastic Cloud (EC2) server. Our Ubuntu server behaves like a ‘normal’ remote server, and can be approached through a web browser (safari, firefox, chrome etc.). All participants will be granted access to a personal workspace to be used during the course. The web interface will be approached through http (not https!), so make sure you can access http sites. You can validate it <a href="http://neverssl.com/">here</a>.</p>
+<p>Please perform these installations PRIOR to the course and contact us if you have any trouble.</p>
+</section>
+</section>
+<section id="schedule---cet-time-zone" class="level2">
+<h2 class="anchored" data-anchor-id="schedule---cet-time-zone">Schedule - CET time zone</h2>
+<p><strong>Day 1 (13:00 -17:00)</strong></p>
+<ul>
+<li>Overview of technologies</li>
+<li>Imaging-based data preprocessing</li>
+<li>Segmentation-free analysis</li>
+</ul>
+<p><strong>Day 2 (09:00 -17:00)</strong></p>
+<ul>
+<li>Sequence-based data preprocessing</li>
+<li>Integration with scRNA-seq</li>
+<li>Multi-omics spatial data analysis</li>
+</ul>
+<p><strong>Day 3 (09:00 -17:00)</strong></p>
+<ul>
+<li>Graph representations and Niche reconstruction</li>
+<li>Spatial domain identification/spatial annotation</li>
+<li>Spatial statistics</li>
+</ul>
+<p><strong>Day 4 (09:00 -12:30)</strong></p>
+<ul>
+<li>Cell-cell communication</li>
+</ul>
+</section>
+<section id="the-trainers" class="level2">
+<h2 class="anchored" data-anchor-id="the-trainers">The trainers</h2>
+<p>The course will feature the following lecturers and trainers:</p>
+<ul>
+<li>Lars Borm (Katholieke Universiteit (KU) Leuven &amp; Vlaams Instituut voor Biotechnologie (VIB), BE)</li>
+<li>Helena Crowell (Centro Nacional de Análisis Genómico (CNAG), ES)</li>
+<li>Francesca Drummer (Helmholtz Zentrum München, DE)</li>
+<li>George Gavrillidis (Centre for Research and Technology Hellas (CERTH), GR)</li>
+<li>Geert van Geest (SIB Swiss Institute of Bioinformatics, CH)</li>
+<li>Naveed Ishaque (Berlin Institute of Health (BIH), DE)</li>
+<li>Ahmed Mahfouz (Leiden University Medical Center (LUMC), NL)</li>
+<li>Mark Robinson (University of Zurich (UZH) &amp; SIB, CH)</li>
+<li>Yvan Saeys (University of Ghent (UGent) &amp; Vlaams Instituut voor Biotechnologie (VIB), BE)</li>
+<li>Rasool Saghaleyni (SciLifeLab, SE)</li>
+<li>Anna Schaar (Helmholtz Zentrum München, DE)</li>
+<li>Marco Varrone (University of Lausanne (UNIL) &amp; SIB, CH)</li>
+</ul>
+</section>
+<section id="application" class="level2">
+<h2 class="anchored" data-anchor-id="application">Application</h2>
+<p>Registration fees are <strong>150 CHF</strong> for academics and <strong>750 CHF</strong> for for-profit companies.</p>
+<p>Participants will be selected based on several criteria. Selection criteria include correct entry requirements, motivation to attend the course as well as gender and ELIXIR nodes balance.</p>
+<p><strong>To apply to this course and enter the selection process, please fill in this <a href="https://forms.office.com/e/4BgWAvVCUg">questionnaire</a>.</strong></p>
+<p>Applications will close <strong>01/11/2024</strong>. The applications selection will start the week of the <strong>05/11/2024</strong>. Accepted applicants will be notified by email by during the week of the <strong>11/11/2024</strong> and they will have until <strong>27/11/2024</strong> to confirm their attendance by paying the fees within 5 days.</p>
+<p>Deadline for free-of-charge cancellation is set to <strong>27/11/2024</strong>. Cancellation after this date will not be reimbursed.</p>
+</section>
+<section id="venue-and-time" class="level2">
+<h2 class="anchored" data-anchor-id="venue-and-time">Venue and Time</h2>
+<p>This course will take place at the University of Lausanne, in the Synathlon building of the campus.</p>
+<p>The course will start the first day at 13:00. A lunch will be provided before the start of the course as well as at the end of the course on the last day.</p>
+<p>All participants are invited to the social dinner, organized on 21 January 2024.</p>
+<p>Precise information will be provided to the participants in due time.</p>
+</section>
+<section id="additional-information" class="level2">
+<h2 class="anchored" data-anchor-id="additional-information">Additional information</h2>
+<p>This is an international course hosted by the SIB Swiss Institute of Bioinformatics (ELIXIR-CH) in collaboration with the <a href="https://elixir-europe.org/communities/single-cell-omics">ELIXIR Single-Cell Omics community</a>, and trainers’ own institutions and affiliations to ELIXIR nodes (KU Leuven, VIB, CNAG, Helmholtz Zentrum München, CERTH, SIB, BIH, LUMC, UZH, UGent, SciLifeLab, UNIL).</p>
+<p>Course organizers:</p>
+<ul>
+<li>Ahmed Mahfouz, Leiden University Medical Center (LUMC), ELIXIR - Netherlands</li>
+<li>Diana Marek, SIB Training group, ELIXIR - Switzerland</li>
+<li>Patricia Palagi, SIB Training group, ELIXIR - Switzerland</li>
+<li>Eija Korpelainen, CSC, ELIXIR - Finland</li>
+</ul>
+<p>This course is partially funded by an <a href="https://elixir-europe.org/internal-projects/staff-exchange-programme">ELIXIR Staff Exchange Programme</a>.</p>
+<p>We will recommend 0.75 ECTS credits for this course (given a passed assessment).</p>
+<p>You are welcome to register to the SIB courses mailing list to be informed of all future courses and workshops, as well as all important deadlines using the form <a href="https://lists.sib.swiss/postorius/lists/courses.lists.sib.swiss/">here</a>.</p>
+<p>Please note that participation in SIB courses is subject to our <a href="https://www.sib.swiss/training/terms-and-conditions">general conditions</a>.</p>
+<p>Course organizers and trainers abide by the <a href="https://elixir-europe.org/events/code-of-conduct">ELIXIR Code of Conduct</a>. Participants are also required to abide by the same code.</p>
+<p><img src="https://raw.githubusercontent.com/sib-swiss/images-training/main/SPODA/ELIXIR/ELIXIR1.png" alt="ElLIXIR logo" style="height: 210px; width:300px;"></p>
+<!--<img src="https://raw.githubusercontent.com/sib-swiss/images-training/main/SPODA/ELIXIR/ELIXIR1.png" alt="ElLIXIR logo"/> -->
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,93 @@
+[
+  {
+    "objectID": "day_2/practical_3/workdir/practical_3.html",
+    "href": "day_2/practical_3/workdir/practical_3.html",
+    "title": "Computational analysis of spatial transcriptomics data",
+    "section": "",
+    "text": "1. Spatial data download and format\n2. Spatial imputation with SpaGE\n3. Spatial clusering with BANKSY\n4. Cell-cell communication with LIANA+"
+  },
+  {
+    "objectID": "day_2/practical_3/workdir/practical_3.html#brainomics-2.0---day-3",
+    "href": "day_2/practical_3/workdir/practical_3.html#brainomics-2.0---day-3",
+    "title": "Computational analysis of spatial transcriptomics data",
+    "section": "",
+    "text": "1. Spatial data download and format\n2. Spatial imputation with SpaGE\n3. Spatial clusering with BANKSY\n4. Cell-cell communication with LIANA+"
+  },
+  {
+    "objectID": "index.html#overview",
+    "href": "index.html#overview",
+    "title": "ELIXIR-SCO-spatial-transcriptomics",
+    "section": "Overview",
+    "text": "Overview\nThis course delves into the cutting-edge field of Spatial Omics, focusing on Spatially-Resolved Transcriptomics (SRT) technology which provides unprecedented insights into the spatial organization of gene expression within tissues. The rapid and recent advances in SRT technology are transforming our understanding of biological systems, and this course is designed to equip researchers with the tools to harness the power of SRT, adding significant value to biological knowledge and opening new avenues for scientific discovery.\nParticipants will explore both imaging-based and sequencing-based SRT technologies, learning to navigate the entire workflow of SRT data analysis. The course covers essential topics such as pre-processing techniques for data cleaning, normalization, and quality control, methods for identifying and characterizing spatial domains within tissues, strategies for integrating SRT data with single-cell RNA sequencing data, and statistical approaches to analyze spatial patterns and relationships. Additionally, participants will investigate interactions between cells within their spatial context. By the end of this course, participants will be equipped with the knowledge and skills to construct a complete workflow for SRT data analysis, from raw data to meaningful biological insights. The course combines lectures with practical sessions, ensuring a balanced approach to theory and hands-on experience.\nThe course materials will be on the dedicated GitHub page."
+  },
+  {
+    "objectID": "index.html#audience",
+    "href": "index.html#audience",
+    "title": "ELIXIR-SCO-spatial-transcriptomics",
+    "section": "Audience",
+    "text": "Audience\nThis 3-day course is addressed to PhD students, postdocs, and researchers who are involved (or will be in the near future) in projects including spatially-resolved transcriptomics data, and want to acquire the skills to get started with spatial data analysis."
+  },
+  {
+    "objectID": "index.html#learning-outcomes",
+    "href": "index.html#learning-outcomes",
+    "title": "ELIXIR-SCO-spatial-transcriptomics",
+    "section": "Learning outcomes",
+    "text": "Learning outcomes\nAt the end of the course, the participants will be able to:\n\nIdentify and recall key concepts and terminology related to imaging- and sequencing-based SRT technologies.\nAssess and evaluate quality of SRT data.\nPerform standard SRT data analysis, including data cleaning, normalization, quality control.\nExamine and interpret spatial patterns and relationships within SRT data using statistical and machine learning approaches.\nConstruct a comprehensive workflow for SRT data analysis, from raw data to meaningful biological insights."
+  },
+  {
+    "objectID": "index.html#prerequisites",
+    "href": "index.html#prerequisites",
+    "title": "ELIXIR-SCO-spatial-transcriptomics",
+    "section": "Prerequisites",
+    "text": "Prerequisites\n\nKnowledge / competencies\nParticipants should be proficient in Python and R, for basic data analysis.\nParticipants should be familiar with NGS technologies, have experience with analyzing (spatial/single-cell) transcriptomics data as well as basic knowledge of machine learning.\nParticipants should also have a basic understanding of working with command line tools on Unix-based systems. You can test your skills with Unix with the quiz here. If you do not feel comfortable with UNIX commands, please take our Unix fundamentals e-learning module.\n\n\nTechnical\nParticipants are required to bring your own laptop.\nWe will be mainly working on an Amazon Web Services (AWS) Elastic Cloud (EC2) server. Our Ubuntu server behaves like a ‘normal’ remote server, and can be approached through a web browser (safari, firefox, chrome etc.). All participants will be granted access to a personal workspace to be used during the course. The web interface will be approached through http (not https!), so make sure you can access http sites. You can validate it here.\nPlease perform these installations PRIOR to the course and contact us if you have any trouble."
+  },
+  {
+    "objectID": "index.html#schedule---cet-time-zone",
+    "href": "index.html#schedule---cet-time-zone",
+    "title": "ELIXIR-SCO-spatial-transcriptomics",
+    "section": "Schedule - CET time zone",
+    "text": "Schedule - CET time zone\nDay 1 (13:00 -17:00)\n\nOverview of technologies\nImaging-based data preprocessing\nSegmentation-free analysis\n\nDay 2 (09:00 -17:00)\n\nSequence-based data preprocessing\nIntegration with scRNA-seq\nMulti-omics spatial data analysis\n\nDay 3 (09:00 -17:00)\n\nGraph representations and Niche reconstruction\nSpatial domain identification/spatial annotation\nSpatial statistics\n\nDay 4 (09:00 -12:30)\n\nCell-cell communication"
+  },
+  {
+    "objectID": "index.html#the-trainers",
+    "href": "index.html#the-trainers",
+    "title": "ELIXIR-SCO-spatial-transcriptomics",
+    "section": "The trainers",
+    "text": "The trainers\nThe course will feature the following lecturers and trainers:\n\nLars Borm (Katholieke Universiteit (KU) Leuven & Vlaams Instituut voor Biotechnologie (VIB), BE)\nHelena Crowell (Centro Nacional de Análisis Genómico (CNAG), ES)\nFrancesca Drummer (Helmholtz Zentrum München, DE)\nGeorge Gavrillidis (Centre for Research and Technology Hellas (CERTH), GR)\nGeert van Geest (SIB Swiss Institute of Bioinformatics, CH)\nNaveed Ishaque (Berlin Institute of Health (BIH), DE)\nAhmed Mahfouz (Leiden University Medical Center (LUMC), NL)\nMark Robinson (University of Zurich (UZH) & SIB, CH)\nYvan Saeys (University of Ghent (UGent) & Vlaams Instituut voor Biotechnologie (VIB), BE)\nRasool Saghaleyni (SciLifeLab, SE)\nAnna Schaar (Helmholtz Zentrum München, DE)\nMarco Varrone (University of Lausanne (UNIL) & SIB, CH)"
+  },
+  {
+    "objectID": "index.html#application",
+    "href": "index.html#application",
+    "title": "ELIXIR-SCO-spatial-transcriptomics",
+    "section": "Application",
+    "text": "Application\nRegistration fees are 150 CHF for academics and 750 CHF for for-profit companies.\nParticipants will be selected based on several criteria. Selection criteria include correct entry requirements, motivation to attend the course as well as gender and ELIXIR nodes balance.\nTo apply to this course and enter the selection process, please fill in this questionnaire.\nApplications will close 01/11/2024. The applications selection will start the week of the 05/11/2024. Accepted applicants will be notified by email by during the week of the 11/11/2024 and they will have until 27/11/2024 to confirm their attendance by paying the fees within 5 days.\nDeadline for free-of-charge cancellation is set to 27/11/2024. Cancellation after this date will not be reimbursed."
+  },
+  {
+    "objectID": "index.html#venue-and-time",
+    "href": "index.html#venue-and-time",
+    "title": "ELIXIR-SCO-spatial-transcriptomics",
+    "section": "Venue and Time",
+    "text": "Venue and Time\nThis course will take place at the University of Lausanne, in the Synathlon building of the campus.\nThe course will start the first day at 13:00. A lunch will be provided before the start of the course as well as at the end of the course on the last day.\nAll participants are invited to the social dinner, organized on 21 January 2024.\nPrecise information will be provided to the participants in due time."
+  },
+  {
+    "objectID": "index.html#additional-information",
+    "href": "index.html#additional-information",
+    "title": "ELIXIR-SCO-spatial-transcriptomics",
+    "section": "Additional information",
+    "text": "Additional information\nThis is an international course hosted by the SIB Swiss Institute of Bioinformatics (ELIXIR-CH) in collaboration with the ELIXIR Single-Cell Omics community, and trainers’ own institutions and affiliations to ELIXIR nodes (KU Leuven, VIB, CNAG, Helmholtz Zentrum München, CERTH, SIB, BIH, LUMC, UZH, UGent, SciLifeLab, UNIL).\nCourse organizers:\n\nAhmed Mahfouz, Leiden University Medical Center (LUMC), ELIXIR - Netherlands\nDiana Marek, SIB Training group, ELIXIR - Switzerland\nPatricia Palagi, SIB Training group, ELIXIR - Switzerland\nEija Korpelainen, CSC, ELIXIR - Finland\n\nThis course is partially funded by an ELIXIR Staff Exchange Programme.\nWe will recommend 0.75 ECTS credits for this course (given a passed assessment).\nYou are welcome to register to the SIB courses mailing list to be informed of all future courses and workshops, as well as all important deadlines using the form here.\nPlease note that participation in SIB courses is subject to our general conditions.\nCourse organizers and trainers abide by the ELIXIR Code of Conduct. Participants are also required to abide by the same code."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "day_1/practical_1/workdir/imaging_based_data_analysis.html",
+    "href": "day_1/practical_1/workdir/imaging_based_data_analysis.html",
+    "title": "Practical 1: Imaging-Based Data Analysis with Xenium (Mouse Brain, Cancer)",
+    "section": "",
+    "text": "Author: Rasool Saghaleyni\n\n# Import necessary libraries\nimport scanpy as sc\nimport squidpy as sq\nimport matplotlib.pyplot as plt\nimport numpy as np\nimport pandas as pd"
+  }
+]
