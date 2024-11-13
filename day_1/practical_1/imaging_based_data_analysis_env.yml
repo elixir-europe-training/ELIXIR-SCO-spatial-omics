@@ -25,3 +25,4 @@ dependencies:
   - jupyterlab-dash
   - pip
   - spatialdata_plot
+  - diptest
