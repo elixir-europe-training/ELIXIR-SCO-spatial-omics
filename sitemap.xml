@@ -2,22 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/index.html</loc>
-    <lastmod>2024-11-13T13:40:05.122Z</lastmod>
+    <lastmod>2024-11-14T15:23:06.476Z</lastmod>
   </url>
   <url>
-    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_1/practical_1/imaging_based_data_analysis.html</loc>
-    <lastmod>2024-11-13T13:40:04.570Z</lastmod>
-  </url>
-  <url>
-    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_1/practical_1/3D Nucleus Segmentation with Cellpose.html</loc>
-    <lastmod>2024-11-13T13:40:04.570Z</lastmod>
+    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_1/practical_1/segmentation.html</loc>
+    <lastmod>2024-11-14T15:23:05.948Z</lastmod>
   </url>
   <url>
     <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_1/practical_1/practical_1_2.html</loc>
-    <lastmod>2024-11-13T13:40:04.590Z</lastmod>
+    <lastmod>2024-11-14T15:23:05.936Z</lastmod>
   </url>
   <url>
     <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_2/practical_3/workdir/practical_3.html</loc>
-    <lastmod>2024-11-13T13:40:05.118Z</lastmod>
+    <lastmod>2024-11-14T15:23:06.476Z</lastmod>
   </url>
 </urlset>
