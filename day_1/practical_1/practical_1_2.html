@@ -218,7 +218,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="cell-2" class="cell" data-execution_count="2">
+<div id="cell-2" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
@@ -236,32 +236,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> Point, Polygon, MultiPoint</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.spatial <span class="im">import</span> ConvexHull</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'/Users/rasools/Library/CloudStorage/OneDrive-Chalmers/Documents/github/ELIXIR-SCO-spatial-transcriptomics/day_1/practical_1/custom'</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'custom'</span>)</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tenx_method_nb_helper_functions <span class="im">as</span> hf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="loading-data-and-primary-inspections" class="level2">
 <h2 class="anchored" data-anchor-id="loading-data-and-primary-inspections">Loading data and primary inspections</h2>
 <p>Making adata object considering the transcripts that should be used for the analysis. Running analysis on the transcripts that are only in the nucleus.</p>
-<div id="cell-5" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sample_path <span class="op">=</span> <span class="st">"/Users/rasools/Library/CloudStorage/OneDrive-Chalmers/Documents/github/ELIXIR-SCO-spatial-transcriptomics/day_1/practical_1/data/xenium_2.0.0_io"</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>transcripts_csv_path <span class="op">=</span> os.path.join(sample_path, <span class="st">"transcripts.csv"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>transcripts_df <span class="op">=</span> pd.read_csv(transcripts_csv_path)</span>
+<div id="cell-5" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sample_path <span class="op">=</span> <span class="st">"data/Xenium_V1_FFPE_TgCRND8_17_9_months_outs"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>transcripts_csv_path <span class="op">=</span> os.path.join(sample_path, <span class="st">"transcripts.csv.gz"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>transcripts_df <span class="op">=</span> pd.read_csv(transcripts_csv_path, compression<span class="op">=</span><span class="st">'gzip'</span>)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>nucleus_boundaries_gz_path <span class="op">=</span> os.path.join(sample_path, <span class="st">"nucleus_boundaries.csv.gz"</span>)</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>nucleus_df <span class="op">=</span> pd.read_csv(nucleus_boundaries_gz_path, compression<span class="op">=</span><span class="st">'gzip'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="making-the-adata-object" class="level3">
 <h3 class="anchored" data-anchor-id="making-the-adata-object">Making the adata object</h3>
-<div id="cell-7" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>adata <span class="op">=</span> hf.create_adata(sample_path, nucleus_genes_only <span class="op">=</span> <span class="va">False</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>adata</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
-<pre><code>AnnData object with n_obs × n_vars = 162254 × 377
-    obs: 'cell_id', 'x_centroid', 'y_centroid', 'transcript_counts', 'control_probe_counts', 'control_codeword_counts', 'unassigned_codeword_counts', 'deprecated_codeword_counts', 'total_counts', 'cell_area', 'nucleus_area'
+<div id="cell-7" class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> os.path.exists(os.path.join(sample_path, <span class="st">"cells.csv"</span>)):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    hf.decompress_file(os.path.join(sample_path, <span class="st">"cells.csv.gz"</span>))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>adata <span class="op">=</span> hf.create_adata(sample_path, nucleus_genes_only <span class="op">=</span> <span class="va">False</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>adata</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>AnnData object with n_obs × n_vars = 62268 × 347
+    obs: 'cell_id', 'x_centroid', 'y_centroid', 'transcript_counts', 'control_probe_counts', 'control_codeword_counts', 'unassigned_codeword_counts', 'total_counts', 'cell_area', 'nucleus_area'
     var: 'gene_ids', 'feature_types', 'genome'
     obsm: 'spatial'</code></pre>
 </div>
 </div>
-<p>The <code>AnnData</code> object, <code>adata</code>, contains a structured dataset with cells as observations (<code>n_obs = 162254</code>) and genes as variables (<code>n_vars = 377</code>). Here’s a breakdown of the main components within <code>adata</code>:</p>
+<p>The <code>AnnData</code> object, <code>adata</code>, contains a structured dataset with cells as observations (<code>n_obs = 62268</code>) and genes as variables (<code>n_vars = 347</code>). Here’s a breakdown of the main components within <code>adata</code>:</p>
 <p><code>obs</code> (Observations): This table contains metadata about each cell, where each row corresponds to a cell, and each column holds information about a specific attribute:</p>
 <ul>
 <li><p><code>cell_id</code>: Unique identifier for each cell.</p></li>
@@ -279,7 +281,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><code>genome</code>: Information about the genome source of each gene, like “human” or “mouse.”</p></li>
 </ul>
 <p><code>obsm</code> (Multi-dimensional Observations): This slot contains multi-dimensional data related to cells. Here, <code>spatial</code> stores spatial coordinates for each cell, allowing visualization and spatial analysis of cells in their tissue context.</p>
-<div id="cell-9" class="cell" data-execution_count="5">
+<div id="cell-9" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>adata.obs[<span class="st">'total_counts'</span>] <span class="op">=</span> adata.X.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>sns.histplot(adata.obs[<span class="st">'total_counts'</span>], kde<span class="op">=</span><span class="va">True</span>, bins<span class="op">=</span><span class="dv">50</span>)</span>
@@ -302,7 +304,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Cells with Very High Counts: High total counts may indicate cell types with naturally high transcriptional activity or potential doublets (two cells counted as one).</li>
 </ul>
 <p>This plot provides a quick check of the dataset’s quality and helps inform any initial filtering steps. A typical goal is to ensure the data has a reasonable distribution of RNA counts per cell, without excessive noise or artifacts that might skew downstream analysis.</p>
-<div id="cell-11" class="cell" data-execution_count="6">
+<div id="cell-11" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>adata.obs[<span class="st">'n_genes'</span>] <span class="op">=</span> (adata.X <span class="op">&gt;</span> <span class="dv">0</span>).<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>sns.histplot(adata.obs[<span class="st">'n_genes'</span>], kde<span class="op">=</span><span class="va">True</span>, bins<span class="op">=</span><span class="dv">50</span>)</span>
@@ -319,7 +321,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Now lets find genes with the highest expression across the whole dataset. We calculate the mean expression level of each gene across all cells and identify the top 10 most highly expressed genes, then plot them to understand which genes dominate the transcriptional landscape. This helps us quickly identify genes with the highest abundance, which are often either essential housekeeping genes or specific markers that define particular cell types. Examining the top expressed genes serves both technical and biological purposes: it allows us to check for any potential technical artifacts (e.g., genes with unusually high background expression) and offers biological insight by highlighting key genes likely involved in core cellular functions or distinguishing cell types.</p>
-<div id="cell-13" class="cell" data-execution_count="7">
+<div id="cell-13" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate mean expression for each gene</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>mean_expression <span class="op">=</span> adata.X.mean(axis<span class="op">=</span><span class="dv">0</span>).A1</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>top_genes_idx <span class="op">=</span> mean_expression.argsort()[::<span class="op">-</span><span class="dv">1</span>][:<span class="dv">10</span>]</span>
@@ -341,7 +343,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>We can also look into the distributions of cell and nucleus areas to assess segmentation quality and examine cell size diversity across the dataset. These distributions provide an overview of the range of cell and nucleus sizes, helping to identify segmentation artifacts or inconsistencies, such as unusually small areas (which may indicate partial cells or segmentation errors) or large areas (potentially indicating doublets or merged cells).</p>
-<div id="cell-15" class="cell" data-execution_count="8">
+<div id="cell-15" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#distribution of cell and nucleus areas</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>sns.histplot(adata.obs[<span class="st">'cell_area'</span>], kde<span class="op">=</span><span class="va">True</span>, bins<span class="op">=</span><span class="dv">50</span>)</span>
@@ -372,7 +374,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Cell Area vs Nucleus Area</p>
-<div id="cell-17" class="cell" data-execution_count="9">
+<div id="cell-17" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(adata.obs[<span class="st">'cell_area'</span>], adata.obs[<span class="st">'nucleus_area'</span>], alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Cell Area"</span>)</span>
@@ -388,7 +390,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Calculate cell-to-nucleus area ratio and plot it. This ratio provides a measure of the relative size of the nucleus compared to the whole cell, which can be informative for understanding cell morphology and the distribution of nuclear material within cells. A high ratio may indicate cells with large nuclei relative to their overall size, which could be relevant for cell type classification or biological interpretation. Examining this ratio helps identify potential outliers or unusual cell morphologies that may require further investigation or filtering.</p>
-<div id="cell-19" class="cell" data-execution_count="10">
+<div id="cell-19" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>adata.obs[<span class="st">'area_ratio'</span>] <span class="op">=</span> adata.obs[<span class="st">'nucleus_area'</span>] <span class="op">/</span> adata.obs[<span class="st">'cell_area'</span>]</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>sns.histplot(adata.obs[<span class="st">'area_ratio'</span>], kde<span class="op">=</span><span class="va">True</span>, bins<span class="op">=</span><span class="dv">50</span>)</span>
@@ -405,7 +407,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Scatter plot of Cell Area vs Total Counts</p>
-<div id="cell-21" class="cell" data-execution_count="11">
+<div id="cell-21" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(adata.obs[<span class="st">'cell_area'</span>], adata.obs[<span class="st">'total_counts'</span>], alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Cell Area"</span>)</span>
@@ -421,7 +423,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Spatial plot of cell and nucleus areas.</p>
-<div id="cell-23" class="cell" data-execution_count="12">
+<div id="cell-23" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Spatial plot of cell area</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sc.pl.spatial(adata, color<span class="op">=</span><span class="st">'cell_area'</span>, spot_size<span class="op">=</span><span class="dv">10</span>, title<span class="op">=</span><span class="st">"Spatial Distribution of Cell Area"</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -443,8 +445,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Looking to spatial distibution of one of the genes. For example the gene “MALL”</p>
-<div id="cell-25" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sc.pl.spatial(adata, color<span class="op">=</span>[<span class="st">'MALL'</span>], spot_size<span class="op">=</span><span class="dv">10</span>, title<span class="op">=</span><span class="st">"MALL Gene Expression"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-25" class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sc.pl.spatial(adata, color<span class="op">=</span>[<span class="st">'Cst3'</span>], spot_size<span class="op">=</span><span class="dv">10</span>, title<span class="op">=</span><span class="st">"Cst3 Gene Expression"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -453,18 +455,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="cell-26" class="cell" data-execution_count="14">
+<div id="cell-26" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter cells with nucleus area &lt; 5</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>initial_cells_count <span class="op">=</span> adata.n_obs</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>adata <span class="op">=</span> adata[adata.obs[<span class="st">'nucleus_area'</span>] <span class="op">&gt;=</span> <span class="dv">5</span>].copy()</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>filtered_cells_count <span class="op">=</span> adata.n_obs</span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Filtered out </span><span class="sc">{</span>initial_cells_count <span class="op">-</span> filtered_cells_count<span class="sc">}</span><span class="ss"> cells with nucleus_area &lt; 5. Remaining cells: </span><span class="sc">{</span>filtered_cells_count<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Filtered out 6241 cells with nucleus_area &lt; 5. Remaining cells: 156013</code></pre>
+<pre><code>Filtered out 314 cells with nucleus_area &lt; 5. Remaining cells: 61954</code></pre>
 </div>
 </div>
 <p>Plot distribution of total transcript counts per cell and distribution of Nucleus area after filtering</p>
-<div id="cell-28" class="cell" data-execution_count="15">
+<div id="cell-28" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(adata.obs[<span class="st">'total_counts'</span>], kde<span class="op">=</span><span class="va">True</span>, bins<span class="op">=</span><span class="dv">50</span>)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Total Transcript Counts per Cell"</span>)</span>
@@ -494,7 +496,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>we can also look into the control probe counts and their spatial distribution to assess background noise and technical quality in the dataset. First, we plot the distribution of control probe counts across cells to understand how frequently control probes are detected. This distribution provides insights into potential technical noise or background signals, as higher-than-expected control counts may suggest artifacts or contamination. Next, we create a spatial plot of control probe counts, which allows us to see if any regions in the tissue exhibit unexpectedly high control counts, possibly indicating localized technical issues.</p>
-<div id="cell-30" class="cell" data-execution_count="16">
+<div id="cell-30" class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot distribution of control probe counts</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>sns.histplot(adata.obs[<span class="st">'control_probe_counts'</span>], kde<span class="op">=</span><span class="va">True</span>, bins<span class="op">=</span><span class="dv">50</span>)</span>
@@ -526,7 +528,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="filtering-normalizing-and-cleaning-data">Filtering, Normalizing and Cleaning data</h2>
 <p>Filter out the cells that have nuclei smaller than 7 microns.</p>
 <p>What do you think could be a good cutoff for filtering out lowly expressed genes and cells with low transcript count? Lets removes low-quality cells and genes from the dataset, which helps reduce noise and computational load in downstream analyses. This filtering step ensures that the dataset is focused on cells and genes with a minimum level of expression, which are more likely to be biologically relevant.</p>
-<div id="cell-34" class="cell" data-execution_count="17">
+<div id="cell-34" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cell and gene filtering</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>initial_cells_count <span class="op">=</span> adata.n_obs</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>initial_genes_count <span class="op">=</span> adata.n_vars</span>
@@ -539,8 +541,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Filtered </span><span class="sc">{</span>initial_cells_count <span class="op">-</span> filtered_cells_count<span class="sc">}</span><span class="ss"> (out of intial </span><span class="sc">{</span>initial_cells_count<span class="sc">}</span><span class="ss"> cells)"</span>)</span>
 <span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Filtered </span><span class="sc">{</span>initial_genes_count <span class="op">-</span> filtered_genes_count<span class="sc">}</span><span class="ss"> (out of intial </span><span class="sc">{</span>initial_genes_count<span class="sc">}</span><span class="ss"> genes)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Filtered 7137 (out of intial 156013 cells)
-Filtered 0 (out of intial 377 genes)</code></pre>
+<pre><code>Filtered 2189 (out of intial 61954 cells)
+Filtered 0 (out of intial 347 genes)</code></pre>
 </div>
 </div>
 <div id="cell-35" class="cell" data-execution_count="18">
@@ -576,13 +578,13 @@ Filtered 0 (out of intial 377 genes)</code></pre>
 <section id="normaliation-and-scaling" class="level2">
 <h2 class="anchored" data-anchor-id="normaliation-and-scaling">Normaliation and scaling</h2>
 <p>Normalization adjusts for cell-specific technical differences, and log transformation makes the data easier to analyze by reducing the effects of extreme values. This normalization and transformation make the dataset more appropriate for dimensionality reduction, clustering, and other analyses.</p>
-<div id="cell-37" class="cell" data-execution_count="19">
+<div id="cell-37" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>adata.raw <span class="op">=</span> adata.copy()</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>sc.pp.normalize_total(adata, target_sum<span class="op">=</span><span class="fl">1e4</span>)</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>sc.pp.log1p(adata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Comparing the effect of normalization</p>
-<div id="cell-39" class="cell" data-execution_count="20">
+<div id="cell-39" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>original_counts <span class="op">=</span> adata.raw.X.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>normalized_counts <span class="op">=</span> adata.X.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">#plt distributions</span></span>
@@ -603,8 +605,8 @@ Filtered 0 (out of intial 377 genes)</code></pre>
 </div>
 </div>
 <p>How the normalization and scaling of the data affects the distribution of gene expression values in the dataset. We can have a look at the distribution of gene expression values before and after normalization and scaling for MALL gene.</p>
-<div id="cell-41" class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>gene_name <span class="op">=</span> <span class="st">"MALL"</span></span>
+<div id="cell-41" class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>gene_name <span class="op">=</span> <span class="st">"Cst3"</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> gene_name <span class="kw">in</span> adata.var_names:</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract MALL expression values before normalization</span></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    original_mall_expression <span class="op">=</span> adata.raw[:, gene_name].X.toarray().flatten()  <span class="co"># Use `.toarray()` for sparse matrices</span></span>
@@ -633,7 +635,7 @@ Filtered 0 (out of intial 377 genes)</code></pre>
 <section id="dimensionality-reduction" class="level2">
 <h2 class="anchored" data-anchor-id="dimensionality-reduction">Dimensionality reduction</h2>
 <p>We use dimensionality reduction, clustering, and visualization techniques to analyze the structure of our dataset, group similar cells, and visualize their relationships. First, we apply Principal Component Analysis (PCA) to reduce the high-dimensional gene expression data into a smaller set of principal components, retaining the main patterns of variation while reducing noise. Then, we create a neighbors graph, which identifies connections between cells based on their similarity in the reduced PCA space, capturing local relationships essential for clustering. Using the Leiden clustering algorithm, we group cells into clusters based on these connections, allowing us to identify groups of similar cells that may represent distinct cell types or states. We then apply UMAP (Uniform Manifold Approximation and Projection), a technique that reduces the data to two dimensions for visualization, preserving both local and global structures in the data. Finally, we generate a UMAP plot with cells colored by their assigned clusters, providing an overview of the dataset’s structure and making it easy to spot distinct cell populations or clusters. This visualization gives us an interpretable view of the relationships within our data, helping us understand its organization before further analysis.</p>
-<div id="cell-44" class="cell" data-execution_count="22">
+<div id="cell-44" class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>sc.pp.pca(adata)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>sc.pp.neighbors(adata)</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>sc.tl.leiden(adata)</span>
@@ -642,7 +644,7 @@ Filtered 0 (out of intial 377 genes)</code></pre>
 <div class="cell-output cell-output-stderr">
 <pre><code>/Users/rasools/miniconda3/envs/imaging_based_data_analysis_env/lib/python3.9/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
   from .autonotebook import tqdm as notebook_tqdm
-/var/folders/8l/yj6nz8296zd7wwj0xy6pw3880000gn/T/ipykernel_69331/2024658743.py:3: FutureWarning: In the future, the default backend for leiden will be igraph instead of leidenalg.
+/var/folders/8l/yj6nz8296zd7wwj0xy6pw3880000gn/T/ipykernel_54309/2024658743.py:3: FutureWarning: In the future, the default backend for leiden will be igraph instead of leidenalg.
 
  To achieve the future defaults please pass: flavor="igraph" and n_iterations=2.  directed must also be False to work with igraph's implementation.
   sc.tl.leiden(adata)</code></pre>
@@ -662,10 +664,10 @@ Filtered 0 (out of intial 377 genes)</code></pre>
 <section id="calculate-the-mean-expression-per-gene-per-cluster" class="level4">
 <h4 class="anchored" data-anchor-id="calculate-the-mean-expression-per-gene-per-cluster">1- Calculate the Mean Expression per Gene per Cluster</h4>
 <p>In the first step, we calculate the mean expression of each gene within each cluster. Clustering organizes cells into groups that likely share biological characteristics, and taking the average expression of each gene within clusters provides a baseline for typical expression levels. This allows us to identify clusters where a gene has unusually low expression, which might indicate noise rather than true expression.</p>
-<div id="cell-47" class="cell" data-execution_count="23">
+<div id="cell-47" class="cell" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>mean_expression <span class="op">=</span> adata.to_df().groupby(adata.obs[<span class="st">'leiden'</span>]).mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/8l/yj6nz8296zd7wwj0xy6pw3880000gn/T/ipykernel_69331/2069805196.py:1: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+<pre><code>/var/folders/8l/yj6nz8296zd7wwj0xy6pw3880000gn/T/ipykernel_54309/2069805196.py:1: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
   mean_expression = adata.to_df().groupby(adata.obs['leiden']).mean()</code></pre>
 </div>
 </div>
@@ -673,14 +675,14 @@ Filtered 0 (out of intial 377 genes)</code></pre>
 <section id="determine-the-maximum-expression-level-of-each-gene-across-clusters" class="level4">
 <h4 class="anchored" data-anchor-id="determine-the-maximum-expression-level-of-each-gene-across-clusters">2- Determine the Maximum Expression Level of Each Gene Across Clusters</h4>
 <p>Then, we find the maximum expression level for each gene across all clusters. This maximum value serves as a reference point for each gene’s typical expression level in the dataset. The highest expression level of each gene is assumed to represent meaningful expression, while lower values may be more likely to represent noise or background.</p>
-<div id="cell-49" class="cell" data-execution_count="24">
+<div id="cell-49" class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>max_expression_levels <span class="op">=</span> mean_expression.<span class="bu">max</span>(axis<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="calculate-spurious-expression-threshold-for-each-gene" class="level4">
 <h4 class="anchored" data-anchor-id="calculate-spurious-expression-threshold-for-each-gene">3- Calculate Spurious Expression Threshold for Each Gene</h4>
 <p>We define a threshold, here set at 5%, which will be used to identify potential false positives. This threshold means that if a gene’s expression in a given cluster is below 5% of its highest expression level across all clusters, we will consider it to be a likely false positive. This step allows us to systematically identify clusters where the gene’s expression is likely due to background noise rather than true biological signal. Then, we calculate a <code>spurious expression threshold</code> for each gene, which is 5% of its maximum expression level. This threshold provides a cut-off below which we consider expression values to be suspected false positives. By applying this threshold, we can filter out clusters where a gene’s expression level is unlikely to be biologically meaningful.</p>
-<div id="cell-51" class="cell" data-execution_count="25">
+<div id="cell-51" class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>threshold <span class="op">=</span> <span class="fl">0.05</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>spurious_expression_threshold <span class="op">=</span> max_expression_levels <span class="op">*</span> threshold</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -688,7 +690,7 @@ Filtered 0 (out of intial 377 genes)</code></pre>
 <section id="identify-suspected-false-positives-for-each-cluster-and-gene" class="level4">
 <h4 class="anchored" data-anchor-id="identify-suspected-false-positives-for-each-cluster-and-gene">4- Identify Suspected False Positives for Each Cluster and Gene</h4>
 <p>Next we creat a dictionary, <code>suspected_false_positives</code>, to store suspected false positive genes for each cluster. For each cluster, it checks each gene’s mean expression level within that cluster. If the gene’s mean expression is below the spurious expression threshold (5% of its maximum expression), the gene is flagged as a suspected false positive in that cluster.</p>
-<div id="cell-53" class="cell" data-execution_count="26">
+<div id="cell-53" class="cell" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>suspected_false_positives <span class="op">=</span> {}</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cluster <span class="kw">in</span> mean_expression.index:</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    suspected_genes <span class="op">=</span> []</span>
@@ -698,7 +700,7 @@ Filtered 0 (out of intial 377 genes)</code></pre>
 <span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    suspected_false_positives[cluster] <span class="op">=</span> suspected_genes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we can see a quick summary of the suspected false positives across clusters</p>
-<div id="cell-55" class="cell" data-execution_count="27">
+<div id="cell-55" class="cell" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Showing first 10 genes for brevity</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cluster, genes <span class="kw">in</span> suspected_false_positives.items():</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Cluster </span><span class="sc">{</span>cluster<span class="sc">}</span><span class="ss"> has </span><span class="sc">{</span><span class="bu">len</span>(genes)<span class="sc">}</span><span class="ss"> suspected false positive genes: </span><span class="sc">{</span>genes[:<span class="dv">10</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -713,26 +715,38 @@ Filtered 0 (out of intial 377 genes)</code></pre>
 <span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Count of Suspected False Positive Genes'</span>)</span>
 <span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>)</span>
 <span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Cluster 0 has 133 suspected false positive genes: ['2010300C02Rik', 'Acvrl1', 'Adgrl4', 'Aldh1a2', 'Ano1', 'Arhgap25', 'Arhgap6', 'Bcl11b', 'Bdnf', 'Bhlhe22']
+Cluster 1 has 64 suspected false positive genes: ['Acvrl1', 'Adamtsl1', 'Aldh1a2', 'C3', 'Cd24a', 'Cd93', 'Chat', 'Cldn5', 'Col19a1', 'Col6a1']
+Cluster 2 has 52 suspected false positive genes: ['Acvrl1', 'Adgrl4', 'Aldh1a2', 'Ano1', 'Arhgap25', 'C3', 'Carmn', 'Cd14', 'Cd33', 'Cd93']
+Cluster 3 has 66 suspected false positive genes: ['Adamts2', 'Adamtsl1', 'Aldh1a2', 'Ano1', 'Arhgap6', 'C3', 'Cd24a', 'Chat', 'Chodl', 'Cldn5']
+Cluster 4 has 41 suspected false positive genes: ['Adamtsl1', 'C3', 'Cd24a', 'Chat', 'Chodl', 'Col19a1', 'Col1a1', 'Col6a1', 'Crh', 'Cwh43']
+Cluster 5 has 51 suspected false positive genes: ['Acvrl1', 'Adgrl4', 'Aldh1a2', 'Ano1', 'Arhgap6', 'C3', 'Calb2', 'Carmn', 'Cd93', 'Chat']
+Cluster 6 has 68 suspected false positive genes: ['Acvrl1', 'Adamtsl1', 'Adgrl4', 'Aldh1a2', 'Ano1', 'Arhgap25', 'C3', 'Carmn', 'Cbln1', 'Cd14']
+Cluster 7 has 103 suspected false positive genes: ['Arc', 'Bcl11b', 'Bdnf', 'Btbd11', 'C3', 'Cacna2d2', 'Calb1', 'Calb2', 'Cbln1', 'Cbln4']
+Cluster 8 has 69 suspected false positive genes: ['Acvrl1', 'Aldh1a2', 'Ano1', 'Arc', 'Arhgap25', 'C3', 'Carmn', 'Cd14', 'Cd33', 'Cd93']
+Cluster 9 has 118 suspected false positive genes: ['Acvrl1', 'Adamts2', 'Adamtsl1', 'Adgrl4', 'Aldh1a2', 'Ano1', 'Arhgap25', 'Arhgap6', 'Bcl11b', 'C3']
+Cluster 10 has 60 suspected false positive genes: ['Acvrl1', 'Adgrl4', 'Aldh1a2', 'Ano1', 'Arhgap6', 'C3', 'Calb2', 'Carmn', 'Cbln4', 'Cd14']
+Cluster 11 has 40 suspected false positive genes: ['Acvrl1', 'Aldh1a2', 'Ano1', 'C3', 'Carmn', 'Cd93', 'Chat', 'Cldn5', 'Col1a1', 'Col6a1']
+Cluster 12 has 165 suspected false positive genes: ['Acvrl1', 'Adamts2', 'Adamtsl1', 'Adgrl4', 'Aldh1a2', 'Ano1', 'Apod', 'Arc', 'Arhgap25', 'Arhgap6']
+Cluster 13 has 92 suspected false positive genes: ['Acvrl1', 'Adgrl4', 'Aldh1a2', 'Ano1', 'Arhgap25', 'Bdnf', 'Bhlhe22', 'C3', 'Carmn', 'Ccn2']
+Cluster 14 has 45 suspected false positive genes: ['Acvrl1', 'Aldh1a2', 'Ano1', 'Arhgap25', 'C3', 'Carmn', 'Cd33', 'Cd93', 'Chat', 'Cldn5']
+Cluster 15 has 102 suspected false positive genes: ['2010300C02Rik', 'Aldh1a2', 'Ano1', 'Arhgap25', 'Arhgap6', 'Bcl11b', 'Bhlhe22', 'C3', 'Cabp7', 'Carmn']
+Cluster 16 has 48 suspected false positive genes: ['Acvrl1', 'Aldh1a2', 'Ano1', 'Arhgap6', 'C3', 'Carmn', 'Cd24a', 'Cd93', 'Chat', 'Chodl']
+Cluster 17 has 43 suspected false positive genes: ['Adgrl4', 'Aldh1a2', 'Ano1', 'Arhgap25', 'C3', 'Carmn', 'Ccn2', 'Cd93', 'Chat', 'Cldn5']
+Cluster 18 has 110 suspected false positive genes: ['Acvrl1', 'Adgrl4', 'Aldh1a2', 'Ano1', 'Arhgap25', 'Arhgap6', 'C3', 'Calb2', 'Cbln1', 'Ccn2']
+Cluster 19 has 143 suspected false positive genes: ['Abca7', 'Adgrl4', 'Aldh1a2', 'Ano1', 'Arc', 'Arhgap25', 'Bcl11b', 'Bdnf', 'Bhlhe22', 'Cabp7']
+Cluster 20 has 71 suspected false positive genes: ['Aldh1a2', 'Ano1', 'Arhgap6', 'Btbd11', 'C3', 'Cacna2d2', 'Calb1', 'Cbln4', 'Ccn2', 'Cd14']
+Cluster 21 has 44 suspected false positive genes: ['Adamtsl1', 'Aldh1a2', 'Ano1', 'Arhgap6', 'C3', 'Calb2', 'Cbln4', 'Cd93', 'Chat', 'Chodl']
+Cluster 22 has 186 suspected false positive genes: ['Acsbg1', 'Adamts2', 'Adgrl4', 'Aldh1a2', 'Ano1', 'Aqp4', 'Arc', 'Arhgap25', 'Arhgap6', 'Bcl11b']
+Cluster 23 has 146 suspected false positive genes: ['Acvrl1', 'Adamts2', 'Adamtsl1', 'Adgrl4', 'Aldh1a2', 'Arc', 'Arhgap25', 'Arhgap6', 'Bhlhe22', 'C1qc']</code></pre>
+</div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/8l/yj6nz8296zd7wwj0xy6pw3880000gn/T/ipykernel_69331/225620550.py:9: FutureWarning: 
+<pre><code>/var/folders/8l/yj6nz8296zd7wwj0xy6pw3880000gn/T/ipykernel_54309/225620550.py:9: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   sns.barplot(x=clusters, y=counts, palette='viridis')</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Cluster 0 has 22 suspected false positive genes: ['ADGRL4', 'C1orf194', 'C20orf85', 'C6orf118', 'C7', 'CCDC39', 'CCL19', 'CD27', 'CD79A', 'CLEC14A']
-Cluster 1 has 67 suspected false positive genes: ['ACKR1', 'ADGRL4', 'ANGPT2', 'ASPN', 'BTNL9', 'C1orf194', 'C20orf85', 'C6orf118', 'C7', 'CCDC39']
-Cluster 2 has 27 suspected false positive genes: ['ACKR1', 'ADGRL4', 'ANGPT2', 'C1orf194', 'C20orf85', 'C6orf118', 'C7', 'CCDC39', 'CCL19', 'CD2']
-Cluster 3 has 33 suspected false positive genes: ['ACE2', 'AGR3', 'AQP9', 'C1orf194', 'C20orf85', 'C6orf118', 'CCDC39', 'CCDC78', 'CFAP53', 'COL17A1']
-Cluster 4 has 56 suspected false positive genes: ['ACE2', 'AGR3', 'ARFGEF3', 'BASP1', 'C1orf194', 'C20orf85', 'C6orf118', 'CAPN8', 'CCDC39', 'CCDC78']
-Cluster 5 has 31 suspected false positive genes: ['BTNL9', 'C1orf194', 'C20orf85', 'C6orf118', 'CA4', 'CCDC39', 'CCDC78', 'CFAP53', 'CLEC14A', 'CLIC6']
-Cluster 6 has 39 suspected false positive genes: ['ACE2', 'AGR3', 'ANPEP', 'C1orf194', 'C20orf85', 'C6orf118', 'CCDC39', 'CCDC78', 'CD27', 'CD79A']
-Cluster 7 has 64 suspected false positive genes: ['ACE2', 'AGR3', 'ARFGEF3', 'C1orf194', 'C20orf85', 'C6orf118', 'CA4', 'CAPN8', 'CCDC39', 'CCDC78']
-Cluster 8 has 61 suspected false positive genes: ['ACE2', 'AGR3', 'AQP9', 'BTNL9', 'C1orf194', 'C20orf85', 'C6orf118', 'CA4', 'CAPN8', 'CCDC39']
-Cluster 9 has 30 suspected false positive genes: ['ADGRL4', 'ANGPT2', 'ASPN', 'C1orf194', 'C20orf85', 'C6orf118', 'C7', 'CA4', 'CCDC39', 'CCL19']
-Cluster 10 has 49 suspected false positive genes: ['ACKR1', 'ADGRL4', 'ASPN', 'C7', 'CD163', 'CD27', 'CD68', 'CD70', 'CD79A', 'CLEC14A']
-Cluster 11 has 71 suspected false positive genes: ['ACE2', 'ACKR1', 'ADH1C', 'AGR3', 'ANPEP', 'AQP9', 'ARFGEF3', 'BMX', 'BTNL9', 'C1orf194']</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
@@ -742,7 +756,7 @@ Cluster 11 has 71 suspected false positive genes: ['ACE2', 'ACKR1', 'ADH1C', 'AG
 </div>
 </div>
 </div>
-<div id="cell-56" class="cell" data-execution_count="28">
+<div id="cell-56" class="cell" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>all_suspected_fp_genes <span class="op">=</span> <span class="bu">set</span>()</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> genes <span class="kw">in</span> suspected_false_positives.values():</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    all_suspected_fp_genes.update(genes)</span>
@@ -767,7 +781,7 @@ Cluster 11 has 71 suspected false positive genes: ['ACE2', 'ACKR1', 'ADH1C', 'AG
 </div>
 </div>
 </div>
-<div id="cell-57" class="cell" data-execution_count="29">
+<div id="cell-57" class="cell" data-execution_count="36">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>background_noise_counts <span class="op">=</span> {gene: <span class="dv">0</span> <span class="cf">for</span> gene <span class="kw">in</span> adata.var_names}</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gene <span class="kw">in</span> adata.var_names:</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> cluster <span class="kw">in</span> mean_expression.index:</span>
@@ -780,14 +794,14 @@ Cluster 11 has 71 suspected false positive genes: ['ACE2', 'ACKR1', 'ADH1C', 'AG
 <span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"The gene with the highest background noise is '</span><span class="sc">{</span>highest_noise_gene<span class="sc">}</span><span class="ss">', detected below the threshold in </span><span class="sc">{</span>highest_noise_count<span class="sc">}</span><span class="ss"> clusters."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>The gene with the highest background noise is 'C1orf194', detected below the threshold in 11 clusters.</code></pre>
+<pre><code>The gene with the highest background noise is 'C3', detected below the threshold in 23 clusters.</code></pre>
 </div>
 </div>
 </section>
 <section id="adjusting-gene-expression-values-across-the-dataset-background-noise-reduction" class="level4">
 <h4 class="anchored" data-anchor-id="adjusting-gene-expression-values-across-the-dataset-background-noise-reduction">5- Adjusting gene expression values across the dataset (background noise reduction)</h4>
 <p>Now, we aim to reduce background noise by adjusting gene expression levels across all cells based on suspected false positives. Specifically, if a gene has low expression (below the spurious expression threshold) in any cluster, we take the highest of those low expression levels and subtract it from all cells for that gene. This method removes unspecific, potentially spurious expression, which can help improve cluster separation and make biologically relevant expression patterns clearer.</p>
-<div id="cell-59" class="cell" data-execution_count="30">
+<div id="cell-59" class="cell" data-execution_count="37">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>adata_app_1 <span class="op">=</span> adata.copy()</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>max_filtered_expression <span class="op">=</span> {}</span>
@@ -829,8 +843,8 @@ Cluster 11 has 71 suspected false positive genes: ['ACE2', 'ACKR1', 'ADH1C', 'AG
 </div>
 </div>
 </div>
-<div id="cell-60" class="cell" data-execution_count="31">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>gene_of_interest <span class="op">=</span> <span class="st">"C1orf194"</span></span>
+<div id="cell-60" class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>gene_of_interest <span class="op">=</span> <span class="st">"C3"</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>sc.pl.spatial(adata, color<span class="op">=</span>[gene_of_interest], spot_size<span class="op">=</span><span class="dv">10</span>, title<span class="op">=</span><span class="ss">f'</span><span class="sc">{</span>gene_of_interest<span class="sc">}</span><span class="ss"> Expression Before Adjustment'</span>)</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>sc.pl.spatial(adata_app_1, color<span class="op">=</span>[gene_of_interest], spot_size<span class="op">=</span><span class="dv">10</span>, title<span class="op">=</span><span class="ss">f'</span><span class="sc">{</span>gene_of_interest<span class="sc">}</span><span class="ss"> Expression After Adjustment'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -848,7 +862,7 @@ Cluster 11 has 71 suspected false positive genes: ['ACE2', 'ACKR1', 'ADH1C', 'AG
 </div>
 </div>
 </div>
-<div id="cell-61" class="cell" data-execution_count="32">
+<div id="cell-61" class="cell" data-execution_count="40">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>original_expression <span class="op">=</span> adata.to_df()[gene_of_interest]</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>adjusted_expression <span class="op">=</span> adata_app_1.to_df()[gene_of_interest]</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -868,7 +882,7 @@ Cluster 11 has 71 suspected false positive genes: ['ACE2', 'ACKR1', 'ADH1C', 'AG
 </div>
 </div>
 </div>
-<div id="cell-62" class="cell" data-execution_count="33">
+<div id="cell-62" class="cell" data-execution_count="41">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate mean expression per gene</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>mean_expression_original <span class="op">=</span> adata.to_df().mean(axis<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>mean_expression_adjusted <span class="op">=</span> adata_app_1.to_df().mean(axis<span class="op">=</span><span class="dv">0</span>)</span>
@@ -893,41 +907,37 @@ Cluster 11 has 71 suspected false positive genes: ['ACE2', 'ACKR1', 'ADH1C', 'AG
 <section id="second-approach" class="level3">
 <h3 class="anchored" data-anchor-id="second-approach">Second approach</h3>
 <p>Check the histogram of the gene expression for every gene and if it has a multimodal expression distribution to set based on that histogram a thereshold below which we consider the expression to be background. And we could remove from all cells the expression below that therahold. First making helper functions performing dip test and plotting the histogram of the gene expression. I’ve used dip test to check if the distribution is multimodal or not. If the p-value is smaller than 0.05 we consider the distribution to be multimodal. A question here would be that should we only consider non-zero expression values for this analysis or should we consider all expression values? If consider all values we might get a multimodal distribution all for genes, however if we only consider non-zero values we might miss some genes that are suspected to have multimodal distribution. What do you think?</p>
-<div id="cell-64" class="cell" data-execution_count="34">
+<div id="cell-64" class="cell" data-execution_count="42">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>genes_to_analyze <span class="op">=</span> adata.var_names[<span class="dv">0</span>:<span class="bu">len</span>(adata.var_names)]</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>thresholds <span class="op">=</span> {}</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gene <span class="kw">in</span> genes_to_analyze:</span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    threshold <span class="op">=</span> hf.analyze_gene_expressions(adata, gene, bandwidth<span class="op">=</span><span class="fl">0.05</span>, plot<span class="op">=</span><span class="va">False</span>, filter_zeros<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> threshold <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
 <span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>        thresholds[gene] <span class="op">=</span> threshold</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/Users/rasools/miniconda3/envs/imaging_based_data_analysis_env/lib/python3.9/site-packages/diptest/consts.py:702: UserWarning: Sample size exceeds the maximum limit of 72000. Results may not be accurate with precomputed statistical values.
-  warnings.warn(</code></pre>
-</div>
 </div>
 <p>Sort genes by threshold values in descending order and display the top genes with the highest thresholds</p>
-<div id="cell-66" class="cell" data-execution_count="35">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>sorted_thresholds <span class="op">=</span> <span class="bu">sorted</span>(thresholds.items(), key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>], reverse<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Top genes with the highest thresholds:"</span>)</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gene, threshold_value <span class="kw">in</span> sorted_thresholds[:<span class="dv">10</span>]:</span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>gene<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>threshold_value<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-66" class="cell" data-execution_count="43">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>sorted_thresholds <span class="op">=</span> <span class="bu">sorted</span>(thresholds.items(), key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>], reverse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Top genes with the highest thresholds:"</span>)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gene, threshold_value <span class="kw">in</span> sorted_thresholds[:<span class="dv">10</span>]:</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>gene<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>threshold_value<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Top genes with the highest thresholds:
-TRAC: 6.0156311077159925
-MS4A1: 5.546137953902388
-GZMK: 5.527799384849327
-PRF1: 5.516858229766021
-CD19: 5.507778126675564
-CD1C: 5.408841428575335
-IL1RL1: 5.403593654269809
-DES: 5.388607265712979
-C20orf85: 5.374537602559225
-PTN: 5.37196197357025</code></pre>
+Igf2: 5.790457594740737
+Calb1: 5.102079337065643
+Carmn: 5.04996848559833
+Apod: 4.911531774847357
+Cldn5: 4.804661403308521
+Gjc3: 4.763423601786296
+Slc17a6: 4.709977990991479
+Col6a1: 4.677103303216241
+Dcn: 4.673891974402381
+Cpne6: 4.656482888413621</code></pre>
 </div>
 </div>
-<div id="cell-67" class="cell" data-execution_count="36">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>gene_of_interest <span class="op">=</span> <span class="st">"CYP2B6"</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>hf.analyze_gene_expressions(adata, gene_of_interest, bandwidth<span class="op">=</span><span class="fl">0.05</span>, plot<span class="op">=</span><span class="va">True</span>, filter_zeros<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-67" class="cell" data-execution_count="45">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>gene_of_interest <span class="op">=</span> <span class="st">"Calb1"</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>hf.analyze_gene_expressions(adata, gene_of_interest, bandwidth<span class="op">=</span><span class="fl">0.05</span>, plot<span class="op">=</span><span class="va">True</span>, filter_zeros<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -936,55 +946,55 @@ PTN: 5.37196197357025</code></pre>
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>CYP2B6 has a Multimodal modality (p-value=0.00)
-Background threshold for CYP2B6 is 1.738</code></pre>
+<pre><code>Calb1 has a Multimodal modality (p-value=0.00)
+Background threshold for Calb1 is 5.102</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="36">
-<pre><code>1.7376490422077961</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="45">
+<pre><code>5.102079337065643</code></pre>
 </div>
 </div>
 <p>Now we can do the subtraction of genes with a background expression from their original values in each cell.</p>
-<div id="cell-69" class="cell" data-execution_count="37">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Reverse the log1p transformation on adata.X</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>adata_app_2 <span class="op">=</span> adata.copy()</span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> sp.issparse(adata_app_2.X):</span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>    adata_app_2.X <span class="op">=</span> sp.csr_matrix(np.expm1(adata_app_2.X.toarray()))</span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>    adata_app_2.X <span class="op">=</span> np.expm1(adata_app_2.X)</span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Reverse the log1p transformation on thresholds</span></span>
-<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>thresholds <span class="op">=</span> {gene: np.expm1(thresh) <span class="cf">for</span> gene, thresh <span class="kw">in</span> thresholds.items()}</span>
-<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Perform the subtraction and ensure non-negative values</span></span>
-<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gene, threshold <span class="kw">in</span> thresholds.items():</span>
-<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> gene <span class="kw">in</span> adata_app_2.var_names:  <span class="co"># Ensure the gene exists in adata</span></span>
-<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>        gene_index <span class="op">=</span> adata_app_2.var_names.get_loc(gene)</span>
-<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Extract the column as a dense numpy array</span></span>
-<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>        gene_data <span class="op">=</span> adata_app_2[:, gene].X</span>
-<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> sp.issparse(gene_data):</span>
-<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a>            gene_data <span class="op">=</span> gene_data.toarray().flatten()</span>
-<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Perform the subtraction and ensure non-negative values</span></span>
-<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a>        updated_gene_data <span class="op">=</span> np.maximum(gene_data <span class="op">-</span> threshold, <span class="dv">0</span>)</span>
-<span id="cb48-23"><a href="#cb48-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-24"><a href="#cb48-24" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update the AnnData object</span></span>
-<span id="cb48-25"><a href="#cb48-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> sp.issparse(adata_app_2.X):</span>
-<span id="cb48-26"><a href="#cb48-26" aria-hidden="true" tabindex="-1"></a>            adata_app_2[:, gene_index].X <span class="op">=</span> sp.csr_matrix(updated_gene_data[:, np.newaxis])</span>
-<span id="cb48-27"><a href="#cb48-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb48-28"><a href="#cb48-28" aria-hidden="true" tabindex="-1"></a>            adata_app_2[:, gene_index].X <span class="op">=</span> updated_gene_data[:, np.newaxis]</span>
-<span id="cb48-29"><a href="#cb48-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-30"><a href="#cb48-30" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Reapply the log1p transformation</span></span>
-<span id="cb48-31"><a href="#cb48-31" aria-hidden="true" tabindex="-1"></a>sc.pp.log1p(adata_app_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-69" class="cell" data-execution_count="46">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Reverse the log1p transformation on adata.X</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>adata_app_2 <span class="op">=</span> adata.copy()</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> sp.issparse(adata_app_2.X):</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>    adata_app_2.X <span class="op">=</span> sp.csr_matrix(np.expm1(adata_app_2.X.toarray()))</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>    adata_app_2.X <span class="op">=</span> np.expm1(adata_app_2.X)</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Reverse the log1p transformation on thresholds</span></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>thresholds <span class="op">=</span> {gene: np.expm1(thresh) <span class="cf">for</span> gene, thresh <span class="kw">in</span> thresholds.items()}</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Perform the subtraction and ensure non-negative values</span></span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gene, threshold <span class="kw">in</span> thresholds.items():</span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> gene <span class="kw">in</span> adata_app_2.var_names:  <span class="co"># Ensure the gene exists in adata</span></span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a>        gene_index <span class="op">=</span> adata_app_2.var_names.get_loc(gene)</span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Extract the column as a dense numpy array</span></span>
+<span id="cb47-17"><a href="#cb47-17" aria-hidden="true" tabindex="-1"></a>        gene_data <span class="op">=</span> adata_app_2[:, gene].X</span>
+<span id="cb47-18"><a href="#cb47-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> sp.issparse(gene_data):</span>
+<span id="cb47-19"><a href="#cb47-19" aria-hidden="true" tabindex="-1"></a>            gene_data <span class="op">=</span> gene_data.toarray().flatten()</span>
+<span id="cb47-20"><a href="#cb47-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-21"><a href="#cb47-21" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Perform the subtraction and ensure non-negative values</span></span>
+<span id="cb47-22"><a href="#cb47-22" aria-hidden="true" tabindex="-1"></a>        updated_gene_data <span class="op">=</span> np.maximum(gene_data <span class="op">-</span> threshold, <span class="dv">0</span>)</span>
+<span id="cb47-23"><a href="#cb47-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-24"><a href="#cb47-24" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update the AnnData object</span></span>
+<span id="cb47-25"><a href="#cb47-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> sp.issparse(adata_app_2.X):</span>
+<span id="cb47-26"><a href="#cb47-26" aria-hidden="true" tabindex="-1"></a>            adata_app_2[:, gene_index].X <span class="op">=</span> sp.csr_matrix(updated_gene_data[:, np.newaxis])</span>
+<span id="cb47-27"><a href="#cb47-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb47-28"><a href="#cb47-28" aria-hidden="true" tabindex="-1"></a>            adata_app_2[:, gene_index].X <span class="op">=</span> updated_gene_data[:, np.newaxis]</span>
+<span id="cb47-29"><a href="#cb47-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-30"><a href="#cb47-30" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Reapply the log1p transformation</span></span>
+<span id="cb47-31"><a href="#cb47-31" aria-hidden="true" tabindex="-1"></a>sc.pp.log1p(adata_app_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>WARNING: adata.X seems to be already log-transformed.</code></pre>
 </div>
 </div>
-<div id="cell-70" class="cell" data-execution_count="38">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>gene_of_interest <span class="op">=</span> <span class="st">"CYP2B6"</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>sc.pl.spatial(adata, color<span class="op">=</span>[gene_of_interest], spot_size<span class="op">=</span><span class="dv">10</span>, title<span class="op">=</span><span class="ss">f'</span><span class="sc">{</span>gene_of_interest<span class="sc">}</span><span class="ss"> Expression Before Adjustment'</span>)</span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>sc.pl.spatial(adata_app_2, color<span class="op">=</span>[gene_of_interest], spot_size<span class="op">=</span><span class="dv">10</span>, title<span class="op">=</span><span class="ss">f'</span><span class="sc">{</span>gene_of_interest<span class="sc">}</span><span class="ss"> Expression After Adjustment'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-70" class="cell" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>gene_of_interest <span class="op">=</span> <span class="st">"Calb1"</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>sc.pl.spatial(adata, color<span class="op">=</span>[gene_of_interest], spot_size<span class="op">=</span><span class="dv">10</span>, title<span class="op">=</span><span class="ss">f'</span><span class="sc">{</span>gene_of_interest<span class="sc">}</span><span class="ss"> Expression Before Adjustment'</span>)</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>sc.pl.spatial(adata_app_2, color<span class="op">=</span>[gene_of_interest], spot_size<span class="op">=</span><span class="dv">10</span>, title<span class="op">=</span><span class="ss">f'</span><span class="sc">{</span>gene_of_interest<span class="sc">}</span><span class="ss"> Expression After Adjustment'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1000,19 +1010,19 @@ Background threshold for CYP2B6 is 1.738</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-71" class="cell" data-execution_count="39">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>original_expression <span class="op">=</span> adata.to_df()[gene_of_interest]</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>adjusted_expression <span class="op">=</span> adata_app_2.to_df()[gene_of_interest]</span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot expression distributions</span></span>
-<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
-<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(original_expression, label<span class="op">=</span><span class="st">"Original"</span>, color<span class="op">=</span><span class="st">"blue"</span>)</span>
-<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(adjusted_expression, label<span class="op">=</span><span class="st">"Adjusted"</span>, color<span class="op">=</span><span class="st">"orange"</span>)</span>
-<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="ss">f'Expression of </span><span class="sc">{</span>gene_of_interest<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Density'</span>)</span>
-<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'Expression Distribution of </span><span class="sc">{</span>gene_of_interest<span class="sc">}</span><span class="ss"> Before and After Adjustment'</span>)</span>
-<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-71" class="cell" data-execution_count="48">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>original_expression <span class="op">=</span> adata.to_df()[gene_of_interest]</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>adjusted_expression <span class="op">=</span> adata_app_2.to_df()[gene_of_interest]</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot expression distributions</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(original_expression, label<span class="op">=</span><span class="st">"Original"</span>, color<span class="op">=</span><span class="st">"blue"</span>)</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(adjusted_expression, label<span class="op">=</span><span class="st">"Adjusted"</span>, color<span class="op">=</span><span class="st">"orange"</span>)</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="ss">f'Expression of </span><span class="sc">{</span>gene_of_interest<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Density'</span>)</span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'Expression Distribution of </span><span class="sc">{</span>gene_of_interest<span class="sc">}</span><span class="ss"> Before and After Adjustment'</span>)</span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1021,13 +1031,13 @@ Background threshold for CYP2B6 is 1.738</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-72" class="cell" data-execution_count="40">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Principal component analysis for dimension reduction</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>sc.pp.pca(adata_app_2)</span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>sc.pp.neighbors(adata_app_2)</span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>sc.tl.leiden(adata_app_2)</span>
-<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>sc.tl.umap(adata_app_2)</span>
-<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>sc.pl.umap(adata_app_2, color<span class="op">=</span><span class="st">'leiden'</span>, title<span class="op">=</span><span class="st">'UMAP after filtering suspected false positives (approach 2)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-72" class="cell" data-execution_count="49">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Principal component analysis for dimension reduction</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>sc.pp.pca(adata_app_2)</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>sc.pp.neighbors(adata_app_2)</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>sc.tl.leiden(adata_app_2)</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>sc.tl.umap(adata_app_2)</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>sc.pl.umap(adata_app_2, color<span class="op">=</span><span class="st">'leiden'</span>, title<span class="op">=</span><span class="st">'UMAP after filtering suspected false positives (approach 2)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">

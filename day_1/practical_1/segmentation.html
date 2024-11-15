@@ -186,7 +186,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div id="cell-0" class="cell" data-execution_count="58">
+<div id="cell-0" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -210,12 +210,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Loading and inspecting the morphology image is a foundational step in the analysis. Understanding the image’s dimensions helps guide downstream processing, including selecting channels or slices for segmentation and defining an ROI if needed.</p>
-<div id="cell-2" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>image_data_path <span class="op">=</span> <span class="st">'data/xenium_2.0.0_io/morphology.ome.tif'</span></span>
+<div id="cell-2" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>image_data_path <span class="op">=</span> <span class="st">'data/Xenium_V1_FFPE_TgCRND8_17_9_months_outs/morphology.ome.tif'</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>image <span class="op">=</span> tifffile.imread(image_data_path)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Image shape: </span><span class="sc">{</span>image<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Image shape: (11, 17098, 51187)</code></pre>
+<pre><code>Image shape: (26, 24864, 31348)</code></pre>
 </div>
 </div>
 <p>we retrieve and inspect the metadata embedded within the morphology image file. Opening the file with <code>tifffile.TiffFile</code> allows us to access not only the pixel data but also any associated metadata stored in OME (Open Microscopy Environment) format. By using a context manager (<code>with</code> statement), we ensure that the file is properly handled, meaning it will close automatically once we’re done, helping to avoid potential file-handling errors.</p>
@@ -251,37 +251,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Lets preview the transcripts data again:</p>
-<div id="cell-6" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>transcriptomics_data_path <span class="op">=</span> <span class="st">'data/xenium_2.0.0_io/transcripts.csv'</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(transcriptomics_data_path)</span>
+<div id="cell-6" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>transcriptomics_data_path <span class="op">=</span> <span class="st">'data/Xenium_V1_FFPE_TgCRND8_17_9_months_outs/transcripts.csv.gz'</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(transcriptomics_data_path, compression<span class="op">=</span><span class="st">'gzip'</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(data.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     transcript_id     cell_id  overlaps_nucleus feature_name  x_location  \
-0  281582350893841  UNASSIGNED                 0       STEAP4    66.84768   
-1  281582350895222  UNASSIGNED                 0        THBS2   202.23119   
-2  281582350896236  UNASSIGNED                 0        CXCR4    60.75596   
-3  281582350896244  UNASSIGNED                 0        CXCR4   116.34792   
-4  281582350896355  UNASSIGNED                 0        EGFL7   195.98398   
+0  281474976710656  UNASSIGNED                 0        Sox10   164.48816   
+1  281474976710657  UNASSIGNED                 0         Ctsh   169.85483   
+2  281474976710658  UNASSIGNED                 0        Ntng1   260.06710   
+3  281474976710659  UNASSIGNED                 0        Ntng1   269.16196   
+4  281474976710660  UNASSIGNED                 0        Ntng1   272.35153   
 
-   y_location  z_location         qv fov_name  nucleus_distance  \
-0   1439.4194   16.830444  21.359655       C2         346.20114   
-1   1421.5540   16.527092  40.000000       C2         327.80260   
-2   1427.1877   16.859750  38.001630       C2         359.86580   
-3   1415.8336   16.661528  40.000000       C2         349.48120   
-4   1445.0748   16.494038  40.000000       C2         304.83670   
-
-   codeword_index  
-0             170  
-1              46  
-2             379  
-3             379  
-4             223  </code></pre>
+   y_location  z_location         qv fov_name  nucleus_distance  
+0   26.783148   11.713852   6.386437       A1           0.00000  
+1  652.652700   11.551014  27.915363       A1           0.00000  
+2  483.239100   12.582438  15.282572       A1         158.24005  
+3  409.500850   14.335079  29.190600       A1          84.09205  
+4  406.806150   15.083600  23.004885       A1          80.83307  </code></pre>
 </div>
 </div>
 <p>Here, we are checking and handling the dimensionality of the morphology image to extract a usable 2D channel for segmentation and analysis. To start, <code>print(f"Image dimensions: {image.ndim}")</code> reveals the number of dimensions in the image array. Images acquired from microscopy can have multiple dimensions, often representing different z-slices, time points, or channels (e.g., specific fluorescent stains). Knowing the exact number of dimensions is essential for understanding the structure of the data and selecting the specific layer or channel needed for downstream tasks.</p>
 <p>We then use conditional statements to select the appropriate 2D plane. If the image has five dimensions—typically representing time, Z (depth), channels, height, and width—we select the first time point, Z-slice, and channel to reduce it to 2D. Similarly, for four-dimensional images (likely Z, channels, height, and width), we choose the first Z-slice and channel. In the case of three-dimensional images, we assume they represent channels, height, and width, and extract the first channel. Finally, if the image is already 2D, we simply assign it to image_channel without further modification.</p>
 <p>This step ensures that we have a consistent, interpretable 2D array (image_channel) for the following analysis. By isolating a single plane or channel, we simplify the data, making it easier to overlay segmentations or spatial features without the added complexity of multiple dimensions. This also ensures that our chosen channel represents the tissue morphology effectively</p>
-<div id="cell-8" class="cell" data-execution_count="5">
+<div id="cell-8" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Image dimensions: </span><span class="sc">{</span>image<span class="sc">.</span>ndim<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> image.ndim <span class="op">==</span> <span class="dv">5</span>:</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Example shape: (Time, Z, Channels, Height, Width)</span></span>
@@ -300,13 +293,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Image dimensions: 3</code></pre>
 </div>
 </div>
-<div id="cell-9" class="cell">
+<div id="cell-9" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>image_channel <span class="op">=</span> np.<span class="bu">max</span>(image, axis<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>image_channel <span class="op">=</span> image_channel.astype(np.uint16)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-10" class="cell" data-execution_count="13">
+<div id="cell-10" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plt.imshow(image_channel, cmap<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plt.imshow(image_channel)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Selected Image for Segmentation'</span>)</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">'off'</span>)</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -347,12 +340,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># dimensions</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"ROI image shape: </span><span class="sc">{</span>roi_image<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>ROI image shape: (854, 2558)</code></pre>
+<pre><code>ROI image shape: (1242, 1566)</code></pre>
 </div>
 </div>
-<div id="cell-15" class="cell" data-execution_count="17">
+<div id="cell-15" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>plt.imshow(roi_image, cmap<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>plt.imshow(roi_image)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'ROI Image for Segmentation'</span>)</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">'off'</span>)</span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -369,7 +362,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Using these scaling factors, we calculate the boundaries of the ROI in micrometers. For each dimension, <code>x_start</code>, <code>x_end</code>, <code>y_start</code>, and <code>y_end</code> (which are pixel coordinates from the original image), we divide by the scaling factor to obtain the corresponding boundaries in micrometers: <code>x_start_um</code>, <code>x_end_um</code>, <code>y_start_um</code>, and <code>y_end_um</code>. This step ensures that our ROI is defined consistently in both pixel and physical units.</p>
 <p>Next, we filter the transcriptomics data to include only the transcripts located within the ROI. We use conditional filtering on the <code>x_location</code> and <code>y_location</code> columns of the data DataFrame, retaining only the transcripts whose coordinates fall within the calculated micrometer boundaries. The result is stored in roi_data, which represents the subset of transcripts that reside within our chosen ROI.</p>
 <p>Finally, by printing <code>len(roi_data)</code>, we get a quick count of the transcripts within the ROI.</p>
-<div id="cell-17" class="cell">
+<div id="cell-17" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#using the scaling factors from before</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>x_scale <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> <span class="fl">0.2125</span>  <span class="co"># pixels per µm</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>y_scale <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> <span class="fl">0.2125</span>  <span class="co"># pixels per µm</span></span>
@@ -389,7 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>].copy()</span>
 <span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of transcripts in ROI: </span><span class="sc">{</span><span class="bu">len</span>(roi_data)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Number of transcripts in ROI: 97422</code></pre>
+<pre><code>Number of transcripts in ROI: 47902</code></pre>
 </div>
 </div>
 <p>Now we should subtract <code>x_start_um</code> from each transcript’s <code>x_location</code> and <code>y_start_um</code> from each <code>y_location</code> in <code>roi_data</code>. By doing so, we create new columns, <code>x_location_roi</code> and <code>y_location_roi</code>, that represent each transcript’s position relative to the top-left corner of the ROI rather than the full image.</p>
@@ -436,7 +429,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="cell-24" class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of cells detected in ROI: </span><span class="sc">{</span>masks<span class="sc">.</span><span class="bu">max</span>()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Number of cells detected in ROI: 761</code></pre>
+<pre><code>Number of cells detected in ROI: 224</code></pre>
 </div>
 </div>
 <p>Now we convert the transcript coordinates within the ROI from micrometers to pixel indices, preparing them for alignment with the segmentation mask.</p>
@@ -451,7 +444,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>x_indices <span class="op">=</span> (x_coords_um <span class="op">*</span> x_scale).astype(<span class="bu">int</span>)</span>
 <span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>y_indices <span class="op">=</span> (y_coords_um <span class="op">*</span> y_scale).astype(<span class="bu">int</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-27" class="cell" data-execution_count="27">
+<div id="cell-27" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#RRoi image dimensions</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>roi_height, roi_width <span class="op">=</span> roi_image.shape</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -460,7 +453,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>y_indices <span class="op">=</span> np.clip(y_indices, <span class="dv">0</span>, roi_height <span class="op">-</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next we assign each transcript to a segmented cell based on its pixel coordinates, linking gene expression data to specific cells within the ROI.</p>
-<div id="cell-29" class="cell" data-execution_count="28">
+<div id="cell-29" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#cell labels for each transcript</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>cell_labels <span class="op">=</span> masks[y_indices, x_indices]</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Add cell labels to the data</span></span>
@@ -470,39 +463,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(roi_data.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           transcript_id     cell_id  overlaps_nucleus feature_name  \
-5298560  281539401221915  dcdoepmd-1                 1         SOX2   
-5298562  281539401221919  dcennfee-1                 1        MCF2L   
-5298564  281539401221930  dcdoepmd-1                 1         SOX2   
-5298573  281539401221974  dcejjaai-1                 0         KRT7   
-5298596  281539401222054  dcendllf-1                 1          PGR   
+8282551  281599530763477  nodbomii-1                 1         Gusb   
+8282556  281599530763482  bdamcjfe-1                 0         Cst3   
+8282569  281599530763495  nodbomii-1                 0         Cst3   
+8282582  281599530763508  bdamcjfe-1                 0         Cst3   
+8282603  281599530763529  nodbomii-1                 1        Parm1   
 
-         x_location  y_location  z_location    qv fov_name  nucleus_distance  \
-5298560   5178.8020   1747.4918   19.144442  40.0      C10          0.000000   
-5298562   5179.6820   1739.0795   19.792334  40.0      C10          0.000000   
-5298564   5181.3604   1746.7770   21.253727  40.0      C10          0.000000   
-5298573   5185.6606   1747.3582   20.520786  40.0      C10          0.169617   
-5298596   5196.8843   1733.5573   19.023884  40.0      C10          0.000000   
+         x_location  y_location  z_location        qv fov_name  \
+8282551   3166.3472   2527.3328   34.873024  40.00000       C6   
+8282556   3166.8430   2533.2446   34.078390  40.00000       C6   
+8282569   3167.3296   2529.3591   33.823017  40.00000       C6   
+8282582   3168.9888   2531.9070   34.126305  38.92044       C6   
+8282603   3171.1484   2524.1245   34.531853  40.00000       C6   
 
-         codeword_index  x_location_roi  y_location_roi  cellpose_cell_id  
-5298560             199         12.0770         21.5668               102  
-5298562              53         12.9570         13.1545                57  
-5298564             199         14.6354         20.8520               102  
-5298573             346         18.9356         21.4332               111  
-5298596             126         30.1593          7.6323                30  </code></pre>
+         nucleus_distance  x_location_roi  y_location_roi  cellpose_cell_id  
+8282551          0.000000          2.0097         17.4953                15  
+8282556          0.705350          2.5055         23.4071                 0  
+8282569          0.609131          2.9921         19.5216                 0  
+8282582          0.900610          4.6513         22.0695                 0  
+8282603          0.223389          6.8109         14.2870                 0  </code></pre>
 </div>
 </div>
 <p>Keep only transcripts assigned to a cell</p>
-<div id="cell-31" class="cell" data-execution_count="29">
+<div id="cell-31" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>assigned_data <span class="op">=</span> roi_data[roi_data[<span class="st">'cellpose_cell_id'</span>] <span class="op">&gt;</span> <span class="dv">0</span>].copy()</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total transcripts in ROI: </span><span class="sc">{</span><span class="bu">len</span>(roi_data)<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Assigned transcripts: </span><span class="sc">{</span><span class="bu">len</span>(assigned_data)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Total transcripts in ROI: 97422
-Assigned transcripts: 47541</code></pre>
+<pre><code>Total transcripts in ROI: 47902
+Assigned transcripts: 17030</code></pre>
 </div>
 </div>
 <p>we visualize the results of the Cellpose segmentation overlayed on the ROI image, allowing us to inspect how well the model identified individual cells in the selected region.</p>
-<div id="cell-33" class="cell">
+<div id="cell-33" class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>plot.show_segmentation(fig, roi_image, masks, flows[<span class="dv">0</span>])</span>
@@ -517,56 +510,40 @@ Assigned transcripts: 47541</code></pre>
 </div>
 </div>
 <p>Group by cell and gene to get expression counts</p>
-<div id="cell-35" class="cell" data-execution_count="31">
+<div id="cell-35" class="cell" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>expression_per_cell <span class="op">=</span> assigned_data.groupby([<span class="st">'cellpose_cell_id'</span>, <span class="st">'feature_name'</span>]).size().reset_index(name<span class="op">=</span><span class="st">'count'</span>)</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>expression_matrix <span class="op">=</span> expression_per_cell.pivot(index<span class="op">=</span><span class="st">'cellpose_cell_id'</span>, columns<span class="op">=</span><span class="st">'feature_name'</span>, values<span class="op">=</span><span class="st">'count'</span>).fillna(<span class="dv">0</span>)</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(expression_matrix.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>feature_name      ABCC11  ACE2  ACKR1  ACTA2  ACTG2  ADAM28  ADAMTS1  ADGRE1  \
-cellpose_cell_id                                                               
-1                    0.0   0.0    0.0    0.0    0.0     0.0      0.0     0.0   
-2                    0.0   0.0    0.0    0.0    1.0     0.0      0.0     0.0   
-3                    0.0   0.0    0.0    0.0    0.0     0.0      0.0     0.0   
-4                    0.0   1.0    0.0    0.0    0.0     0.0      0.0     0.0   
-5                    0.0   0.0    0.0    0.0    0.0     0.0      0.0     0.0   
+<pre><code>feature_name      2010300C02Rik  Abca7  Acsbg1  Acta2  Acvrl1  Adamts2  \
+cellpose_cell_id                                                         
+1                           0.0    0.0     1.0    0.0     2.0      0.0   
+2                           0.0    0.0     1.0    0.0     0.0      0.0   
+3                           0.0    0.0     0.0    0.0     0.0      0.0   
+4                           1.0    0.0     0.0    0.0     0.0      0.0   
+5                           1.0    1.0     0.0    0.0     0.0      0.0   
 
-feature_name      ADGRL4  ADH1C  ...  UnassignedCodeword_0473  \
-cellpose_cell_id                 ...                            
-1                    0.0    0.0  ...                      0.0   
-2                    0.0    0.0  ...                      0.0   
-3                    0.0    0.0  ...                      0.0   
-4                    0.0    0.0  ...                      0.0   
-5                    0.0    0.0  ...                      0.0   
+feature_name      Adamtsl1  Adgrl4  Aldh1a2  Aldh1l1  ...  Unc13c  Vat1l  \
+cellpose_cell_id                                      ...                  
+1                      0.0     4.0      0.0      1.0  ...     0.0    0.0   
+2                      0.0     0.0      0.0      0.0  ...     0.0    0.0   
+3                      0.0     0.0      0.0      0.0  ...     0.0    0.0   
+4                      0.0     0.0      0.0      0.0  ...     0.0    1.0   
+5                      0.0     0.0      0.0      0.0  ...     0.0    1.0   
 
-feature_name      UnassignedCodeword_0479  UnassignedCodeword_0480  \
-cellpose_cell_id                                                     
-1                                     0.0                      0.0   
-2                                     0.0                      0.0   
-3                                     0.0                      0.0   
-4                                     0.0                      0.0   
-5                                     0.0                      0.0   
+feature_name      Vcan  Vim  Vip  Vwc2l  Wfs1  Zfp366  Zfp536  Zfpm2  
+cellpose_cell_id                                                      
+1                  0.0  1.0  0.0    0.0   0.0     0.0     0.0    0.0  
+2                  0.0  0.0  0.0    0.0   0.0     0.0     0.0    0.0  
+3                  0.0  0.0  0.0    0.0   0.0     0.0     0.0    0.0  
+4                  0.0  0.0  0.0    0.0   0.0     0.0     0.0    0.0  
+5                  0.0  0.0  0.0    0.0   0.0     0.0     1.0    0.0  
 
-feature_name      UnassignedCodeword_0481  UnassignedCodeword_0488  \
-cellpose_cell_id                                                     
-1                                     0.0                      0.0   
-2                                     0.0                      0.0   
-3                                     0.0                      0.0   
-4                                     0.0                      0.0   
-5                                     0.0                      0.0   
-
-feature_name      UnassignedCodeword_0495  VCAN  VSIG4  VWA5A  VWF  
-cellpose_cell_id                                                    
-1                                     0.0   0.0    0.0    0.0  0.0  
-2                                     0.0   0.0    0.0    0.0  0.0  
-3                                     0.0   0.0    0.0    0.0  0.0  
-4                                     0.0   0.0    0.0    0.0  0.0  
-5                                     0.0   0.0    0.0    0.0  0.0  
-
-[5 rows x 421 columns]</code></pre>
+[5 rows x 418 columns]</code></pre>
 </div>
 </div>
 <p>we can plot the locations of transcripts overlaid on the ROI image, specifically highlighting those that have been assigned to segmented cells. This helps us see how transcript data aligns with the detected cell boundaries within the region.</p>
-<div id="cell-37" class="cell" data-execution_count="32">
+<div id="cell-37" class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>plt.imshow(roi_image, cmap<span class="op">=</span><span class="st">'gray'</span>)</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>plt.scatter(</span>
@@ -587,8 +564,8 @@ cellpose_cell_id
 </div>
 </div>
 <p>Finally, we can visualize the expression of a specific gene across the detected cells, providing insights into the spatial distribution of gene expression within the ROI. This visualization can reveal patterns of gene expression, such as high expression in specific cell types or regions, helping to interpret the biological significance of the data.</p>
-<div id="cell-39" class="cell" data-execution_count="34">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>gene_of_interest <span class="op">=</span> <span class="st">'CYP2B6'</span></span>
+<div id="cell-39" class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>gene_of_interest <span class="op">=</span> <span class="st">'Cst3'</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> gene_of_interest <span class="kw">in</span> expression_matrix.columns:</span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    cell_ids <span class="op">=</span> expression_matrix.index.values</span>
@@ -633,48 +610,48 @@ cellpose_cell_id
 </div>
 </div>
 <p>now we want to compare the cellpose segmentation with 10x segmentation, we can use the Jaccard index to quantify the similarity between the two segmentation masks. The Jaccard index, also known as the intersection-over-union (IoU), measures the overlap between two sets by dividing the size of their intersection by the size of their union. In the context of segmentation masks, the Jaccard index provides a measure of how well two masks align, with values closer to 1 indicating greater similarity.</p>
-<div id="cell-41" class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>cells_data_path <span class="op">=</span> <span class="st">'data/xenium_2.0.0_io/cells.csv'</span></span>
+<div id="cell-41" class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>cells_data_path <span class="op">=</span> <span class="st">'data/Xenium_V1_FFPE_TgCRND8_17_9_months_outs/cells.csv'</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>cells_data <span class="op">=</span> pd.read_csv(cells_data_path)</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cells_data.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      cell_id  x_centroid   y_centroid  transcript_counts  \
-0  aaaadpbp-1  206.089813  1495.898193                  0   
-1  aaaaficg-1  201.765823  1816.210815                 19   
-2  aaabbaka-1  179.024506  2167.253906                 53   
-3  aaabbjoo-1  186.060654  2163.309082                 29   
-4  aaablchg-1  200.246887  2198.593506                 42   
+<pre><code>      cell_id  x_centroid  y_centroid  transcript_counts  \
+0  aaabiggh-1  831.785336  755.803772                554   
+1  aaacfoel-1  821.733453  768.910446                291   
+2  aaaeefil-1  831.932053  780.367651                220   
+3  aaaehidd-1  853.614108  774.764157               1029   
+4  aaagcbkg-1  821.639603  799.171515                453   
 
    control_probe_counts  control_codeword_counts  unassigned_codeword_counts  \
 0                     0                        0                           0   
 1                     0                        0                           0   
-2                     0                        0                           0   
+2                     1                        0                           0   
 3                     0                        0                           0   
 4                     0                        0                           1   
 
-   deprecated_codeword_counts  total_counts   cell_area  nucleus_area  
-0                           0             0   68.456877           NaN  
-1                           0            19   49.130002     21.268595  
-2                           0            53  119.618911     74.778753  
-3                           0            29   94.241097     59.109533  
-4                           0            43  120.341411     52.426408  </code></pre>
+   total_counts   cell_area  nucleus_area  
+0           554  509.091563     65.386250  
+1           291  275.498281     36.982969  
+2           221  261.635312     15.849844  
+3          1029  818.547344    129.056563  
+4           454  522.232031     96.002188  </code></pre>
 </div>
 </div>
 <div id="cell-42" class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>cell_boundaries_path <span class="op">=</span> <span class="st">'data/xenium_2.0.0_io/cell_boundaries.csv.gz'</span>  <span class="co"># Adjust the path as needed</span></span>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>cell_boundaries_path <span class="op">=</span> <span class="st">'data/Xenium_V1_FFPE_TgCRND8_17_9_months_outs/cell_boundaries.csv.gz'</span>  </span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>cell_boundaries <span class="op">=</span> pd.read_csv(cell_boundaries_path)</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cell_boundaries.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      cell_id   vertex_x   vertex_y
-0  aaaadpbp-1  205.06250  1489.8375
-1  aaaadpbp-1  204.21251  1490.4751
-2  aaaadpbp-1  204.00000  1491.1125
-3  aaaadpbp-1  202.08751  1493.4501
-4  aaaadpbp-1  201.87500  1494.7251</code></pre>
+<pre><code>      cell_id  vertex_x  vertex_y
+0  aaabiggh-1  829.6000  742.0500
+1  aaabiggh-1  816.6375  752.6750
+2  aaabiggh-1  815.3625  757.9875
+3  aaabiggh-1  822.5875  761.3875
+4  aaabiggh-1  835.9750  768.6125</code></pre>
 </div>
 </div>
 <p>First we need to extract the region of intrest from the 10x segmentation mask, then we need to resize the 10x segmentation mask to the same size as the cellpose segmentation mask, then we can calculate the Jaccard index between the two masks.</p>
-<div id="cell-44" class="cell">
+<div id="cell-44" class="cell" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>scale_factor <span class="op">=</span> <span class="fl">0.05</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>image_height, image_width <span class="op">=</span> image_channel.shape</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>roi_width <span class="op">=</span> <span class="bu">int</span>(image_width <span class="op">*</span> scale_factor)</span>
@@ -701,7 +678,7 @@ cellpose_cell_id
 <span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a>y_end_um <span class="op">=</span> y_end <span class="op">/</span> y_scale</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Filter cells whose centroids are within the ROI</p>
-<div id="cell-46" class="cell" data-execution_count="40">
+<div id="cell-46" class="cell" data-execution_count="36">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>cells_in_roi <span class="op">=</span> cells_data[</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>    (cells_data[<span class="st">'x_centroid'</span>] <span class="op">&gt;=</span> x_start_um) <span class="op">&amp;</span></span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    (cells_data[<span class="st">'x_centroid'</span>] <span class="op">&lt;</span> x_end_um) <span class="op">&amp;</span></span>
@@ -711,11 +688,11 @@ cellpose_cell_id
 <span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of cells in ROI from original segmentation: </span><span class="sc">{</span><span class="bu">len</span>(cells_in_roi)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Number of cells in ROI from original segmentation: 987</code></pre>
+<pre><code>Number of cells in ROI from original segmentation: 284</code></pre>
 </div>
 </div>
 <p>Filter cell boundaries for cells in ROI</p>
-<div id="cell-48" class="cell" data-execution_count="43">
+<div id="cell-48" class="cell" data-execution_count="37">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>cell_boundaries_in_roi <span class="op">=</span> cell_boundaries[cell_boundaries[<span class="st">'cell_id'</span>].isin(cells_in_roi[<span class="st">'cell_id'</span>])].copy()</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>cell_polygons <span class="op">=</span> {}</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cell_id, group <span class="kw">in</span> cell_boundaries_in_roi.groupby(<span class="st">'cell_id'</span>):</span>
@@ -731,7 +708,7 @@ cellpose_cell_id
 <span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> TopologicalError <span class="im">as</span> e:</span>
 <span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Could not create polygon for cell </span><span class="sc">{</span>cell_id<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-49" class="cell" data-execution_count="45">
+<div id="cell-49" class="cell" data-execution_count="38">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to transform geometries to pixel coordinates</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> geometry_to_pixel_coords(geometry):</span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Shift geometry to ROI coordinates (subtract ROI origin in micrometers)</span></span>
@@ -744,19 +721,19 @@ cellpose_cell_id
 <span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>cell_polygons_px <span class="op">=</span> {cell_id: geometry_to_pixel_coords(geom) <span class="cf">for</span> cell_id, geom <span class="kw">in</span> cell_polygons.items()}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Map cell_id strings to integer labels</p>
-<div id="cell-51" class="cell" data-execution_count="46">
+<div id="cell-51" class="cell" data-execution_count="39">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>cell_id_to_label <span class="op">=</span> {cell_id: idx<span class="op">+</span><span class="dv">1</span> <span class="cf">for</span> idx, cell_id <span class="kw">in</span> <span class="bu">enumerate</span>(cell_polygons_px.keys())}</span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>label_to_cell_id <span class="op">=</span> {idx<span class="op">+</span><span class="dv">1</span>: cell_id <span class="cf">for</span> idx, cell_id <span class="kw">in</span> <span class="bu">enumerate</span>(cell_polygons_px.keys())}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Prepare shapes for rasterization</p>
-<div id="cell-53" class="cell" data-execution_count="47">
+<div id="cell-53" class="cell" data-execution_count="40">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>shapes <span class="op">=</span> [</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>    (geom, cell_id_to_label[cell_id])</span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> cell_id, geom <span class="kw">in</span> cell_polygons_px.items()</span>
 <span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Create an empty mask and rasterize the shapes</p>
-<div id="cell-55" class="cell" data-execution_count="49">
+<div id="cell-55" class="cell" data-execution_count="41">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>original_masks <span class="op">=</span> np.zeros_like(roi_image, dtype<span class="op">=</span>np.uint16)</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>original_masks <span class="op">=</span> features.rasterize(</span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    shapes,</span>
@@ -767,7 +744,7 @@ cellpose_cell_id
 <span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Lets compare the cellpose segmentation with 10x segmentation side by side</p>
-<div id="cell-57" class="cell" data-execution_count="51">
+<div id="cell-57" class="cell" data-execution_count="42">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">8</span>))</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Cellpose </span></span>
@@ -795,7 +772,7 @@ cellpose_cell_id
 </div>
 </div>
 <p>And we can overlay the cellpose segmentation on the 10x segmentation to see how well they align</p>
-<div id="cell-59" class="cell" data-execution_count="52">
+<div id="cell-59" class="cell" data-execution_count="43">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Overlay both masks</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>plt.imshow(roi_image, cmap<span class="op">=</span><span class="st">'gray'</span>)</span>
@@ -812,7 +789,7 @@ cellpose_cell_id
 </div>
 </div>
 </div>
-<div id="cell-60" class="cell" data-execution_count="53">
+<div id="cell-60" class="cell" data-execution_count="44">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert masks to binary masks (cells vs background)</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>cellpose_mask_binary <span class="op">=</span> (masks <span class="op">&gt;</span> <span class="dv">0</span>).astype(<span class="bu">int</span>)</span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>original_mask_binary <span class="op">=</span> (original_masks <span class="op">&gt;</span> <span class="dv">0</span>).astype(<span class="bu">int</span>)</span>
@@ -821,15 +798,15 @@ cellpose_cell_id
 <span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>cellpose_mask_flat <span class="op">=</span> cellpose_mask_binary.flatten()</span>
 <span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>original_mask_flat <span class="op">=</span> original_mask_binary.flatten()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-61" class="cell">
+<div id="cell-61" class="cell" data-execution_count="45">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>jaccard <span class="op">=</span> jaccard_score(original_mask_flat, cellpose_mask_flat)</span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Jaccard Index: </span><span class="sc">{</span>jaccard<span class="sc">:.4f}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Jaccard Index: 0.4733</code></pre>
+<pre><code>Jaccard Index: 0.1255</code></pre>
 </div>
 </div>
-<div id="cell-62" class="cell" data-execution_count="56">
+<div id="cell-62" class="cell" data-execution_count="46">
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dice_coefficient(y_true, y_pred):</span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>    intersection <span class="op">=</span> np.<span class="bu">sum</span>(y_true <span class="op">*</span> y_pred)</span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>    sum_union <span class="op">=</span> np.<span class="bu">sum</span>(y_true) <span class="op">+</span> np.<span class="bu">sum</span>(y_pred)</span>
@@ -839,21 +816,21 @@ cellpose_cell_id
 <span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>dice <span class="op">=</span> dice_coefficient(original_mask_flat, cellpose_mask_flat)</span>
 <span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Dice Coefficient: </span><span class="sc">{</span>dice<span class="sc">:.4f}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Dice Coefficient: 0.6425</code></pre>
+<pre><code>Dice Coefficient: 0.2230</code></pre>
 </div>
 </div>
-<div id="cell-63" class="cell" data-execution_count="57">
+<div id="cell-63" class="cell" data-execution_count="47">
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>cellpose_cell_count <span class="op">=</span> masks.<span class="bu">max</span>()</span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>original_cell_count <span class="op">=</span> original_masks.<span class="bu">max</span>()</span>
 <span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of cells detected by Cellpose: </span><span class="sc">{</span>cellpose_cell_count<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of cells in original segmentation: </span><span class="sc">{</span>original_cell_count<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Number of cells detected by Cellpose: 761
-Number of cells in original segmentation: 987</code></pre>
+<pre><code>Number of cells detected by Cellpose: 224
+Number of cells in original segmentation: 284</code></pre>
 </div>
 </div>
-<div id="cell-64" class="cell" data-execution_count="59">
+<div id="cell-64" class="cell" data-execution_count="48">
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cellpose cell areas</span></span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>cellpose_props <span class="op">=</span> regionprops_table(masks, properties<span class="op">=</span>[<span class="st">'area'</span>])</span>
 <span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>cellpose_areas <span class="op">=</span> pd.DataFrame(cellpose_props)</span>
@@ -868,7 +845,7 @@ Number of cells in original segmentation: 987</code></pre>
 <span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>areas_df <span class="op">=</span> pd.concat([cellpose_areas, original_areas], ignore_index<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>compare cell sizes between the two segmentation methods</p>
-<div id="cell-66" class="cell" data-execution_count="60">
+<div id="cell-66" class="cell" data-execution_count="49">
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(data<span class="op">=</span>areas_df, x<span class="op">=</span><span class="st">'area'</span>, hue<span class="op">=</span><span class="st">'method'</span>, common_norm<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Cell Area (pixels)'</span>)</span>
@@ -884,19 +861,19 @@ Number of cells in original segmentation: 987</code></pre>
 </div>
 </div>
 <p>and save the results to a new file</p>
-<div id="cell-68" class="cell" data-execution_count="61">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>tifffile.imwrite(<span class="st">'data/xenium_2.0.0_io/cellpose/cellpose_masks_roi.tif'</span>, masks.astype(np.uint16))</span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>tifffile.imwrite(<span class="st">'data/xenium_2.0.0_io/cellpose/original_masks_roi.tif'</span>, original_masks.astype(np.uint16))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-68" class="cell" data-execution_count="54">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>tifffile.imwrite(<span class="st">'data/Xenium_V1_FFPE_TgCRND8_17_9_months_outs/cellpose/cellpose_masks_roi.tif'</span>, masks.astype(np.uint16))</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>tifffile.imwrite(<span class="st">'data/Xenium_V1_FFPE_TgCRND8_17_9_months_outs/cellpose/original_masks_roi.tif'</span>, original_masks.astype(np.uint16))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-69" class="cell" data-execution_count="62">
+<div id="cell-69" class="cell" data-execution_count="55">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>metrics <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Metric'</span>: [<span class="st">'Jaccard Index'</span>, <span class="st">'Dice Coefficient'</span>],</span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Value'</span>: [jaccard, dice]</span>
 <span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>metrics.to_csv(<span class="st">'data/xenium_2.0.0_io/cellpose/segmentation_comparison_metrics.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>metrics.to_csv(<span class="st">'data/Xenium_V1_FFPE_TgCRND8_17_9_months_outs/cellpose/segmentation_comparison_metrics.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-70" class="cell" data-execution_count="63">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>areas_df.to_csv(<span class="st">'data/xenium_2.0.0_io/cellpose/cell_size_comparison.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-70" class="cell" data-execution_count="57">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>areas_df.to_csv(<span class="st">'data/Xenium_V1_FFPE_TgCRND8_17_9_months_outs/cellpose/cell_size_comparison.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
