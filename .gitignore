@@ -4,4 +4,5 @@
 *_files/
 _site/
 
-day_1/practical_1/data
+day_1/practical_1/data/*/
+day_1/practical_1/data/*.zip
