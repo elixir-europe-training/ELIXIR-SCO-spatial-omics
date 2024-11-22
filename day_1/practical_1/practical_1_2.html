@@ -423,12 +423,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Spatial plot of cell and nucleus areas.</p>
-<div id="cell-23" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Spatial plot of cell area</span></span>
+<div id="cell-23" class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#cell area</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sc.pl.spatial(adata, color<span class="op">=</span><span class="st">'cell_area'</span>, spot_size<span class="op">=</span><span class="dv">10</span>, title<span class="op">=</span><span class="st">"Spatial Distribution of Cell Area"</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Spatial plot of nucleus area (if available)</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>sc.pl.spatial(adata, color<span class="op">=</span><span class="st">'nucleus_area'</span>, spot_size<span class="op">=</span><span class="dv">10</span>, title<span class="op">=</span><span class="st">"Spatial Distribution of Nucleus Area"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#nucleus area</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>sc.pl.spatial(adata, color<span class="op">=</span><span class="st">'nucleus_area'</span>, spot_size<span class="op">=</span><span class="dv">10</span>, title<span class="op">=</span><span class="st">"Spatial Distribution of Nucleus Area"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
