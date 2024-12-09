@@ -17,6 +17,12 @@ jobs:
       # Step 1: Checkout the repository code
       - name: Checkout code
         uses: actions/checkout@v4
+      
+
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: false
 
       - name: free disk space
         run: |
