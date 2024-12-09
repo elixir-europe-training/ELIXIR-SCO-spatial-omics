@@ -3,9 +3,9 @@ name: Build and Push Docker Image to GHCR
 on:
   push:
     branches:
-      - 1-developing-practical-1
+      - 51-manage-environments
     paths:
-      - 'day_1/practical_1/**'
+      - 'docker/**'
 
 jobs:
   build:
@@ -44,8 +44,8 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./day_1/practical_1
-          file: ./day_1/practical_1/Dockerfile
+          context: ./docker/jupyter
+          file: ./docker/jupyter/Dockerfile
           platforms: linux/amd64
           push: true
           tags: |
