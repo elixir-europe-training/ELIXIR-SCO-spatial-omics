@@ -1,0 +1,10 @@
+name: sib_sainsc_env
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.11
+  - sainsc=0.2
+  - scanpy=1.10
+  - ipywidgets
+  - ipykernel
