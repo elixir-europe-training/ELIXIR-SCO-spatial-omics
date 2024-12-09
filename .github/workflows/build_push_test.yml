@@ -33,8 +33,8 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./docker/jupyter
-          file: ./docker/jupyter/Dockerfile
+          context: ./docker_test
+          file: ./docker_test/Dockerfile
           platforms: linux/amd64
           push: true
           tags: |
