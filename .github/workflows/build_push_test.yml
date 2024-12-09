@@ -5,7 +5,7 @@ on:
     branches:
       - 51-manage-environments
     paths:
-      - 'docker/**'
+      - 'docker_test/**'
 
 jobs:
   build:
