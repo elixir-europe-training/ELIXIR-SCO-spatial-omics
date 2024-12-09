@@ -26,9 +26,6 @@ jobs:
           docker rmi $(docker image ls -aq)
           df -h   
 
-      - name: cleanup old action artifacts
-        run: .github/workflows/purge_artifacts.sh ${{ secrets.REPO_ACCESS_TOKEN }}
-
       # Step 2: Set up Docker Buildx (enables multi-platform builds)
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
