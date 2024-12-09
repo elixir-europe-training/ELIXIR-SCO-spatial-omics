@@ -6,6 +6,7 @@ on:
       - 51-manage-environments
     paths:
       - 'docker_test/**'
+      - '.github/workflows/build_push_test.yml'
 
 jobs:
   build:
@@ -37,4 +38,4 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}:test
+            ghcr.io/elixir-europe-training/elixir-sco-spatial-omics:test
