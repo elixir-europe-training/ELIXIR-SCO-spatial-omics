@@ -3,38 +3,26 @@ name: Build and Push Docker Image to GHCR
 on:
   push:
     branches:
-      - main
-      # - 51-manage-environments
+      - 51-manage-environments
     paths:
       - 'docker/**'
+      - '.github/workflows/build_push.yml'
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Set GHCR image name based on repository
-      - name: Set GHCR image name
-        id: set-ghcr
-        run: |
-          if [[ "${{ github.repository }}" == "elixir-europe-training/ELIXIR-SCO-spatial-transcriptomics" ]]; then
-            echo "Using original repo namespace for GHCR"
-            echo "IMAGE_NAME=elixir-europe-training/elixir-sco-spatial-transcriptomics" >> $GITHUB_ENV
-          else
-            echo "Using fork owner's namespace for GHCR"
-            echo "IMAGE_NAME=${{ github.actor }}/elixir-sco-spatial-transcriptomics" >> $GITHUB_ENV
-          fi
-        shell: bash
 
-      # Step 2: Checkout the repository code
+      # Step 1: Checkout the repository code
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Step 3: Set up Docker Buildx (enables multi-platform builds)
+      # Step 2: Set up Docker Buildx (enables multi-platform builds)
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # Step 4: Log in to GitHub Container Registry (GHCR)
+      # Step 3: Log in to GitHub Container Registry (GHCR)
       - name: Log in to GHCR
         run: |
           echo "Logging into GHCR"
@@ -50,4 +38,4 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            ghcr.io/${{ env.IMAGE_NAME }}:practical_1
+            ghcr.io/elixir-europe-training/elixir-sco-spatial-omics:jupyter
