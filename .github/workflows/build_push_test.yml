@@ -3,8 +3,7 @@ name: Build and Push Docker Image to GHCR
 on:
   push:
     branches:
-      - main
-      # - 51-manage-environments
+      - 51-manage-environments
     paths:
       - 'docker/**'
 
@@ -13,18 +12,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Set GHCR image name based on repository
-      - name: Set GHCR image name
-        id: set-ghcr
-        run: |
-          if [[ "${{ github.repository }}" == "elixir-europe-training/ELIXIR-SCO-spatial-transcriptomics" ]]; then
-            echo "Using original repo namespace for GHCR"
-            echo "IMAGE_NAME=elixir-europe-training/elixir-sco-spatial-transcriptomics" >> $GITHUB_ENV
-          else
-            echo "Using fork owner's namespace for GHCR"
-            echo "IMAGE_NAME=${{ github.actor }}/elixir-sco-spatial-transcriptomics" >> $GITHUB_ENV
-          fi
-        shell: bash
 
       # Step 2: Checkout the repository code
       - name: Checkout code
@@ -50,4 +37,4 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            ghcr.io/${{ env.IMAGE_NAME }}:practical_1
+            ghcr.io/${{ github.repository }}:test
