@@ -1,57 +1,105 @@
+# Use jupyter/minimal-notebook as the base image
 FROM jupyter/minimal-notebook:latest
-LABEL org.opencontainers.image.source=https://github.com/scilifelabdatacentre/serve-images
+LABEL org.opencontainers.image.source="https://github.com/scilifelabdatacentre/serve-images"
 
 ARG SERVE_BRANCH=develop
+
+########################
+# Switch to root to install system packages
+########################
+USER root
+
+# Create /data directory so we can volume-mount it at runtime (shared, read-only)
+RUN mkdir -p /home/jovyan/workdir /data /group_work
+
+# Set working directory
 WORKDIR /home/jovyan/workdir
 
-COPY requirements.txt /tmp
-COPY imaging_based_data_analysis_env.yml /tmp
-COPY day_1/practical_1/imaging_based_data_analysis.ipynb /home/jovyan/workdir
-COPY group_work /home/jovyan/group_work
-COPY start-script.sh /usr/local/bin/start-script.sh
+########################
+# Copy environment YAML files
+########################
+COPY envs/*.yml /tmp/envs/
 
-USER root
-RUN apt-get update && apt-get install curl -y --no-install-recommends && \
+########################
+# Copy other relevant files into the image
+########################
+COPY requirements.txt /tmp/requirements.txt
+COPY start-script.sh /usr/local/bin/start-script.sh
+COPY workdir/ /home/jovyan/workdir/
+
+########################
+# Install system packages
+########################
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends curl wget unzip && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
+########################
+# Install Python packages in the base environment
+########################
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
-RUN conda install -n base -c conda-forge mamba
+########################
+# Install mamba in base environment
+########################
+RUN conda install -n base -c conda-forge mamba && conda clean --all --yes
 
-RUN mamba env create -f /tmp/imaging_based_data_analysis_env.yml && conda clean --all --yes
+########################
+# Create ALL environments & register kernels
+########################
+RUN for f in /tmp/envs/*.yml; do \
+      echo "Creating environment from $f" && \
+      mamba env create -f "$f" && \
+      conda clean --all --yes; \
+    done && \
+    # For each environment, install an IPython kernel so Jupyter can use it
+    for env_name in $(ls /opt/conda/envs); do \
+      if [ -f "/opt/conda/envs/$env_name/bin/python" ]; then \
+        echo "Installing kernel for $env_name" && \
+        /opt/conda/envs/"$env_name"/bin/python -m ipykernel install --user \
+            --name "$env_name" --display-name "Python ($env_name)"; \
+      fi; \
+    done
 
-RUN echo "conda activate imaging_based_data_analysis_env" >> /etc/profile.d/conda.sh
-
-RUN /opt/conda/envs/imaging_based_data_analysis_env/bin/pip install ipykernel && \
-    /opt/conda/envs/imaging_based_data_analysis_env/bin/python -m ipykernel install --name imaging_based_data_analysis_env --display-name "Python (imaging_based_data_analysis_env)"
-
-# Add data folder
-RUN apt-get update && apt-get install -y wget && \
-    wget -O /home/jovyan/data/Xenium_data.zip https://cf.10xgenomics.com/samples/xenium/1.4.0/Xenium_V1_FFPE_TgCRND8_17_9_months/Xenium_V1_FFPE_TgCRND8_17_9_months_outs.zip && \
-    unzip /home/jovyan/data/Xenium_data.zip -d /home/jovyan/data && \
-    rm /home/jovyan/data/Xenium_data.zip && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Ensure correct permissions for directories
-RUN chown -R jovyan:users /opt/conda /home/jovyan/.cache /home/jovyan/workdir && \
-    chmod -R a+rwx /home/jovyan/workdir && \
-    chown -R jovyan:users /home/jovyan/data && \
-    chmod -R a+rx /home/jovyan/data && \
-    chown -R jovyan:users /home/jovyan/group_work && \
-    chmod -R a+rwx /home/jovyan/group_work && \
+########################
+# Fix Ownership & Permissions
+########################
+# Set ownership and permissions according to each directory’s needs
+RUN chown -R jovyan:users /home/jovyan /opt/conda /home/jovyan/workdir /data /group_work && \
+    \
+    # 1) /home/jovyan and /home/jovyan/workdir: read-write for all
+    chmod -R a+rwx /home/jovyan /home/jovyan/workdir /opt/conda && \
+    \
+    # 2) /data: read-only for all (a+rx)
+    chmod -R a+rx /data && \
+    \
+    # 3) /group_work: read-write for all (a+rwx)
+    chmod -R a+rwx /group_work && \
+    \
+    # Make sure the startup script is executable
     chmod +x /usr/local/bin/start-script.sh
 
+########################
+# Switch back to jovyan user
+########################
 USER jovyan
 
+########################
 # Set default conda environment
-ENV PATH=/opt/conda/envs/imaging_based_data_analysis_env/bin:$PATH
+########################
+ENV DEFAULT_ENV=imaging_based_data_analysis_env
+ENV PATH=/opt/conda/envs/${DEFAULT_ENV}/bin:$PATH
 
+########################
 # Disable Jupyter token authentication
+########################
 RUN jupyter notebook --generate-config && \
     echo "c.NotebookApp.token = ''" >> /home/jovyan/.jupyter/jupyter_notebook_config.py && \
     echo "c.NotebookApp.password = ''" >> /home/jovyan/.jupyter/jupyter_notebook_config.py && \
     echo "c.NotebookApp.ip = '0.0.0.0'" >> /home/jovyan/.jupyter/jupyter_notebook_config.py && \
     echo "c.NotebookApp.open_browser = False" >> /home/jovyan/.jupyter/jupyter_notebook_config.py
 
-# Set the startup script as the entrypoint
+########################
+# Set the startup script as the container entrypoint
+########################
 ENTRYPOINT ["/usr/local/bin/start-script.sh"]
