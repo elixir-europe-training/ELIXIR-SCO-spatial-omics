@@ -9,7 +9,7 @@ on:
       - '.github/workflows/build_push.yml'
 
 jobs:
-  build:
+  build-practical-1:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,8 +17,8 @@ jobs:
       # Step 1: Checkout the repository code
       - name: Checkout code
         uses: actions/checkout@v4
-      
 
+        # Free disk space on the runner
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@main
         with:
@@ -39,8 +39,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./docker/jupyter
-          file: ./docker/jupyter/Dockerfile
+          context: ./day_1/practical_1
           platforms: linux/amd64
           push: true
           tags: |
