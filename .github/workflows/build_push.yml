@@ -5,7 +5,7 @@ on:
     branches:
       - 51-manage-environments
     paths:
-      - 'docker/**'
+      - '**/Dockerfile'
       - '.github/workflows/build_push.yml'
 
 jobs:
