@@ -18,3 +18,5 @@ dependencies:
   - pip:
     - cell2location[full]
     - tangram-sc
+    - git+https://github.com/alleninstitute/abc_atlas_access.git
+    
