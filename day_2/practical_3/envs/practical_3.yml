@@ -5,6 +5,7 @@ channels:
   - defaults
 dependencies:
   - anndata
+  - ipykernel
   - matplotlib
   - numpy
   - pandas
