@@ -1,5 +1,6 @@
-name: cellpose_env
+name: practical_3
 channels:
+  - bioconda
   - conda-forge
   - defaults
 dependencies:
