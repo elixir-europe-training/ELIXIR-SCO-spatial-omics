@@ -11,7 +11,7 @@ USER $NB_UID
 RUN rm -r /home/jovyan/work
 
 # intall required software with conda
-COPY envs/*.yml /tmp/envs/
+COPY envs/*.yml /tmp/envs/ 
 
 # install environments
 # For each environment, install an IPython kernel so Jupyter can use it
