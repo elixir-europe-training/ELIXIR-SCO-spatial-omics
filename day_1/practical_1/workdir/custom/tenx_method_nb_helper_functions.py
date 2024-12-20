@@ -14,6 +14,7 @@ import statsmodels.api as sm
 from shapely.geometry import Point, Polygon, MultiPoint
 from scipy.spatial import ConvexHull
 import re
+import gzip
 
 ####################### Helper functions####################
 def create_adata(sample_path, nucleus_genes_only=False):
@@ -378,3 +379,22 @@ def process_cells_link(link):
         print('No X and Y coordinates found in link.')
     cell_info = pd.DataFrame(data)
     return cell_info
+
+def decompress_file(input_path):
+    """
+    Decompresses a .gz file.
+
+    Parameters:
+        input_path (str): The path to the .gz file to decompress.
+
+    Returns:
+        str: The path to the decompressed file.
+    """
+    output_path = os.path.splitext(input_path)[0]
+
+    # Decompress the file
+    with gzip.open(input_path, 'rt') as compressed_file:
+        with open(output_path, 'w') as decompressed_file:
+            decompressed_file.write(compressed_file.read())
+
+    return output_path
