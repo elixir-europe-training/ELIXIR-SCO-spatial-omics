@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/index.html</loc>
-    <lastmod>2024-12-20T09:54:45.942Z</lastmod>
+    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_3/practical_4/niche_and_domain_reconstruction.html</loc>
+    <lastmod>2025-01-08T12:40:12.331Z</lastmod>
   </url>
   <url>
     <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_2/practical_3/workdir/practical_3.html</loc>
-    <lastmod>2024-12-20T09:54:45.938Z</lastmod>
-  </url>
-  <url>
-    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_1/practical_1/workdir/practical_1_2.html</loc>
-    <lastmod>2024-12-20T09:54:45.250Z</lastmod>
-  </url>
-  <url>
-    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_1/practical_1/workdir/Practical_1_sainsc_seg_free.html</loc>
-    <lastmod>2024-12-20T09:54:45.206Z</lastmod>
-  </url>
-  <url>
-    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_1/practical_1/data/READM.html</loc>
-    <lastmod>2024-12-20T09:54:45.178Z</lastmod>
-  </url>
-  <url>
-    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_1/practical_1/workdir/Practical_1_segmentation.html</loc>
-    <lastmod>2024-12-20T09:54:45.222Z</lastmod>
+    <lastmod>2025-01-08T12:40:12.328Z</lastmod>
   </url>
   <url>
     <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_1/practical_1/workdir/practical_1_QC&amp;Normalization.html</loc>
-    <lastmod>2024-12-20T09:54:45.406Z</lastmod>
+    <lastmod>2025-01-08T12:40:11.838Z</lastmod>
   </url>
   <url>
-    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_3/practical_4/niche_and_domain_reconstruction.html</loc>
-    <lastmod>2024-12-20T09:54:45.942Z</lastmod>
+    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_1/practical_1/workdir/Practical_1_segmentation.html</loc>
+    <lastmod>2025-01-08T12:40:11.667Z</lastmod>
+  </url>
+  <url>
+    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_1/practical_1/data/READM.html</loc>
+    <lastmod>2025-01-08T12:40:11.618Z</lastmod>
+  </url>
+  <url>
+    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_1/practical_1/workdir/practical_1_2.html</loc>
+    <lastmod>2025-01-08T12:40:11.695Z</lastmod>
+  </url>
+  <url>
+    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_1/practical_1/workdir/Practical_1_sainsc_seg_free.html</loc>
+    <lastmod>2025-01-08T12:40:11.650Z</lastmod>
+  </url>
+  <url>
+    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/index.html</loc>
+    <lastmod>2025-01-08T12:40:12.331Z</lastmod>
   </url>
 </urlset>

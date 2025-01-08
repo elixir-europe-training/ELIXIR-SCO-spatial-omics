@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.39">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Sainsc Tutorial – ELIXIR-SCO-spatial-transcriptomics</title>
+<title>ELIXIR Spatial Transcriptomics Course – ELIXIR-SCO-spatial-transcriptomics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -70,10 +70,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-fd6bd13297446cad3caef3b2694f49f1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-c7e0d8a4bb88518e69f3d36b54b6fc10.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -159,7 +159,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Sainsc Tutorial</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">ELIXIR Spatial Transcriptomics Course</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -182,7 +182,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#imports" id="toc-imports" class="nav-link active" data-scroll-target="#imports">Imports</a></li>
+  <li><a href="#practical-1b-segmentation-free-cell-identification-using-sainsc" id="toc-practical-1b-segmentation-free-cell-identification-using-sainsc" class="nav-link active" data-scroll-target="#practical-1b-segmentation-free-cell-identification-using-sainsc">Practical 1b: Segmentation free cell identification using <code>sainsc</code></a></li>
+  <li><a href="#imports" id="toc-imports" class="nav-link" data-scroll-target="#imports">Imports</a></li>
   <li><a href="#unsupervised-analysis" id="toc-unsupervised-analysis" class="nav-link" data-scroll-target="#unsupervised-analysis">Unsupervised analysis</a>
   <ul class="collapse">
   <li><a href="#find-cell-type-signatures" id="toc-find-cell-type-signatures" class="nav-link" data-scroll-target="#find-cell-type-signatures">Find cell-type signatures</a></li>
@@ -197,7 +198,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Sainsc Tutorial</h1>
+<h1 class="title">ELIXIR Spatial Transcriptomics Course</h1>
 </div>
 
 
@@ -214,6 +215,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<section id="practical-1b-segmentation-free-cell-identification-using-sainsc" class="level3">
+<h3 class="anchored" data-anchor-id="practical-1b-segmentation-free-cell-identification-using-sainsc">Practical 1b: Segmentation free cell identification using <code>sainsc</code></h3>
+<p>Date: 2025-01-22</p>
+<p>Author(s): Niklas Müller-Bötticher, Rasool Saghaleyni</p>
+<p>Author(s) email: niklas.mueller-boetticher@bih-charite.de, rasool.saghaleyni@scilifelab.</p>
+<p>⚠️ Note: The proper environment for this notebook is <code>sib_sainsc_env</code>. It can be activated by selecting the kernel in the Jupyter notebook.</p>
+</section>
 <section id="imports" class="level2">
 <h2 class="anchored" data-anchor-id="imports">Imports</h2>
 <p>First we are going to load all necessary packages for the analysis.</p>
