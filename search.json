@@ -35,18 +35,18 @@
     "text": "3. Spatial Domain detection with CellCharter"
   },
   {
-    "objectID": "day_2/practical_3/workdir/practical_3.html",
-    "href": "day_2/practical_3/workdir/practical_3.html",
+    "objectID": "day_2/practical_3/workdir/spatial_course_SOL_CH.html",
+    "href": "day_2/practical_3/workdir/spatial_course_SOL_CH.html",
     "title": "Computational analysis of spatial transcriptomics data",
     "section": "",
-    "text": "1. Spatial data download and format\n2. Spatial imputation with SpaGE\n3. Spatial clusering with BANKSY\n4. Cell-cell communication with LIANA+"
+    "text": "1. Spatial data download and format\n2. Spatial imputation with SpaGE and Tangram\n3. Cell deconvolution with Cell2location\n4. Access image in AnnData object"
   },
   {
-    "objectID": "day_2/practical_3/workdir/practical_3.html#brainomics-2.0---day-3",
-    "href": "day_2/practical_3/workdir/practical_3.html#brainomics-2.0---day-3",
+    "objectID": "day_2/practical_3/workdir/spatial_course_SOL_CH.html#brainomics-2.0---day-3",
+    "href": "day_2/practical_3/workdir/spatial_course_SOL_CH.html#brainomics-2.0---day-3",
     "title": "Computational analysis of spatial transcriptomics data",
     "section": "",
-    "text": "1. Spatial data download and format\n2. Spatial imputation with SpaGE\n3. Spatial clusering with BANKSY\n4. Cell-cell communication with LIANA+"
+    "text": "1. Spatial data download and format\n2. Spatial imputation with SpaGE and Tangram\n3. Cell deconvolution with Cell2location\n4. Access image in AnnData object"
   },
   {
     "objectID": "day_1/practical_1/workdir/practical_1_QC&Normalization.html",
