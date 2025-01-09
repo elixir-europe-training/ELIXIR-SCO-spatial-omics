@@ -5,6 +5,7 @@ channels:
   - defaults
 dependencies:
   - python=3.9
+  - ipykernel
   - scanpy
   - pandas
   - numpy
@@ -21,7 +22,6 @@ dependencies:
   - jupyterlab-topbar
   - jupyterlab-system-monitor
   - jupyterlab-dash
-  - ipykernel
   - jupyterlab
   - shapely
   - rasterio

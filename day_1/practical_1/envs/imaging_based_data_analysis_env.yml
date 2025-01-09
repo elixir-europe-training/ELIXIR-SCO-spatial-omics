@@ -5,6 +5,7 @@ channels:
   - defaults
 dependencies:
   - python=3.9
+  - ipykernel
   - scanpy
   - pandas
   - numpy
@@ -12,7 +13,6 @@ dependencies:
   - scikit-learn
   - matplotlib
   - seaborn
-  - ipykernel
   - jupyterlab
   - spatialdata-io
   - squidpy
