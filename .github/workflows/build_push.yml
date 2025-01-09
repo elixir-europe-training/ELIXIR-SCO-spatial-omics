@@ -9,8 +9,8 @@ on:
     paths:
       - '**/Dockerfile'
       - '.github/workflows/build_push.yml'
-      - '**/env/*.yml'
-      - '**/env/*.txt'
+      - '**/envs/*.yml'
+      - '**/envs/*.txt'
 
 jobs:
   practical-1:
