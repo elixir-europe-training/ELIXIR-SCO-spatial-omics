@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - 51-manage-environments
+      - 62-add-container-images-to-sib-dockerhub
     paths:
       - '**/Dockerfile'
       - '.github/workflows/build_push.yml'
@@ -14,6 +14,15 @@ on:
 jobs:
   practical-1:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - context: day_1/practical_1
+            tag: practical_1
+          - context: day_1/practical_2
+            tag: practical_2
+          - context: day_2/practical_3
+            tag: practical_3
 
     steps:
 
@@ -31,54 +40,18 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # Step 3: Log in to GitHub Container Registry (GHCR)
-      - name: Log in to GHCR
+      - name: Log in to Docker Hub
         run: |
-          echo "Logging into GHCR"
-          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          echo "Logging into Docker Hub"
+          echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
         shell: bash
 
       # Step 5: Build and push Docker image to GHCR
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./day_1/practical_1
+          context: ./${{ matrix.context }}
           platforms: linux/amd64
           push: true
           tags: |
-            ghcr.io/elixir-europe-training/elixir-sco-spatial-omics:${{ github.job }}
-  practical-3:
-    runs-on: ubuntu-latest
-
-    steps:
-
-      # Step 1: Checkout the repository code
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-        # Free disk space on the runner
-      - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@main
-        with:
-          tool-cache: false
-
-      # Step 2: Set up Docker Buildx (enables multi-platform builds)
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      # Step 3: Log in to GitHub Container Registry (GHCR)
-      - name: Log in to GHCR
-        run: |
-          echo "Logging into GHCR"
-          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-        shell: bash
-
-      # Step 5: Build and push Docker image to GHCR
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: ./day_2/practical_3
-          platforms: linux/amd64
-          push: true
-          tags: |
-            ghcr.io/elixir-europe-training/elixir-sco-spatial-omics:${{ github.job }}
+              ${{ secrets.DOCKERHUB_USERNAME }}/elixir-sco-spatial-omics:${{ matrix.tag }}
