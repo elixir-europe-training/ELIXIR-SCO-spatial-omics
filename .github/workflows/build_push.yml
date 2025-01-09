@@ -8,6 +8,8 @@ on:
     paths:
       - '**/Dockerfile'
       - '.github/workflows/build_push.yml'
+      - '**/env/*.yml'
+      - '**/env/*.txt'
 
 jobs:
   practical-1:
