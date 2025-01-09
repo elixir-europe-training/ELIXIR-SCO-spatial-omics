@@ -11,11 +11,11 @@ USER $NB_UID
 RUN rm -r /home/jovyan/work
 
 # intall required software with conda
-COPY ./envs/*.y?ml /tmp/envs/
+COPY ./envs/*.yml /tmp/envs/
 
 # install environments
 # For each environment, install an IPython kernel so Jupyter can use it
-RUN for f in /tmp/envs/*.y?ml; do \
+RUN for f in /tmp/envs/*.yml; do \
       echo "Creating environment from $f" && \
       mamba env create -f "$f" && \
       conda clean --all --yes; \
