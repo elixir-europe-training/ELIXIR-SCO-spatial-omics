@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - 62-add-container-images-to-sib-dockerhub
+      - 51-manage-environments
     paths:
       - '**/Dockerfile'
       - '.github/workflows/build_push.yml'
@@ -19,10 +20,13 @@ jobs:
         include:
           - context: day_1/practical_1
             tag: practical_1
-          - context: day_1/practical_2
-            tag: practical_2
+            ide: jupyter
           - context: day_2/practical_3
             tag: practical_3
+            ide: jupyter
+          - context: day_4/practical_6
+            tag: practical_6
+            ide: jupyter
 
     steps:
 
@@ -51,6 +55,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./${{ matrix.context }}
+          file: ./docker/${{ matrix.ide }}/Dockerfile
           platforms: linux/amd64
           push: true
           tags: |

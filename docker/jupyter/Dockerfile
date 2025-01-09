@@ -11,29 +11,20 @@ USER $NB_UID
 RUN rm -r /home/jovyan/work
 
 # intall required software with conda
-COPY environments/*.yml /tmp
+COPY envs/*.yml /tmp/envs/
 
-# cellpose environment
-ARG env_name=cellpose_env
-RUN mamba env create -f /tmp/${env_name}.yml && \
-    mamba clean --all -f -y
-RUN "${CONDA_DIR}/envs/${env_name}/bin/python" -m ipykernel install --user --name="${env_name}" && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
-
-# segmentation environment
-ARG env_name=segmentation_env
-RUN mamba env create -f /tmp/${env_name}.yml && \
-    mamba clean --all -f -y
-RUN "${CONDA_DIR}/envs/${env_name}/bin/python" -m ipykernel install --user --name="${env_name}" && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
-
-
-# imaging based data analysis environment
-ARG env_name=imaging_based_data_analysis_env
-RUN mamba env create -f /tmp/${env_name}.yml && \
-    mamba clean --all -f -y
-RUN "${CONDA_DIR}/envs/${env_name}/bin/python" -m ipykernel install --user --name="${env_name}" && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
+# install environments
+# For each environment, install an IPython kernel so Jupyter can use it
+RUN for f in /tmp/envs/*.yml; do \
+      echo "Creating environment from $f" && \
+      mamba env create -f "$f" && \
+      conda clean --all --yes; \
+    done && \
+    for env_name in $(ls /opt/conda/envs); do \
+      if [ -f "/opt/conda/envs/$env_name/bin/python" ]; then \
+        echo "Installing kernel for $env_name" && \
+        "${CONDA_DIR}/envs/${env_name}/bin/python" -m ipykernel install --user --name="${env_name}" && \
+        fix-permissions "${CONDA_DIR}" && \
+        fix-permissions "/home/${NB_USER}"; \
+      fi; \
+    done
