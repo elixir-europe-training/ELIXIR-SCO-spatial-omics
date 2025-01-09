@@ -59,4 +59,4 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-              ${{ secrets.DOCKERHUB_USERNAME }}/elixir-sco-spatial-omics:${{ matrix.tag }}
+              sibswiss/elixir-sco-spatial-omics:${{ matrix.tag }}
