@@ -25,4 +25,10 @@ At the first login, open a terminal, navigate to `/home/jovyan/workdir` and clon
 git clone https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics.git
 ```
 
-After cloning you can use the navigation menu to open a notebook. With each notebook, use the associated environment (has the same name as the notebook).
+After cloning you can use the navigation menu to open a notebook. With each notebook, use the associated environment (has the same name as the notebook). Do this by clicking the button 'Python 3 (ipykernel)' on the top right of your notebook:
+
+![](assets/select_kernel.png)
+
+And select the environment with the corresponding name from the dropdown menu. This ensures that you are using the correct dependencies for each practical.
+
+If you encounter any issues or have questions, please ask one of the instructors for assistance. Happy coding!
