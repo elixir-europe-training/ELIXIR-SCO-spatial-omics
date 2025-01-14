@@ -3,7 +3,7 @@ project:
   execute-dir: project
 
 website:
-  title: "ELIXIR-SCO-spatial-transcriptomics"
+  title: "Spatial Omics Data Analysis"
   favicon: assets/elixir_favicon.ico
   search: true
   page-navigation: true
