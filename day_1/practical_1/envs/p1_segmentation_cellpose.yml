@@ -1,7 +1,7 @@
-name: imaging_based_data_analysis_env
+name: p1_segmentation_cellpose
 channels:
-  - bioconda
   - conda-forge
+  - anaconda
   - defaults
 dependencies:
   - python=3.9
@@ -9,20 +9,19 @@ dependencies:
   - scanpy
   - pandas
   - numpy
-  - scipy
-  - scikit-learn
   - matplotlib
   - seaborn
-  - jupyterlab
-  - spatialdata-io
-  - squidpy
-  - anndata
-  - leidenalg
+  - scikit-image
+  - opencv
+  - cellpose
+  - zarr
+  - h5py
+  - pip
   - jupyterlab-git
   - jupyterlab-lsp
   - jupyterlab-topbar
   - jupyterlab-system-monitor
   - jupyterlab-dash
-  - spatialdata-plot
-  - pip:
-    - diptest
+  - jupyterlab
+  - shapely
+  - rasterio

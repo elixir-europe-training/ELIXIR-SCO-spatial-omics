@@ -1,7 +1,7 @@
-name: segmentation_env
+name: p1_qc_normalization
 channels:
+  - bioconda
   - conda-forge
-  - anaconda
   - defaults
 dependencies:
   - python=3.9
@@ -9,19 +9,20 @@ dependencies:
   - scanpy
   - pandas
   - numpy
+  - scipy
+  - scikit-learn
   - matplotlib
   - seaborn
-  - scikit-image
-  - opencv
-  - cellpose
-  - zarr
-  - h5py
-  - pip
+  - jupyterlab
+  - spatialdata-io
+  - squidpy
+  - anndata
+  - leidenalg
   - jupyterlab-git
   - jupyterlab-lsp
   - jupyterlab-topbar
   - jupyterlab-system-monitor
   - jupyterlab-dash
-  - jupyterlab
-  - shapely
-  - rasterio
+  - spatialdata-plot
+  - pip:
+    - diptest

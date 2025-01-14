@@ -1,4 +1,4 @@
-name: sib_sainsc_env
+name: p1_segmentation_sainsc
 channels:
   - conda-forge
   - bioconda
