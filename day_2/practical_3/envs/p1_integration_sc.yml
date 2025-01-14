@@ -1,0 +1,22 @@
+name: p1_integration_sc
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - ipykernel 
+  - anndata
+  - matplotlib
+  - numpy
+  - pandas
+  - pillow
+  - scanpy
+  - scikit-learn
+  - scipy
+  - seaborn
+  - squidpy
+  - pip:
+    - cell2location[full]
+    - tangram-sc
+    - git+https://github.com/alleninstitute/abc_atlas_access.git
+    

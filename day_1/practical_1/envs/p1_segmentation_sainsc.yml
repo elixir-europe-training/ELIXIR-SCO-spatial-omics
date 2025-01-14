@@ -1,0 +1,11 @@
+name: p1_segmentation_sainsc
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.11
+  - ipykernel
+  - sainsc=0.2
+  - scanpy=1.10
+  - ipywidgets
+  
