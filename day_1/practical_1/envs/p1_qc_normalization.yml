@@ -1,0 +1,28 @@
+name: p1_qc_normalization
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - ipykernel
+  - scanpy
+  - pandas
+  - numpy
+  - scipy
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - jupyterlab
+  - spatialdata-io
+  - squidpy
+  - anndata
+  - leidenalg
+  - jupyterlab-git
+  - jupyterlab-lsp
+  - jupyterlab-topbar
+  - jupyterlab-system-monitor
+  - jupyterlab-dash
+  - spatialdata-plot
+  - pip:
+    - diptest

@@ -1,0 +1,27 @@
+name: p1_segmentation_cellpose
+channels:
+  - conda-forge
+  - anaconda
+  - defaults
+dependencies:
+  - python=3.9
+  - ipykernel
+  - scanpy
+  - pandas
+  - numpy
+  - matplotlib
+  - seaborn
+  - scikit-image
+  - opencv
+  - cellpose
+  - zarr
+  - h5py
+  - pip
+  - jupyterlab-git
+  - jupyterlab-lsp
+  - jupyterlab-topbar
+  - jupyterlab-system-monitor
+  - jupyterlab-dash
+  - jupyterlab
+  - shapely
+  - rasterio
