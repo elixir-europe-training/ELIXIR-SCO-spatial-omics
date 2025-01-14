@@ -16,6 +16,8 @@ website:
         text: Schedule
       - href: practicals.qmd
         text: Practicals
+      - href: presentations.qmd
+        text: Presentations
       # - text: "practicals"
       #   menu:
       #     - href: day_1/practical_1/workdir/imaging_based_data_analysis.ipynb
