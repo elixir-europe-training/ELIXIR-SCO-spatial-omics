@@ -1,4 +1,4 @@
-name: practical_3
+name: p1_integration_sc
 channels:
   - bioconda
   - conda-forge
