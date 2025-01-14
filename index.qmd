@@ -1,5 +1,5 @@
 ---
-title: "ELIXIR-SCO-spatial-transcriptomics"
+title: "Spatial Omics Data Analysis"
 ---
 
 <img src="https://raw.githubusercontent.com/sib-swiss/images-training/main/SPODA/ELIXIR/SCObanner.png" alt="SCO banner" style="width:500px;"/>
@@ -8,8 +8,6 @@ title: "ELIXIR-SCO-spatial-transcriptomics"
 This course delves into the cutting-edge field of Spatial Omics, focusing on Spatially-Resolved Transcriptomics (SRT) technology which provides unprecedented insights into the spatial organization of gene expression within tissues. The rapid and recent advances in SRT technology are transforming our understanding of biological systems, and this course is designed to equip researchers with the tools to harness the power of SRT, adding significant value to biological knowledge and opening new avenues for scientific discovery.
 
 Participants will explore both imaging-based and sequencing-based SRT technologies, learning to navigate the entire workflow of SRT data analysis. The course covers essential topics such as pre-processing techniques for data cleaning, normalization, and quality control, methods for identifying and characterizing spatial domains within tissues, strategies for integrating SRT data with single-cell RNA sequencing data, and statistical approaches to analyze spatial patterns and relationships. Additionally, participants will investigate interactions between cells within their spatial context. By the end of this course, participants will be equipped with the knowledge and skills to construct a complete workflow for SRT data analysis, from raw data to meaningful biological insights. The course combines lectures with practical sessions, ensuring a balanced approach to theory and hands-on experience. 
-
-The course materials will be on the dedicated [GitHub page](https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics).
 
 ## Audience
 This 3-day course is addressed to PhD students, postdocs, and researchers who are involved (or will be in the near future) in projects including spatially-resolved transcriptomics data, and want to acquire the skills to get started with spatial data analysis. 
