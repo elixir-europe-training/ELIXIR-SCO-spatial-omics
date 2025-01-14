@@ -1,4 +1,4 @@
-name: practical_6  # Name of the environment
+name: p6_ccc  # Name of the environment
 channels:
   - conda-forge  # Preferred channels for installation
   - defaults
