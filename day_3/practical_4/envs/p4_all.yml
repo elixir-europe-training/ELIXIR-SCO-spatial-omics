@@ -1,4 +1,4 @@
-ame: practical4
+name: p4_all
 channels:
   - pytorch
   - conda-forge
