@@ -16,7 +16,7 @@ To start working on the practicals, navigate to the provided spreadsheet with se
 
 Now you are in your personal container image. This image has two important directories that are mounted to all container images that are avaiable to you:
 
-- `/home/jovyan/workdir`: a directory in home for which you have read and write access. This is where you will be mainly working in. 
+- (for jupyter-based practicals)`/home/jovyan/workdir`: a directory in home for which you have read and write access. This is where you will be mainly working in. For the rstudio-based practical this is `/home/rstudio`. 
 - `/data`: a directory where you only have read access. From here you can read the available input data. 
 
 At the first login, open a terminal, navigate to `/home/jovyan/workdir` and clone the repository:
@@ -24,6 +24,10 @@ At the first login, open a terminal, navigate to `/home/jovyan/workdir` and clon
 ```sh
 git clone https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics.git
 ```
+
+::: {.callout-warning}
+For jupyter containers, only `/home/jovyan/workdir` is shared with other containers. This means that everything you write outside this directory will **not** be available for other practicals. 
+:::
 
 After cloning you can use the navigation menu to open a notebook. With each notebook, use the associated environment (has the same name as the notebook). Do this by clicking the button 'Python 3 (ipykernel)' on the top right of your notebook:
 
