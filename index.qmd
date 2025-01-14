@@ -11,9 +11,7 @@ Participants will explore both imaging-based and sequencing-based SRT technologi
 
 ## Venue and time
 
-This course will take place at the University of Lausanne (UNIL), in the [Synathlon building](https://www.unil.ch/unil/en/home/menuinst/campus/acces-et-transports/campus-dorigny/synathlon.html) of the campus. More info on [UNIL access, map and transport](https://www.unil.ch/unil/en/home/menuinst/campus/acces-et-transports.html).
-
-The course will start the first day at 13:00. Find a detailed schedule [here](schedule.qmd). 
+This course will take place in Lausanne. The course will start the first day at 13:00. Find a detailed schedule [here](schedule.qmd). 
 
 A lunch will be provided before the start of the course as well as at the end of the course on the last day. All participants are invited to the social dinner, organized on 21 January 2024. 
 
