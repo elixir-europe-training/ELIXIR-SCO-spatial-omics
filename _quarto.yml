@@ -12,12 +12,18 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - text: "practicals"
-        menu:
-          - href: day_1/practical_1/workdir/imaging_based_data_analysis.ipynb
-            text: "Practical 1:  Imaging-based data analysis"
-          - href: day_2/practical_3/workdir/practical_3.ipynb
-            text: "Practical 3: Integration with scRNA-seq"
+      - href: schedule.qmd
+        text: Schedule
+      - href: practicals.qmd
+        text: Practicals
+      - href: presentations.qmd
+        text: Presentations
+      # - text: "practicals"
+      #   menu:
+      #     - href: day_1/practical_1/workdir/imaging_based_data_analysis.ipynb
+      #       text: "Practical 1:  Imaging-based data analysis"
+      #     - href: day_2/practical_3/workdir/practical_3.ipynb
+      #       text: "Practical 3: Integration with scRNA-seq"
     right:
       - icon: github
         href: https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics/

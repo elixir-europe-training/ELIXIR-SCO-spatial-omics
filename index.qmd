@@ -1,5 +1,5 @@
 ---
-title: "ELIXIR-SCO-spatial-transcriptomics"
+title: "Spatial Omics Data Analysis"
 ---
 
 <img src="https://raw.githubusercontent.com/sib-swiss/images-training/main/SPODA/ELIXIR/SCObanner.png" alt="SCO banner" style="width:500px;"/>
@@ -9,7 +9,13 @@ This course delves into the cutting-edge field of Spatial Omics, focusing on Spa
 
 Participants will explore both imaging-based and sequencing-based SRT technologies, learning to navigate the entire workflow of SRT data analysis. The course covers essential topics such as pre-processing techniques for data cleaning, normalization, and quality control, methods for identifying and characterizing spatial domains within tissues, strategies for integrating SRT data with single-cell RNA sequencing data, and statistical approaches to analyze spatial patterns and relationships. Additionally, participants will investigate interactions between cells within their spatial context. By the end of this course, participants will be equipped with the knowledge and skills to construct a complete workflow for SRT data analysis, from raw data to meaningful biological insights. The course combines lectures with practical sessions, ensuring a balanced approach to theory and hands-on experience. 
 
-The course materials will be on the dedicated [GitHub page](https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics).
+## Venue and time
+
+This course will take place at the University of Lausanne (UNIL), in the [Synathlon building](https://www.unil.ch/unil/en/home/menuinst/campus/acces-et-transports/campus-dorigny/synathlon.html) of the campus. More info on [UNIL access, map and transport](https://www.unil.ch/unil/en/home/menuinst/campus/acces-et-transports.html).
+
+The course will start the first day at 13:00. Find a detailed schedule [here](schedule.qmd). 
+
+A lunch will be provided before the start of the course as well as at the end of the course on the last day. All participants are invited to the social dinner, organized on 21 January 2024. 
 
 ## Audience
 This 3-day course is addressed to PhD students, postdocs, and researchers who are involved (or will be in the near future) in projects including spatially-resolved transcriptomics data, and want to acquire the skills to get started with spatial data analysis. 
@@ -41,31 +47,6 @@ We will be mainly working on an Amazon Web Services (AWS) Elastic Cloud (EC2) se
 
 Please perform these installations PRIOR to the course and contact us if you have any trouble.
 
-## Schedule - CET time zone
-
-**Day 1 (13:00 -17:00)**
-
-* Overview of technologies
-* Imaging-based data preprocessing 
-* Segmentation-free analysis 
-
- **Day 2 (09:00 -17:00)**
-
-* Sequence-based data preprocessing 
-* Integration with scRNA-seq 
-* Multi-omics spatial data analysis
-
- **Day 3 (09:00 -17:00)**
-
-* Graph representations and Niche reconstruction
-* Spatial domain identification/spatial annotation
-* Spatial statistics 
-
- **Day  4 (09:00 -12:30)**
-
-* Cell-cell communication
-
-
 ## The trainers
 
 The course will feature the following lecturers and trainers:
@@ -82,29 +63,6 @@ The course will feature the following lecturers and trainers:
 * Rasool Saghaleyni (SciLifeLab, SE)
 * Anna Schaar (Helmholtz Zentrum München, DE)
 * Marco Varrone (University of Lausanne (UNIL) & SIB, CH)
-
-
-## Application
-
-Registration fees are **150 CHF** for academics and **750 CHF** for for-profit companies.
-
-Participants will be selected based on several criteria. Selection criteria include correct entry requirements, motivation to attend the course as well as gender and ELIXIR nodes balance.
-
-**To apply to this course and enter the selection process, please fill in this [questionnaire](https://forms.office.com/e/4BgWAvVCUg).** 
-
-Applications will close  **01/11/2024**. The applications selection will start  the week of the **05/11/2024**.  Accepted applicants will be notified by email by  during the week of the **11/11/2024** and they will have until **27/11/2024** to confirm their attendance by paying the fees within 5 days. 
-
-Deadline for free-of-charge cancellation is set to **27/11/2024**. Cancellation after this date will not be reimbursed. 
-
-## Venue and Time
-
-This course will take place at the University of Lausanne, in the Synathlon building of the campus. 
-
-The course will start the first day at 13:00. A lunch will be provided before the start of the course as well as at the end of the course on the last day.  
-
-All participants are invited to the social dinner, organized on 21 January 2024. 
-
-Precise information will be provided to the participants in due time.
 
 ## Additional information
 

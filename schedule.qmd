@@ -1,0 +1,54 @@
+---
+title: "Schedule"
+---
+
+## Day 1
+
+| Time      	| Topic                                                                                                         	| Teacher                          	|
+|-------------	|---------------------------------------------------------------------------------------------------------------	|--------------------------------	|
+| 12:00-13:00 	| Arrival and lunch                                                                                             	|                                	|
+| 13:00-13:15 	| Welcome and course intro                                                                                      	| Ahmed Mahfouz (LUMC, NL)       	|
+| 13:15-14:00 	| Overview of technologies                                                                                      	| Lars Borm (KU Leuven, VIB, BE) 	|
+| 14:00-14:45 	| imaging-based spatial data analysis (preprocessing, data structures, cell segmentation, QC and normalization) 	| Helena Crowell (CNAG, ES)      	|
+| 14:45-15:15 	| Break                                                                                                         	|                                	|
+| 15:15-16:00 	| Practical 0: Data formats (SpatialData, AnnData,...)                                                          	| George Gavrilidis              	|
+| 16:00-17:00 	| Practical 1a: imaging-based data QC and normalization                                                         	| Rasool Saghaleyni              	|
+
+## Day 2
+
+| Time      	| Topic                                                                                             	| Teacher               	|
+|-------------	|----------------------------------------------------------------------------------------------------	|--------------------------	|
+| 09:00-09:45 	| imaging-based spatial data analysis (segmentation-free analysis)                                   	| Naveed Ishaque (BIH, DE) 	|
+| 09:45-10:45 	| Practical 1b: imaging-based data segmentation-free analysis + Practical 1c:segmentation (optional) 	| Rasool Saghaleyni        	|
+| 10:45-11:15 	| Break                                                                                              	|                          	|
+| 11:15-12:00 	| sequence-based data analysis (preprocessing, data structures, QC and normalization)                	| Ahmed Mahfouz (LUMC, NL) 	|
+| 12:00-13:30 	| Lunch                                                                                              	|                          	|
+| 13:30-14:30 	| Practical 2: sequence-based data analysis                                                          	| George Gavrilidis        	|
+| 14:30-15:15 	| Integration with scRNA-seq/deconvolution/annotation/imputation                                     	| Ahmed Mahfouz (LUMC, NL) 	|
+| 15:15-15:45 	| Break                                                                                              	|                          	|
+| 15:45-16:45 	| Practical 3: integration with scRNA-seq                                                            	| Geert van Geest          	|
+
+## Day 3
+
+| Time      	| Topic                                                     	| Teacher                           	|
+|-------------	|-------------------------------------------------------------	|------------------------------------	|
+| 09:00-09:45 	| Graph representations/Niche reconstruction                  	| Anna Schaar (Helmholtz Munich, DE) 	|
+| 09:45-10:30 	| Spatial domain identification/spatial annotation            	| Marco Varrone (UNIL, CH)           	|
+| 10:30-11:00 	| Break                                                       	|                                    	|
+| 11:00-12:30 	| Practical 4: Niche reconstruction and domain identification 	| Francesca Drummer/Marco Varrone    	|
+| 12:30-14:00 	| Lunch                                                       	|                                    	|
+| 14:00-14:45 	| Spatial statistics                                          	| Mark Robinson (Uni Zurich, CH)     	|
+| 14:45-15:45 	| Practical 5: spatial stats                                  	| Mark Robinson                      	|
+| 15:45-16:15 	| Break                                                       	|                                    	|
+| 16:15-17:00 	| Guest lecture:                                              	| Maria Brbic (EPFL)                 	|
+
+## Day 4
+
+| Time      	| Topic                                                 	| Teaching                      	|
+|-------------	|---------------------------------------------------------	|-------------------------------	|
+| 09:00-09:45 	| cell-cell communication (CCC)                           	| Yvan Saeys (U Ghent, VIB, BE) 	|
+| 09:45-10:45 	| Practical 6: CCC                                        	| Francesca Drummer             	|
+| 10:45-11:15 	| Break                                                   	|                               	|
+| 11:15-11:45 	| Free practical time (finish stuff) / work on assignment 	|                               	|
+| 11:45-12:00 	| Wrap-up (how)                                           	|                               	|
+| 12:00-13:00 	| Lunch and departure                                     	|                               	|

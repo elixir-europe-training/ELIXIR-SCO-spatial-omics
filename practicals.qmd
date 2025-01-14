@@ -1,0 +1,28 @@
+---
+title: "Practicals"
+---
+
+## Introduction
+
+This course consists of multiple practicals. During the four days we will go through practical 0 till 6 (more info in the [schedule](schedule.qmd)). Each practical has a dedicated directory in the [repository](https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics), and comes with:
+
+- A container image: you will receive a link for each practical to your personal environment during the course.
+- One or more notebooks with the name `p[practical number]_topic.ipynb`. So for practical 1, we have a notebook called `p1_segmentation.ipynb`. 
+- One or more conda environments in the image corresponding to each notebook, e.g. `p1_segmentation.ipynb`. 
+
+## Working on the practicals
+
+To start working on the practicals, navigate to the provided spreadsheet with server login information, click on the link next to your name that links to the corresponding practical. Then, use the password associated with your name to log in. 
+
+Now you are in your personal container image. This image has two important directories that are mounted to all container images that are avaiable to you:
+
+- `/home/jovyan/workdir`: a directory in home for which you have read and write access. This is where you will be mainly working in. 
+- `/data`: a directory where you only have read access. From here you can read the available input data. 
+
+At the first login, open a terminal, navigate to `/home/jovyan/workdir` and clone the repository:
+
+```sh
+git clone https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics.git
+```
+
+After cloning you can use the navigation menu to open a notebook. With each notebook, use the associated environment (has the same name as the notebook).
