@@ -220,11 +220,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>To start working on the practicals, navigate to the provided spreadsheet with server login information, click on the link next to your name that links to the corresponding practical. Then, use the password associated with your name to log in.</p>
 <p>Now you are in your personal container image. This image has two important directories that are mounted to all container images that are avaiable to you:</p>
 <ul>
-<li><code>/home/jovyan/workdir</code>: a directory in home for which you have read and write access. This is where you will be mainly working in.</li>
+<li>(for jupyter-based practicals)<code>/home/jovyan/workdir</code>: a directory in home for which you have read and write access. This is where you will be mainly working in. For the rstudio-based practical this is <code>/home/rstudio</code>.</li>
 <li><code>/data</code>: a directory where you only have read access. From here you can read the available input data.</li>
 </ul>
 <p>At the first login, open a terminal, navigate to <code>/home/jovyan/workdir</code> and clone the repository:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For jupyter containers, only <code>/home/jovyan/workdir</code> is shared with other containers. This means that everything you write outside this directory will <strong>not</strong> be available for other practicals.</p>
+</div>
+</div>
 <p>After cloning you can use the navigation menu to open a notebook. With each notebook, use the associated environment (has the same name as the notebook). Do this by clicking the button ‘Python 3 (ipykernel)’ on the top right of your notebook:</p>
 <p><img src="assets/select_kernel.png" class="img-fluid"></p>
 <p>And select the environment with the corresponding name from the dropdown menu. This ensures that you are using the correct dependencies for each practical.</p>
