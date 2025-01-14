@@ -13,6 +13,8 @@ title: "Schedule"
 | 14:45-15:15 	| Break                                                                                                         	|                                	|
 | 15:15-16:00 	| Practical 0: Data formats (SpatialData, AnnData,...)                                                          	| George Gavrilidis              	|
 | 16:00-17:00 	| Practical 1a: imaging-based data QC and normalization                                                         	| Rasool Saghaleyni              	|
+: {tbl-colwidths="[25,50,25]"}
+
 
 ## Day 2
 
@@ -27,6 +29,7 @@ title: "Schedule"
 | 14:30-15:15 	| Integration with scRNA-seq/deconvolution/annotation/imputation                                     	| Ahmed Mahfouz (LUMC, NL) 	|
 | 15:15-15:45 	| Break                                                                                              	|                          	|
 | 15:45-16:45 	| Practical 3: integration with scRNA-seq                                                            	| Ahmed Mahfouz, Benedetta Manzato (LUMC)      	|
+: {tbl-colwidths="[25,50,25]"}
 
 ## Day 3
 
@@ -41,10 +44,11 @@ title: "Schedule"
 | 14:45-15:45 	| Practical 5: spatial stats                                  	| Mark Robinson                      	|
 | 15:45-16:15 	| Break                                                       	|                                    	|
 | 16:15-17:00 	| Guest lecture:                                              	| Maria Brbic (EPFL)                 	|
+: {tbl-colwidths="[25,50,25]"}
 
 ## Day 4
 
-| Time      	| Topic                                                 	| Teaching                      	|
+| Time      	| Topic                                                 	| Teacher                      	|
 |-------------	|---------------------------------------------------------	|-------------------------------	|
 | 09:00-09:45 	| cell-cell communication (CCC)                           	| Yvan Saeys (U Ghent, VIB, BE) 	|
 | 09:45-10:45 	| Practical 6: CCC                                        	| Francesca Drummer             	|
@@ -52,3 +56,4 @@ title: "Schedule"
 | 11:15-11:45 	| Free practical time (finish stuff) / work on assignment 	|                               	|
 | 11:45-12:00 	| Wrap-up (how)                                           	|                               	|
 | 12:00-13:00 	| Lunch and departure                                     	|                               	|
+: {tbl-colwidths="[25,50,25]"}
