@@ -36,3 +36,41 @@ After cloning you can use the navigation menu to open a notebook. With each note
 And select the environment with the corresponding name from the dropdown menu. This ensures that you are using the correct dependencies for each practical.
 
 If you encounter any issues or have questions, please ask one of the instructors for assistance. Happy coding!
+
+## Working locally
+
+If you would like to work on the exercises after course, you can work locally with docker and download the files from amazon s3.
+
+On s3, there is a bucket in which we mirrored the `/data` folder. To download data from `/data`, you can use e.g. `wget`: 
+
+```sh
+FILEPATH=/data/path/to/file.txt
+wget https://elixir-sco-spatial-omics.s3.eu-central-1.amazonaws.com"$FILEPATH"
+```
+
+If you are used to AWS CLI, you can also download the full directories from the bucket `elixir-sco-spatial-omics` in region `eu-central-1`. 
+
+The container images for each practical for each practical are in the `sibswiss` namespace on dockerhub, find them [here](https://hub.docker.com/r/sibswiss/elixir-sco-spatial-omics/tags). In order to use them locally for e.g. practical 6, you can use the following command:
+
+```sh
+docker run \
+--rm \
+-p 8888:8888 \
+-v $PWD:/home/jovyan/workdir \
+-e JUPYTER_ENABLE_LAB=yes \
+sibswiss/elixir-sco-spatial-omics:practical_6
+```
+
+Now, jupyter lab should be available from `localhost:8888`. Use the token that is provided in the terminal to login. Change the option `-v` to mount another local directory to the container, for example the directory in which you have stored the required input files. 
+
+For the rstudio image of practical 5, this would be:
+
+```sh 
+docker run \
+--rm \
+-p 8787:8787 \
+-v $PWD:/home/rstudio \
+sibswiss/elixir-sco-spatial-omics:practical_5
+```
+
+Now Rstudio is available from `localhost:8787`. Use the username `rstudio` and the password that is provided in the terminal to login. 
