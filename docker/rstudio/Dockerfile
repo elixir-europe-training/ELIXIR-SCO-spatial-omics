@@ -29,7 +29,9 @@ RUN apt-get update && \
   libglpk40 \
   patch \
   libglpk-dev \
-  libgmp-dev
+  libgmp-dev \
+  libtiff5-dev \
+  libtiff-dev
 
 COPY envs/install.R /tmp/
 RUN R -f /tmp/install.R && \
