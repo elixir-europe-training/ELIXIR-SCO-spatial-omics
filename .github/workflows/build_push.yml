@@ -11,6 +11,7 @@ on:
       - '.github/workflows/build_push.yml'
       - '**/envs/*.yml'
       - '**/envs/*.txt'
+      - '**/envs/*.R'
 
 jobs:
   build-push:
