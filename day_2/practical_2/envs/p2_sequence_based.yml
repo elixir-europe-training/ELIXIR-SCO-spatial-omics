@@ -1,3 +1,4 @@
+name: p2_sequence_based
 dependencies:
 - python=3.12.2
 - pip:
@@ -269,4 +270,3 @@ dependencies:
   - zarr==2.18.2
   - zict==3.0.0
   - zipp==3.21.0
-name: spatialdata_env
