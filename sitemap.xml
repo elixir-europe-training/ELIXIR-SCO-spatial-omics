@@ -1,55 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/schedule.html</loc>
+    <lastmod>2025-01-15T07:56:29.168Z</lastmod>
+  </url>
+  <url>
     <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/practicals.html</loc>
-    <lastmod>2025-01-15T07:55:35.758Z</lastmod>
-  </url>
-  <url>
-    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_3/practical_4/p4_niche_domain.html</loc>
-    <lastmod>2025-01-15T07:55:35.037Z</lastmod>
-  </url>
-  <url>
-    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_3/practical_4/workdir/niche_and_domain_reconstruction.html</loc>
-    <lastmod>2025-01-15T07:55:35.480Z</lastmod>
+    <lastmod>2025-01-15T07:56:29.167Z</lastmod>
   </url>
   <url>
     <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/index.html</loc>
-    <lastmod>2025-01-15T07:55:35.758Z</lastmod>
-  </url>
-  <url>
-    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/schedule.html</loc>
-    <lastmod>2025-01-15T07:55:35.758Z</lastmod>
-  </url>
-  <url>
-    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_1/practical_1/workdir/p1_qc_normalization.html</loc>
-    <lastmod>2025-01-15T07:55:34.270Z</lastmod>
-  </url>
-  <url>
-    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_1/practical_1/data/READM.html</loc>
-    <lastmod>2025-01-15T07:55:34.157Z</lastmod>
-  </url>
-  <url>
-    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_1/practical_1/workdir/p1_segmentation_sainsc.html</loc>
-    <lastmod>2025-01-15T07:55:34.302Z</lastmod>
-  </url>
-  <url>
-    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_1/practical_1/workdir/p1_segmentation_cellpose.html</loc>
-    <lastmod>2025-01-15T07:55:34.282Z</lastmod>
-  </url>
-  <url>
-    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_2/practical_3/workdir/p1_integration_sc.html</loc>
-    <lastmod>2025-01-15T07:55:34.934Z</lastmod>
+    <lastmod>2025-01-15T07:56:29.167Z</lastmod>
   </url>
   <url>
     <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/presentations.html</loc>
-    <lastmod>2025-01-15T07:55:35.758Z</lastmod>
-  </url>
-  <url>
-    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_3/practical_4/workdir/adata_loading_and_annotation.html</loc>
-    <lastmod>2025-01-15T07:55:35.262Z</lastmod>
-  </url>
-  <url>
-    <loc>https://elixir-europe-training.github.io/ELIXIR-SCO-spatial-omics/day_4/practical_6/workdir/p6_ccc.html</loc>
-    <lastmod>2025-01-15T07:55:35.757Z</lastmod>
+    <lastmod>2025-01-15T07:56:29.167Z</lastmod>
   </url>
 </urlset>
