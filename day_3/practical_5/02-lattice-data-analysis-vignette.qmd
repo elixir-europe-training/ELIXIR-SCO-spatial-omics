@@ -57,7 +57,7 @@ sfe_tissue <- scater::logNormCounts(sfe_tissue)
 
 ```{r}
 sfe_tissue
-```
+  ```
 
 For example, the spots of the Visium dataset are stored as a simple feature collection.
 
