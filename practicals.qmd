@@ -23,6 +23,7 @@ At the first login, open a terminal, navigate to `/home/jovyan/workdir` and clon
 
 ::: {.callout-note}
 If you are comfortable with using git, you migh want to fork the repository first, and push your changes to your own namespace. In order to do so:
+
 - Fork the [repository](https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics) (Click 'fork' on the top right).
 - Set your name and e-mail with:
 
