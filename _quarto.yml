@@ -8,7 +8,7 @@ website:
   search: true
   page-navigation: true
   navbar:
-    background: "#0c3450ff"
+    # background: "#0c3450ff"
     left:
       - href: index.qmd
         text: Home
