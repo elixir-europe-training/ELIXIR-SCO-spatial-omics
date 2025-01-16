@@ -236,4 +236,5 @@ dependencies:
   - zstd=1.5.5
   - pip:
       - squidpy==1.4.0
+      - scvi-tools==1.1.6
       - cellcharter==0.3.2
