@@ -19,15 +19,15 @@ jobs:
     strategy:
       matrix:
         include:
-          # - context: day_1/practical_0
-          #   tag: practical_0
-          #   ide: jupyter
+          - context: day_1/practical_0
+            tag: practical_0
+            ide: jupyter
           - context: day_1/practical_1
             tag: practical_1
             ide: jupyter
-          # - context: day_2/practical_2
-          #   tag: practical_2
-          #   ide: jupyter
+          - context: day_2/practical_2
+            tag: practical_2
+            ide: jupyter
           - context: day_2/practical_3
             tag: practical_3
             ide: jupyter
