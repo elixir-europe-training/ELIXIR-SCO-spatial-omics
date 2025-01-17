@@ -29,6 +29,21 @@ git clone https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics.git
 For jupyter containers, only `/home/jovyan/workdir` is shared with other containers. This means that everything you write outside this directory will **not** be available for other practicals. 
 :::
 
+::: {.callout-note}
+If you are comfortable with using git, you migh want to fork the repository first, and push your changes to your own namespace. In order to do so:
+
+- Fork the [repository](https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics) (Click 'fork' on the top right).
+- Set your name and e-mail with:
+
+```sh
+git config --local user.email "you@example.com"
+git config --local user.name "Your Name" 
+```
+
+- Clone the repository from your namespace to `/home/jovyan/workdir`
+- Make changes and push them. You will be asked for your github username and password (use a token: https://github.com/settings/tokens/new). If you are using a token, store it somewhere, because you have to login again if you move to a container of another practical.
+:::
+
 After cloning you can use the navigation menu to open a notebook. With each notebook, use the associated environment (has the same name as the notebook). Do this by clicking the button 'Python 3 (ipykernel)' on the top right of your notebook:
 
 ![](assets/select_kernel.png)
