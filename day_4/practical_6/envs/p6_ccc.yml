@@ -3,7 +3,7 @@ channels:
   - conda-forge  # Preferred channels for installation
   - defaults
 dependencies:
-  - python=3.9  # Specify Python version
+  - python=3.10  # Specify Python version
   - ipykernel   
   - numpy       # Add necessary packages
   - pandas
