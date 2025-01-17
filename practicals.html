@@ -239,6 +239,29 @@ Warning
 <p>For jupyter containers, only <code>/home/jovyan/workdir</code> is shared with other containers. This means that everything you write outside this directory will <strong>not</strong> be available for other practicals.</p>
 </div>
 </div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you are comfortable with using git, you migh want to fork the repository first, and push your changes to your own namespace. In order to do so:</p>
+<ul>
+<li>Fork the <a href="https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics">repository</a> (Click ‘fork’ on the top right).</li>
+<li>Set your name and e-mail with:</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--local</span> user.email <span class="st">"you@example.com"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--local</span> user.name <span class="st">"Your Name"</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Clone the repository from your namespace to <code>/home/jovyan/workdir</code></li>
+<li>Make changes and push them. You will be asked for your github username and password (use a token: https://github.com/settings/tokens/new). If you are using a token, store it somewhere, because you have to login again if you move to a container of another practical.</li>
+</ul>
+</div>
+</div>
 <p>After cloning you can use the navigation menu to open a notebook. With each notebook, use the associated environment (has the same name as the notebook). Do this by clicking the button ‘Python 3 (ipykernel)’ on the top right of your notebook:</p>
 <p><img src="assets/select_kernel.png" class="img-fluid"></p>
 <p>And select the environment with the corresponding name from the dropdown menu. This ensures that you are using the correct dependencies for each practical.</p>
@@ -248,23 +271,23 @@ Warning
 <h2 class="anchored" data-anchor-id="working-locally">Working locally</h2>
 <p>If you would like to work on the exercises after course, you can work locally with docker and download the files from amazon s3.</p>
 <p>On s3, there is a bucket in which we mirrored the <code>/data</code> folder. To download data from <code>/data</code>, you can use e.g.&nbsp;<code>wget</code>:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="va">FILEPATH</span><span class="op">=</span>/data/path/to/file.txt</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://elixir-sco-spatial-omics.s3.eu-central-1.amazonaws.com<span class="st">"</span><span class="va">$FILEPATH</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="va">FILEPATH</span><span class="op">=</span>/data/path/to/file.txt</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://elixir-sco-spatial-omics.s3.eu-central-1.amazonaws.com<span class="st">"</span><span class="va">$FILEPATH</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If you are used to AWS CLI, you can also download the full directories from the bucket <code>elixir-sco-spatial-omics</code> in region <code>eu-central-1</code>.</p>
 <p>The container images for each practical for each practical are in the <code>sibswiss</code> namespace on dockerhub, find them <a href="https://hub.docker.com/r/sibswiss/elixir-sco-spatial-omics/tags">here</a>. In order to use them locally for e.g.&nbsp;practical 6, you can use the following command:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="dt">\</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>--rm <span class="dt">\</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>-p 8888:8888 <span class="dt">\</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>-v <span class="va">$PWD</span>:/home/jovyan/workdir <span class="dt">\</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>-e JUPYTER_ENABLE_LAB=yes <span class="dt">\</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>sibswiss/elixir-sco-spatial-omics:practical_6</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Now, jupyter lab should be available from <code>localhost:8888</code>. Use the token that is provided in the terminal to login. Change the option <code>-v</code> to mount another local directory to the container, for example the directory in which you have stored the required input files.</p>
-<p>For the rstudio image of practical 5, this would be:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="dt">\</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>--rm <span class="dt">\</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>-p 8787:8787 <span class="dt">\</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>-v <span class="va">$PWD</span>:/home/rstudio <span class="dt">\</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>sibswiss/elixir-sco-spatial-omics:practical_5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>-p 8888:8888 <span class="dt">\</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>-v <span class="va">$PWD</span>:/home/jovyan/workdir <span class="dt">\</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>-e JUPYTER_ENABLE_LAB=yes <span class="dt">\</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>sibswiss/elixir-sco-spatial-omics:practical_6</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now, jupyter lab should be available from <code>localhost:8888</code>. Use the token that is provided in the terminal to login. Change the option <code>-v</code> to mount another local directory to the container, for example the directory in which you have stored the required input files.</p>
+<p>For the rstudio image of practical 5, this would be:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="dt">\</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>--rm <span class="dt">\</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>-p 8787:8787 <span class="dt">\</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>-v <span class="va">$PWD</span>:/home/rstudio <span class="dt">\</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>sibswiss/elixir-sco-spatial-omics:practical_5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now Rstudio is available from <code>localhost:8787</code>. Use the username <code>rstudio</code> and the password that is provided in the terminal to login.</p>
 
 
