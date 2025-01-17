@@ -65,7 +65,7 @@ wget https://elixir-sco-spatial-omics.s3.eu-central-1.amazonaws.com"$FILEPATH"
 
 If you are used to AWS CLI, you can also download the full directories from the bucket `elixir-sco-spatial-omics` in region `eu-central-1`. 
 
-The container images for each practical for each practical are in the `sibswiss` namespace on dockerhub, find them [here](https://hub.docker.com/r/sibswiss/elixir-sco-spatial-omics/tags). In order to use them locally for e.g. practical 6, you can use the following command:
+The container images for each practical are in the `sibswiss` namespace on dockerhub, find them [here](https://hub.docker.com/r/sibswiss/elixir-sco-spatial-omics/tags). In order to use them locally for e.g. practical 6, you can use the following command:
 
 ```sh
 docker run \
