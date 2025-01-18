@@ -33,7 +33,6 @@ Often, the starting point in spatial omics data analysis is a `r BiocStyle::Bioc
 
 ```{r}
 #| label: load packages
-
 suppressPackageStartupMessages({
   library(SpatialExperiment)
   library(spatstat.geom)
@@ -46,6 +45,7 @@ suppressPackageStartupMessages({
   library(stringr)
   library(tidyr)
   library(magrittr)
+  library(spatialFDA)
   # library(Voyager)
   # library(SpatialFeatureExperiment)
   # library(SFEData)
@@ -60,8 +60,6 @@ suppressPackageStartupMessages({
 # load the data from ExperimentHub
 basedir <- here::here("day_3/practical_5/")
 source(file.path(basedir, "code/load_data.R"))
-# source some helper functions
-source(file.path(basedir,"code/utils.R"))
 
 theme_set(theme_light())
 # load the SpatialExperiment object
@@ -88,20 +86,21 @@ table(spe$sample_id)
 
 # EXERCISE: 
 # 1. How many 'z' slices does the dataset have?
-# 2. how many cells are annotated as Astrocytes in each of 
+# 2. how many cells are annotated as 'OD Mature' in each of 
 #    the 3 slices used below (-0.09, 0.01, 0.21)?
 ```
 
 
-Next, we want to extract three slices of this `r BiocStyle::Biocpkg('SpatialExperiment')` object and convert the 2D slices into `ppp` objects. Note that in the `code/utils.R` script, we have defined a function called `.ppp()`.
+Next, we want to extract three slices of this `r BiocStyle::Biocpkg('SpatialExperiment')` object and convert the 2D slices into `ppp` objects. The `r BiocStyle::Biocpkg('spatialFDA')` package contains a function for this conversion: `spatialFDA:::.dfToppp`.
 
 ```{r}
 # define the Z-stacks that you want to compare
 zstack_list <- list("-0.09", "0.01", "0.21")
 # small helper function to extract the z-slices and convert them to `ppp` objects
 selectZstacks <- function(zstack, spe) {
-  spe[, spe$sample_id == zstack] |> 
-    .ppp(marks = "cluster_id")
+  subset_spe <- spe[, spe$sample_id == zstack]
+  df <- spatialFDA:::.speToDf(subset_spe)
+  spatialFDA:::.dfToppp(df, marks = "cluster_id")
 }
 pp_ls <- lapply(zstack_list, selectZstacks, spe) |>
   setNames(zstack_list)
@@ -152,18 +151,6 @@ pp_sub_round <- pp_sub
 w <- disc(r = 850, centroid.owin(Window(pp_sub)))
 Window(pp_sub_round) <- w
 pp_sub_round |> plot()
-
-
-# EXERCISE: 
-# 1. Calculate the convex hull of the points 
-#    (hint: see `?grDevices::chull`)
-# 2. Set the convex hull as the Window() of the ppp object
-# polygon(X[chull(X), ])
-
-# ch <- spatialCoords(spe) %>% chull
-# plot(pp_sub)
-# polygon(spatialCoords(spe)[ch,])
-
 ```
 
 Correctly assigning windows is important. The window should represent the space where points are expected. This means, in window sampling, one should not restrict the window. This would lead to a false underestimation of the area where the points can be potentially observed. This problem of where we can observe points and where not (beyond the boundary of the window) leads to a range of problems collectively called edge effects [@baddeleySpatialPointPatterns2015, pp. 143-145]. We will discuss these later.
@@ -257,12 +244,6 @@ ggplot(pp_df_odmature, aes(x, y, colour = marks)) +
 
 Continuous marks can be compared as well, e.g. the expression of a gene across slices of a tissue.
 
-```{r, fig.height=5, fig.width=10}
-# EXERCISE
-# 1. Extract the expression of Esr1 across 
-# the same three slices as above
-```
-
 #### Correlation
 
 Correlation is a second order quantity that measures the dependence between points [@baddeleySpatialPointPatterns2015 pp. 199]. A famous way to measure this is with Ripley's $K$, which is a cumulative function that quantifies the "number of $r$-neighbours of a typical random point" [@baddeleySpatialPointPatterns2015, pp. 204; @ripleySecondOrderAnalysisStationary1976a].
@@ -288,22 +269,13 @@ L(r) = \sqrt{\frac{K(r)}{\pi}}
 $$
 
 ```{r, message = FALSE, warning=FALSE, fig.height=5, fig.width=10, results='hide'}
-
-
 m <- calcMetricPerFov(spe, selection = 'OD Mature',
                       subsetby = 'sample_id',
                       fun = 'Kest',
                       marks = 'cluster_id',
-                      by = c('Animal_ID', 'sample_id'))
-head(m, 2)
+                      by = c('sample_id'))
 
-# m <- calcMetricPerFov(spe, selection = 'OD Mature',
-#                       subsetby = 'sample_id',
-#                       fun = 'Kest',
-#                       marks = 'cluster_id',
-#                       by = c('sample_id'))
-# 
-# head(m, 2)
+head(m, 2)
 
 p <- plotMetricPerFov(m %>% subset(sample_id %in% c('-0.09', 
                                                   '0.01', '0.21')), 
@@ -313,23 +285,17 @@ p <- plotMetricPerFov(m %>% subset(sample_id %in% c('-0.09',
                       ID = 'sample_id',
                       linewidth = 3)
 p
-
-
-```
-
-```{r, fig.height=5, fig.width=10}
-p | q
 ```
 
 The strongest estimate of association between oligodendrocytes is found for the slices $0.01$. Slice $0.21$ does not show such a high degree of association at radii $\leq300$ as the other two slices. This means that the apparent clustering we see in the distribution of points is mainly due to an overall higher number of cells in slide $0.21$ and not a higher degree of association per se. The black line indicates the expected $K$ respectively $L$ function for a completely spatially random poisson process [@baddeleySpatialPointPatterns2015, pp. 132 ff.].
 
-Your turn: Try to compare the arrangement of `Ependymal` cells across these three sections. You can choose any function you might find in the documentation of `r BiocStyle::CRANpkg('spatstat.explore')`.
+EXERCISE: Try to compare the arrangement of `Ependymal` cells across these three sections. You can choose any function you might find in the documentation of `r BiocStyle::CRANpkg('spatstat.explore')`. For example, look for the **Summary statistics for a point pattern** section of the help page at `?spatstat.explore`.
 
 ```{r, eval=FALSE}
-res <- calcMetric(...)
+res <- calcMetricPerFov(...)
 ```
 
-A similar analysis can be performed for continuous marks. As an exercise, try to calculated a mark weighted correlation function `markcorr`. You get more information on this function by typing `?markcorr`. The mark weighted correlation function is defined as:
+A similar analysis can be performed for continuous marks. As an exercise, try to calculated a mark-weighted correlation function `markcorr`. You can get more information on this function by typing `?markcorr`. The mark weighted correlation function is defined as:
 
 $$
 k_f(r) =  \frac{\mathbb{E}[f(m(u),m(v))|u,v \in X]}{\mathbb{E}[f(M,M')]}
@@ -338,33 +304,37 @@ $$
 where the numerator is the conditional expectation of the marks at location $u,v$ separated by a radius $r$ and $f$ can be any function linking the two marks. The denominator is the expectation of two random marks $M,M'$ [@baddeleySpatialPointPatterns2015, pp. 603].
 
 ```{r}
-genes <- c("Slc18a2", "Esr1", "Pgr")
-# add the genes as marks to the point pattern
-pp <- lapply(zstack_list, function(x) {
-  pp <- pp_ls[[x]]
-  # subset the original SpatialExperiment
-  sub <- spe[, spe$sample_id == x]
-  #  Genes from Fig. 6 of Moffitt et al. (2018)
-  genes <- c("Slc18a2", "Esr1", "Pgr")
-  gex <- assay(sub)[genes, ] %>%
-    t() %>%
-    as.matrix() %>%
-    data.frame() %>%
-    set_rownames(NULL)
-  # gene expression to marks
-  marks(pp) <- gex
-  return(pp)
-}) |> setNames(zstack_list)
+genes <- c('Slc18a2', 'Esr1', 'Pgr')
+gex <- assay(spe)[genes,] %>% t %>% as.matrix %>% 
+  data.frame %>% set_rownames(NULL)
+# gene expression to marks
+colData(spe) <- colData(spe) %>% cbind(gex) 
 
-# calculate the metric for example slide '-0.09'
-res <- calcMetric("markcorr", pp, zstack_list, 
-                  "Esr1", continuous = TRUE)
-p <- ggplot(res, aes(r, iso, colour = stack)) +
-  geom_line(linewidth = 2) +
-  geom_line(aes(x = r, y = theo), 
-            linetype = "dashed", color = "black")
+system.time({
+  
+res <- calcMetricPerFov(
+  spe[,spe$sample_id == "-0.09"],
+  'OD Mature',
+  subsetby = genes,
+  fun = 'markcorr',
+  marks = genes,
+  rSeq = NULL,
+  by = c('Animal_ID', 'sample_id'),
+  continuous = TRUE
+)
 
+})
+
+
+p <- plotMetricPerFov(
+  res,
+  correction = "iso",
+  theo = TRUE,
+  x = "r",
+  imageId = 'gene'
+)
 p
+
 ```
 
 We note that at very small radii the expression of the gene `Esr1` shows a high association with itself. Later on, the association is less pronounced than in the slices $-0.09$ and $0.01$.
@@ -388,7 +358,7 @@ get_sel <- dfm %>%
 
 dfm <- dfm %>% left_join(get_sel)
 
-p <- ggplot(dfm, aes(x = r, y = asinh(value/50), 
+p <- ggplot(dfm, aes(x = r, y = value, 
                      group = variable, colour = sel)) +
   geom_line(linewidth = 1) +
   scale_color_continuous(type = "viridis") +
@@ -437,7 +407,7 @@ p_biplot
 
 
 # EXERCISE: 
-# 1. Play with the scale of the curves (e.g., although we've used L, which is a variance-stabilized transform of the K function,  ); for example, consider `sqrt()` or `asinh(. / 50)` or something similar. Recompute 
+# 1. Play with the scale of the curves (e.g., although we've used L, which is a variance-stabilized transform of the K function,  ); for example, consider `sqrt()` or `asinh(. / 50)` or similar. Recompute 
 # 2. do the exploratory analysis the other way around; for each point, plot the value of the functional PC1 in the spatial context (above, we coloured by the value of the K curve at r=~200).
 
 ```
@@ -447,33 +417,33 @@ p_biplot
 
 The same analyses as above can be performed between two celltypes. The corresponding functions are called cross functions [@baddeleySpatialPointPatterns2015 pp. 594 ff.]. As an exercise, try to implement (similar to the analyses above) a cross comparison between two cell types of interest. With the provided functions this is possible, just give a function you like as input and a vector with two cell types you wish to compare. You can look at functions in the documentation of `r BiocStyle::CRANpkg('spatstat.explore')`. We provide an example below:
 
-```{r, message = FALSE, warning=FALSE, fig.height=5, fig.width=10}
-# select OD Mature and Microglia cells
-pp_df_odmature_microglia <- pp_df_discrete[pp_df_discrete$marks %in% c("OD Mature", "Microglia"), ]
-
-ggplot(pp_df_odmature_microglia, aes(x, y, colour = marks)) +
-  geom_point(size = 0.5) +
-  facet_wrap(~stack, scales = "free") +
-  theme(aspect.ratio = 1)
-```
 
 ```{r, message = FALSE, warning=FALSE, fig.height=5, fig.width=10, results='hide'}
-res <- calcMetricPerFov("Lcross", pp_ls, by = zstack_list, 
-                  mark = c("OD Mature", "Microglia"), 
-                  continuous = FALSE)
+resCross <- calcCrossMetricPerFov(
+  spe,
+  selection = c("OD Mature", "Microglia"),
+  subsetby = 'sample_id',
+  fun = 'Lcross.inhom',
+  marks = 'cluster_id',
+  rSeq = seq(0, 500, length.out = 100),
+  by = c('sample_id')
+)
 
-q <- ggplot(res, aes(r, iso, colour = stack)) +
-  geom_line(linewidth = 2) +
-  geom_line(aes(x = r, y = theo), linetype = "dashed", color = "black")
-```
+ps <- plotCrossMetricPerFov(
+  resCross,
+  theo = TRUE,
+  correction = "iso",
+  x = "r",
+  imageId = 'sample_id'
+)
+ps[[2]]
 
-```{r, fig.height=5, fig.width=10}
-q
 ```
 
 We note that there is not a very strong co-localisation indicated by the $L$ curves between mature oligodendrocytes and microglia cells. If we look at their spatial distribution that makes sense since microglia cells are distributed more or less homogeneously in the respective slices.
 
-EXERCISE: try to compare the colocalisation of `OD Mature` and `Ependymal`cells. Again, the documentation of `r BiocStyle::CRANpkg('spatstat.explore')` will help you to find good cross functions and `calcMetricPerFov` is a helper (wrapper) function that is useful to operate on `r BiocStyle::Biocpkg('SpatialExperiment')` objects.
+EXERCISE: try to compare the colocalisation of `OD Mature` and `Ependymal` cells. Again, the documentation of `r BiocStyle::CRANpkg('spatstat.explore')` will help you to find good cross functions and `calcMetricPerFov` is a helper (wrapper) function that is useful to operate on `r BiocStyle::Biocpkg('SpatialExperiment')` objects.  Similar to above, look for the **Summary statistics for a multitype point pattern** section of the help page at `?spatstat.explore`.
+
 
 ```{r, eval = FALSE}
 res <- calcMetricPerFov()

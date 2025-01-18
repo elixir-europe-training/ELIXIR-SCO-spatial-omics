@@ -57,12 +57,12 @@ sfe_tissue <- scater::logNormCounts(sfe_tissue)
 
 ```{r}
 sfe_tissue
-  ```
+```
 
 For example, the spots of the Visium dataset are stored as a simple feature collection.
 
 ```{r}
-colGeometry(sfe_tissue, "spotPoly") |> head()
+colGeometry(sfe_tissue, "spotPoly")
 ```
 
 # Lattice Data
@@ -265,42 +265,12 @@ pExp + pLi + pPval
 
 In the local version of Moran's I, the interpretation is the same as the global version. When interpreting local autocorrelation measures, it is important to consider both the effect size estimates and the significance level. Since the significance level is calculated for each spot separately, it is recommended to adjust for multiple testing. By default, `runUnivariate` uses the Benjamini & Hochberg correction. The local Moran's I statistics reveal locations in the tissue that have similar values to their neighbours (c.f., the lower part of the tissue).
 
-Your turn: try to recalculate the local Moran's I with gene *Myh1*. What do you notice?
+EXERCISE: try to recalculate the local Moran's I with gene *Myh1*. What do you notice?
 
 ```{r}
 #| eval: false #remove this line when you want to execute the chunck
 
 sfe_tissue <- runUnivariate(...)
-```
-
-```{r}
-#| include: false
-#| eval: false
-
-sfe_tissue <- runUnivariate(sfe_tissue,
-  type = "localmoran", features = "Myh1",
-  colGraphName = "visium", swap_rownames = "symbol"
-)
-
-# plot the expression values
-plotSpatialFeature(sfe_tissue,
-  features = c("Myh1"), colGeometryName = "spotPoly",
-  swap_rownames = "symbol"
-)
-
-# plot the local Moran's I values
-plotLocalResult(sfe_tissue, "localmoran",
-  features = c("Myh1"),
-  colGeometryName = "spotPoly", swap_rownames = "symbol",
-  divergent = TRUE, diverge_center = 0
-)
-
-# plot the local Moran's I p-values
-plotLocalResult(sfe_tissue, "localmoran",
-  features = c("Myh1"), "-log10p_adj",
-  colGeometryName = "spotPoly", swap_rownames = "symbol",
-  divergent = TRUE, diverge_center = -log10(0.05)
-)
 ```
 
 ### Advanced -- Bivariate Moran's I
@@ -316,10 +286,10 @@ where $a_i$ and $b_i$ are the two variables of interest and $w_{ij}$ is the valu
 There exists a local version that we will explore here. Note that the results are not symmetric, but very similar to each other.
 
 ```{r}
-sfe_tissue <- runBivariate(sfe_tissue, "localmoran_bv", # wraps the method from spdep
-  c("Myh1", "Myh2"),
-  swap_rownames = "symbol", nsim = 1000
-)
+sfe_tissue <- runBivariate(sfe_tissue, 
+                           "localmoran_bv", # wraps the method from spdep
+                           c("Myh1", "Myh2"),
+                           swap_rownames = "symbol", nsim = 1000)
 
 # this command gives all results of localmoran_bv
 localResultFeatures(sfe_tissue, "localmoran_bv")
@@ -340,7 +310,8 @@ Let's compare the impact of different spatial weight matrices on local autocorre
 First, we base the spatial weight matrix on contiguous neighbours.
 
 ```{r}
-sfe_tissue <- annotGeometryUnivariate(sfe_tissue, "localmoran", "area",
+sfe_tissue <- annotGeometryUnivariate(sfe_tissue, 
+  "localmoran", "area",
   annotGeometryName = "myofiber_simplified",
   annotGraphName = "myofiber_poly2nb",
   include_self = FALSE, zero.policy = TRUE,
@@ -377,7 +348,7 @@ pKnn5 <- plotLocalResult(sfe_tissue, "knn5", "area",
 pPoly + pKnn5
 ```
 
-Your turn: What happens if we set the nearest neighbourhood graph to 10 nearest neighbours? What do you notice?
+EXERCISE: What happens if we set the nearest neighbourhood graph to 10 nearest neighbours? What do you notice?
 
 ```{r}
 #| eval: false #remove this line when you want to execute the chunck
