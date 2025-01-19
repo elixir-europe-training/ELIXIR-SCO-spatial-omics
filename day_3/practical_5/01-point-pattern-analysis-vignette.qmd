@@ -1,6 +1,6 @@
 ---
 title: "SIB Spatial Omics Data Analysis Course 2025: Point Pattern Analysis Vignette (Part 1)"
-author: "Mark D. Robinson (Martin Emons, Samuel Gunz)"
+author: "Martin Emons, Samuel Gunz, Mark D. Robinson"
 format:
     html:
       toc: true
@@ -79,8 +79,9 @@ colData(spe)
 colnames(colData(spe))
 rowData(spe)
 assays(spe)
-assay(spe,1)
+dim(assay(spe,1))
 assay(spe,1) %>% class
+assay(spe,1)[,1:6] %>% head
 spe$sample_id %>% head
 table(spe$sample_id)
 
@@ -98,8 +99,7 @@ Next, we want to extract three slices of this `r BiocStyle::Biocpkg('SpatialExpe
 zstack_list <- list("-0.09", "0.01", "0.21")
 # small helper function to extract the z-slices and convert them to `ppp` objects
 selectZstacks <- function(zstack, spe) {
-  subset_spe <- spe[, spe$sample_id == zstack]
-  df <- spatialFDA:::.speToDf(subset_spe)
+  df <- spatialFDA:::.speToDf(spe[, spe$sample_id == zstack])
   spatialFDA:::.dfToppp(df, marks = "cluster_id")
 }
 pp_ls <- lapply(zstack_list, selectZstacks, spe) |>
@@ -282,7 +282,6 @@ p <- plotMetricPerFov(m %>% subset(sample_id %in% c('-0.09',
                       correction = "border", 
                       theo = TRUE, x = "r", 
                       imageId = 'sample_id', 
-                      ID = 'sample_id',
                       linewidth = 3)
 p
 ```
@@ -305,13 +304,7 @@ where the numerator is the conditional expectation of the marks at location $u,v
 
 ```{r}
 genes <- c('Slc18a2', 'Esr1', 'Pgr')
-gex <- assay(spe)[genes,] %>% t %>% as.matrix %>% 
-  data.frame %>% set_rownames(NULL)
-# gene expression to marks
-colData(spe) <- colData(spe) %>% cbind(gex) 
 
-system.time({
-  
 res <- calcMetricPerFov(
   spe[,spe$sample_id == "-0.09"],
   'OD Mature',
@@ -319,21 +312,18 @@ res <- calcMetricPerFov(
   fun = 'markcorr',
   marks = genes,
   rSeq = NULL,
-  by = c('Animal_ID', 'sample_id'),
+  by = 'sample_id',
   continuous = TRUE
 )
-
-})
-
 
 p <- plotMetricPerFov(
   res,
   correction = "iso",
   theo = TRUE,
   x = "r",
-  imageId = 'gene'
+  imageId = 'gene', linewidth = 3
 )
-p
+p + theme(legend.position = "bottom")
 
 ```
 
@@ -344,8 +334,7 @@ We note that at very small radii the expression of the gene `Esr1` shows a high 
 Next to observation window metrics, we can calculate point level statistics as well. One such option is the local indicators of spatial association (LISA). This gives one curve per point in the field of view [@baddeleySpatialPointPatterns2015 pp. 247-248].
 
 ```{r, message = FALSE, warning=FALSE, fig.height=5, fig.width=10, results='hide'}
-pp <- subset(pp_ls[["0.01"]], 
-             marks %in% "OD Mature")
+pp <- subset(pp_ls[["0.01"]], marks %in% "OD Mature")
 L_odmature_lisa <- localL(pp)
 
 df <- as.data.frame(L_odmature_lisa)
@@ -375,7 +364,7 @@ It may be useful to compress these curves into something easier to interpret, su
 
 ```{r}
 # df_fdob <- asinh(df %>% as.matrix / 50) %>% as.data.frame()
-df_fdob <- df %>% as.matrix %>% as.data.frame()
+df_fdob <- df %>% as.data.frame
 # extract the functional response matrix
 mat <- df_fdob %>%
   select(!c(r, theo)) %>%
@@ -434,7 +423,7 @@ ps <- plotCrossMetricPerFov(
   theo = TRUE,
   correction = "iso",
   x = "r",
-  imageId = 'sample_id'
+  imageId = 'sample_id', linewidth = 3
 )
 ps[[2]]
 
