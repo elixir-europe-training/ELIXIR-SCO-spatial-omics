@@ -19,7 +19,7 @@ For this representation of the cells, we will rely on the `r BiocStyle::Biocpkg(
 
 ## Dependencies
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 suppressPackageStartupMessages({
   library(dplyr)
   library(ggplot2)
@@ -53,7 +53,7 @@ sfe_tissue <- sfe_tissue[rowSums(counts(sfe_tissue)) > 0, ]
 sfe_tissue <- scater::logNormCounts(sfe_tissue)
 ```
 
-`SpatialFeatureExperiment` [@mosesVoyagerExploratorySinglecell2023] objects are an extension of the `r BiocStyle::Biocpkg('SpatialExperiment')` object [@righelliSpatialExperimentInfrastructureSpatiallyresolved2022]. It additionally contains geometric annotations that are encoded as simple features of the `r BiocStyle::CRANpkg('sf')` library [@pebesmaSpatialDataScience2023].
+`SpatialFeatureExperiment` [@mosesVoyagerExploratorySinglecell2023] objects are an extension of the `r BiocStyle::Biocpkg('SpatialExperiment')` object [@righelliSpatialExperimentInfrastructureSpatiallyresolved2022]. In particular, the objects contain geometric annotations that are encoded as simple features of the `r BiocStyle::CRANpkg('sf')` library [@pebesmaSpatialDataScience2023].
 
 ```{r}
 sfe_tissue
@@ -80,7 +80,7 @@ plotSpatialFeature(sfe_tissue,
 )
 ```
 
-As can be seen below, the Visium dataset is a regular lattice. The color shows the number of counts detected in each Visium spot. In contrast, the outlines of individual cells after segmentation (e.g., from a higher resolution spatial omics assay) could be seen as an irregular lattice. As this dataset also contains (manual) segmentations of myofibers (muscle cells stored as `myofiber_simplified`) we will illustrate calculations based on irregular lattice on the myofiber segmentations.
+As can be seen below, the Visium dataset is a regular (hexagonal) lattice. The color shows the number of counts detected in each Visium spot. In contrast, the outlines of individual cells after segmentation (e.g., from a higher resolution spatial omics assay, or an H&E stain) could be thought of and represented as an irregular lattice. As this dataset also contains (manual) segmentations of myofibers (muscle cells stored as `myofiber_simplified`), we will illustrate calculations based on irregular lattice on the myofiber segmentations.
 
 ```{r}
 # A plot using the plotSpatialFeature from Voyager
@@ -104,7 +104,7 @@ p | q
 
 ## Spatial weight matrix
 
-In lattice data analysis, a key concept is the *spatial weight matrix*, which models the spatial relationships between units in the lattice (i.e., spots or cells). Various methods exist for constructing this matrix, such as contiguity-based (direct neighbors), graph-based, or distance-based methods. [@getisSpatialWeightsMatrices2009; @zuurAnalysingEcologicalData2007; @pebesmaSpatialDataScience2023]. The documentation of the package `spdep` gives an [overview of the different methods](https://r-spatial.github.io/spdep/articles/nb.html).
+In lattice data analysis, a key concept is the *spatial weight matrix*, which models the spatial relationships between units in the lattice (i.e., spots or cells). Various methods exist to construct this matrix, such as contiguity-based (direct neighbors), graph-based, or distance-based methods. [@getisSpatialWeightsMatrices2009; @zuurAnalysingEcologicalData2007; @pebesmaSpatialDataScience2023]. The documentation of the package `spdep` gives an [overview of the different methods](https://r-spatial.github.io/spdep/articles/nb.html).
 
 For Visium, the most straightforward way is to take the direct neighbours of each spot. This is done using the function `findVisiumGraph`.
 
@@ -121,7 +121,7 @@ plotColGraph(sfe_tissue,
 
 In an irregular lattice, the task of finding a spatial weight matrix is more complex, as different options exist. One option is to base the neighbourhood graph on neighbours that are in direct contact with each other (contiguous), as implemented in the `poly2nb` method.
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 annotGraph(sfe_tissue, "myofiber_poly2nb") <-
   findSpatialNeighbors(sfe_tissue,
     type = "myofiber_simplified",
@@ -184,7 +184,7 @@ where $f(x_i,x_j)$ is the measure of association between features of interest an
 
 Moran's I is the most prominent measure of spatial autocorrelation. The values are bounded by $-1$ and $1$. The expected value is close to $0$ for large $n$, the exact value is given by $\mathbb{E}(I) = -1/(n-1)$. A value higher than the expected value indicates spatial auto-correlation. Negative values indicate negative auto-correlation. Spatial auto-correlation means that similar values tend to be found together in the tissue. In fact, Moran's I can be interpreted as the Pearson correlation between the value at location $i$ and the averages value of the neigbours of $i$, (neighbours as defined in the weight matrix $W$) [@moranNotesContinuousStochastic1950].
 
-In the first example we will calculate Moran's I for the number of counts and genes measured in the Visium dataset. First we have a look at the distribution by eye.
+In the first example, we will calculate Moran's I for the number of counts and genes measured in the Visium dataset. First we have a look at the distribution by eye.
 
 ```{r}
 plotSpatialFeature(sfe_tissue,
@@ -220,7 +220,7 @@ Here we can see the Moran's I values for the number of counts and genes that wer
 
 ## Local Measures for Univariate Data
 
-Often a global measure is not enough. One number determining e.g. the spatial autocorrelation over an entire tissue slice might not be reflective of tissue heterogeneity. Therefore, local indicators of spatial associations have been developed [@pebesmaSpatialDataScience2023].
+Often a global measure is not enough. One number determining, e.g., the spatial autocorrelation over an entire tissue slice might not be reflective of tissue heterogeneity. Therefore, local indicators of spatial associations have been developed [@pebesmaSpatialDataScience2023].
 
 ### Local Moran's I
 
@@ -272,7 +272,7 @@ Try to recalculate the local Moran's I with gene *Myh1*. What do you notice?
 
 
 ```{r}
-#| eval: false #remove this line when you want to execute the chunck
+#| eval: false #remove this line when you want to execute the chunk
 
 sfe_tissue <- runUnivariate(...)
 ```
@@ -281,7 +281,7 @@ sfe_tissue <- runUnivariate(...)
 
 There exists a bivariate version of Moran's I as well. The package `spatialDM` [@liSpatialDMRapidIdentification2023] uses an adapted version of bivariate Moran's I to identify ligand-receptor pairs.
 
-For two continous observations the global bivariate Moran's I is defined as [@wartenbergMultivariateSpatialCorrelation1985 ; @bivandPackagesAnalyzingSpatial2022]
+For two continous observations, the global bivariate Moran's I is defined as [@wartenbergMultivariateSpatialCorrelation1985 ; @bivandPackagesAnalyzingSpatial2022]
 
 $$I_B = \frac{\Sigma_i(\Sigma_j{w_{ij}b_j\times a_i})}{\Sigma_i{b_i^2}}$$
 
@@ -298,9 +298,10 @@ sfe_tissue <- runBivariate(sfe_tissue,
 # this command gives all results of localmoran_bv
 localResultFeatures(sfe_tissue, "localmoran_bv")
 
-plotLocalResult(sfe_tissue, "localmoran_bv", c("Myh1__Myh2", "Myh2__Myh1"),
-  colGeometryName = "spotPoly", divergent = TRUE, diverge_center = 0
-)
+plotLocalResult(sfe_tissue, "localmoran_bv", 
+                c("Myh1__Myh2", "Myh2__Myh1"),
+                colGeometryName = "spotPoly",
+                divergent = TRUE, diverge_center = 0)
 ```
 
 Compare the results to the local Moran's I plots for genes *Myh1* and *Myh2*. What do you notice?
