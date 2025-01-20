@@ -3,13 +3,14 @@ channels:
   - conda-forge  # Preferred channels for installation
   - defaults
 dependencies:
-  - python=3.9  # Specify Python version
+  - python=3.11  # Specify Python version
   - ipykernel   
   - numpy       # Add necessary packages
   - pandas
   - matplotlib=3.8.0
   - pip         # Include pip if you need to install pip-only packages
   - python-igraph>= 0.9
+  - anndata==0.10.8
   - pip:
     - liana
     - squidpy
