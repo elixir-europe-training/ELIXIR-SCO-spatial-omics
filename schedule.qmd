@@ -12,7 +12,7 @@ title: "Schedule"
 | 14:00-14:45 	| Imaging-based SRT data analysis                                                                                	| Helena Crowell (CNAG, ES)      	|
 | 14:45-15:15 	| Break                                                                                                         	|                                	|
 | 15:15-16:00 	| Practical 0: Data formats                                                                                     	| George Gavrilidis (CERTH, GR)     |
-| 16:00-17:00 	| Practical 1a: Imaging-based SRT data preprocessing                                                         	    | Rasool Saghaleyni (SciLifeLab, SE)|
+| 16:00-17:00 	| Practical 1a: Imaging-based SRT data preprocessing                                                         	    | Rasool Saghaleyni (NBIS/SciLifeLab, SE)|
 : {tbl-colwidths="[25,50,25]"}
 
 
@@ -21,7 +21,7 @@ title: "Schedule"
 | Time      	| Topic                                                                                             	    | Teacher               	|
 |-------------	|---------------------------------------------------------------------------------------------------------	|--------------------------	|
 | 09:00-09:45 	| Cell segmentation free analysis of SRT data                                                          	    | Naveed Ishaque (BIH, DE) 	|
-| 09:45-10:45 	| Practical 1b: Cell segmentation free analysis of SRT data & Practical 1c: Cell Segmentation (optional) 	| Rasool Saghaleyni        	|
+| 09:45-10:45 	| Practical 1b: Cell segmentation free analysis of SRT data & Practical 1c: Cell Segmentation (optional) 	| Rasool Saghaleyni (NBIS/SciLifeLab, SE)   |
 | 10:45-11:15 	| Break                                                                                                   	|                          	|
 | 11:15-12:00 	| Sequence-based SRT data preprocessing                                                                 	| Ahmed Mahfouz (LUMC, NL) 	|
 | 12:00-13:30 	| Lunch                                                                                              	    |                          	|
