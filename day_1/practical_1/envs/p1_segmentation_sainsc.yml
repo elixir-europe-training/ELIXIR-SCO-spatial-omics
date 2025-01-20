@@ -7,5 +7,7 @@ dependencies:
   - ipykernel
   - sainsc=0.2
   - scanpy=1.10
+  - polars=1.12
+  - pyarrow=18
   - ipywidgets
   
