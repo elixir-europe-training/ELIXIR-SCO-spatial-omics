@@ -59,7 +59,7 @@ The course will feature the following lecturers and trainers:
 * Benedetta Manzato (Leiden University Medical Center (LUMC), NL)
 * Mark Robinson (University of Zurich (UZH) & SIB, CH)
 * Yvan Saeys (University of Ghent (UGent) & Vlaams Instituut voor Biotechnologie (VIB), BE)
-* Rasool Saghaleyni (NBIS/SciLifeLab, SE)|
+* Rasool Saghaleyni (NBIS / SciLifeLab, SE)
 * Anna Schaar (Helmholtz Zentrum München, DE)
 * Marco Varrone (University of Lausanne (UNIL) & SIB, CH)
 
