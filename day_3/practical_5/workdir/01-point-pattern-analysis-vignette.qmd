@@ -1,0 +1,486 @@
+---
+title: "SIB Spatial Omics Data Analysis Course 2025: Point Pattern Analysis Vignette (Part 1)"
+author: "Martin Emons, Samuel Gunz, Mark D. Robinson"
+format:
+    html:
+      toc: true
+      self-contained: true
+editor: visual
+editor_options: 
+  chunk_output_type: console
+bibliography: misc/PASTA.bib
+---
+
+## Introduction
+
+Here, we assume that cells (or transcripts) can be approximated as points given their location (ignoring for instance that cells can have a shape).
+
+### `spatstat` package and `ppp` object
+
+The central package to analyse point patterns in `R` is called `r BiocStyle::CRANpkg('spatstat')` [@baddeleySpatstatPackageAnalyzing2005]. The main data object to compute on is called a `ppp` object. `ppp` objects describe point patterns in two dimensional space, `ppx` objects create multidimensional point patterns. A `ppp` object is made up of three specifications [@baddeleySpatstatPackageAnalyzing2005]:
+
+-   The locations of the points in question ($x$,$y$ and, optionally, $z$ coordinates)
+-   The observation window
+-   "Marks" that are associated to each point in the pattern
+
+On this object, various `r BiocStyle::CRANpkg('spatstat')` metrics can be calculated.
+
+### `SpatialExperiment` Object
+
+![Structure of a `SpatialExperiment` object as introduced by Righelli et al.](https://raw.githubusercontent.com/drighelli/SpatialExperiment/devel/vignettes/SPE.png)
+
+Often, the starting point in spatial omics data analysis in `R` is a `r BiocStyle::Biocpkg('SpatialExperiment')` (or similar) object. This is a central data structure in the `Bioconductor` framework to store spatial omics data. The data we consider here is a MERFISH assay of a mouse preoptic hypothalamus [@chenSpatiallyResolvedHighly2015; @moffittMolecularSpatialFunctional2018].
+
+```{r warning=FALSE, message=FALSE}
+#| label: load packages
+suppressPackageStartupMessages({
+  library(SpatialExperiment)
+  library(spatstat.geom)
+  library(spatstat.explore)
+  library(ExperimentHub)
+  library(dplyr)
+  library(ggplot2)
+  library(patchwork)
+  library(reshape2)
+  library(stringr)
+  library(tidyr)
+  library(magrittr)
+  library(spatialFDA)
+})
+
+```
+
+```{r, message=FALSE, warning=FALSE}
+#| label: load-data
+# load the data from ExperimentHub
+basedir <- here::here("day_3/practical_5/")
+source(file.path(basedir, "code/load_data.R"))
+
+theme_set(theme_light())
+# load the SpatialExperiment object
+spe <- readRDS("data/spe.rds")
+spe
+```
+
+We see that we have an object of class `r BiocStyle::Biocpkg('SpatialExperiment')` with $161$ genes (rows) and $73655$ cells. This object is very similar to a `r BiocStyle::Biocpkg('SingleCellExperiment')` object except it has the added `spatialCoords` slot. One slot in the `colData` is called `sample_id` which defines the so called z-slices. The three dimensional tissue is cut in the z-axis into consecutive two dimensional slices [@righelliSpatialExperimentInfrastructureSpatiallyresolved2022].
+
+Just to remind users of typical accessory functions for `r BiocStyle::Biocpkg('SpatialExperiment')` objects, here are a few useful accessory functions:
+
+```{r}
+dim(spe)
+spatialCoords(spe) %>% head
+colData(spe) %>% head(2)
+colnames(colData(spe))
+rowData(spe)
+assays(spe)
+dim(assay(spe,1))
+assay(spe,1) %>% class
+assay(spe,1)[,1:3] %>% head(3)
+spe$sample_id %>% head
+table(spe$sample_id)
+
+```
+
+
+::: {.callout-tip title="EXERCISE"}
+1. How many 'z' slices does the dataset have?
+2. how many cells are annotated as 'OD Mature' in each of the 3 slices used below (-0.09, 0.01, 0.21)?
+:::
+
+
+Next, we want to extract three 2D slices of this `r BiocStyle::Biocpkg('SpatialExperiment')` object and convert them into `ppp` objects. The `r BiocStyle::Biocpkg('spatialFDA')` package contains a function for this conversion: `spatialFDA:::.dfToppp`.
+
+```{r}
+# define the Z-stacks that you want to compare
+zstack_list <- list("-0.09", "0.01", "0.21")
+# small helper function to extract the z-slices and convert them to `ppp` objects
+selectZstacks <- function(zstack, spe) {
+  df <- spatialFDA:::.speToDf(spe[, spe$sample_id == zstack])
+  spatialFDA:::.dfToppp(df, marks = "cluster_id")
+}
+(pp_ls <- lapply(zstack_list, selectZstacks, spe) |>
+  setNames(zstack_list))
+
+```
+
+We see that we obtain a list of three `ppp` objects for the three z-slices $-0.09, 0.01, 0.21$.
+
+We can plot one of these slices, e.g. slice $-0.09$ with ggplot
+
+```{r}
+# create a dataframe from ppp and plot with ggplot
+ggplot(pp_ls$`-0.09` %>% as.data.frame, 
+       aes(x, y, colour = marks)) +
+  geom_point(size = .5) +
+  coord_equal()
+
+```
+
+::: {.callout-tip title="EXERCISE"}
+1. Modify the ggplot to highlight `OD Mature` cells
+:::
+
+
+### Windows
+
+One important aspect of a point pattern is the observation window, which represents the region in which a pattern is observed or, e.g., a survey was conducted [@baddeleySpatialPointPatterns2015, pp. 85]. In most microscopy use cases, we encounter so-called window sampling. Window sampling describes the case where we don't observe the entire point pattern in a window but just a sample [@baddeleySpatialPointPatterns2015, pp. 143-145].
+
+The window of a point pattern does not need to be rectangular; we can receive round biopsies or calculate convex hulls around our sample [@baddeleySpatialPointPatterns2015, pp. 143-145].
+
+Let's investigate the observation window for the slice $-0.09$.
+
+```{r}
+# subset point pattern list
+pp_sub <- pp_ls$`-0.09`
+# base R plot of all marks
+pp_sub |> plot()
+
+Window(pp_sub)
+```
+
+Here, we have a rectangular window around all points.
+
+Let's investigate what a round window would look like:
+
+```{r}
+pp_sub_round <- pp_sub
+# calculate circle with radius 850 µm and a center at the centroid of the window would look like
+w <- disc(r = 850, centroid.owin(Window(pp_sub)))
+Window(pp_sub_round) <- w
+pp_sub_round |> plot()
+```
+
+Correctly assigning windows is important. The window should represent the space where points are expected. This means, in window sampling, one should not restrict the window. This would lead to a false underestimation of the area where the points can be potentially observed. This problem of where we can observe points and where not (beyond the boundary of the window) leads to a range of problems collectively called edge effects [@baddeleySpatialPointPatterns2015, pp. 143-145]. A short discussion of this is given below.
+
+### Marks
+
+The next concept that defines a point pattern is that **marks** can be associated with the points. Point patterns can even be unmarked (e.g., `unmark(pp_sub)`). In the context of cell biology, we can distinguish between discrete marks (e.g., cell types) or continuous marks (e.g., gene expression).
+
+#### Discrete Marks
+
+In our example, we have a multitype point pattern, meaning there are different cell types that serve as marks for the point pattern. **Multitype** means that we consider all marks together. An alternative is **multivariate**, where we consider the marks independently [@baddeleySpatialPointPatterns2015, pp. 564 ff.].
+
+Compare the multitype case:
+
+```{r}
+pp_sub |> plot()
+```
+
+with the multivariate view on the same pattern:
+
+```{r, fig.height=7, fig.width=10}
+pp_sub |>
+  split() |>
+  plot()
+```
+
+#### Continuous Marks
+
+Marks can as well be continuous as in the case of gene expression. We choose some genes from the original paper and look at their distribution [@baddeleySpatialPointPatterns2015 pp. 637; @moffittMolecularSpatialFunctional2018].
+
+```{r}
+# subset the SpatialExperiment to our example slide -0.09
+sub <- spe[, spe$sample_id == "-0.09"]
+
+#  Genes from Fig. 6 of Moffitt et al. (2018)
+genes <- c("Slc18a2", "Esr1", "Pgr")
+
+gex <- assay(sub)[genes, ] %>%
+  t() %>%
+  as.matrix() %>%
+  data.frame() %>%
+  set_rownames(NULL)
+
+# gene expression to marks
+marks(pp_sub) <- gex
+```
+
+Now that we have points with multivariate continuous marks
+
+```{r, fig.height=5, fig.width=10}
+# create a dataframe in long format for plotting
+pp_df <- pp_sub %>%
+  as.data.frame() %>%
+  pivot_longer(cols = 3:5)
+
+ggplot(pp_df, aes(x, y, colour = log(value + 1))) +
+  geom_point(size = 2) +
+  facet_wrap(~name) +
+  coord_equal() +
+  scale_color_continuous(type = "viridis")
+
+```
+
+::: {.callout-tip title="EXERCISE"}
+Adjust the code blocks above to also visualize the expression of 'Prlr'
+:::
+
+#### Within Mark Comparison
+
+We can compare patterns between marks of the same type, which is referred to as a *within-mark* comparison in our vignette. We can compare discrete marks, i.e., the distribution of one single mark (e.g., a cell type).
+
+Here, we plot the distribution of mature oligodendrocytes across three slices of one 3D brain sample.
+
+```{r, fig.height=5, fig.width=10}
+# create a dataframe from the point pattern
+pp_df_discrete <- lapply(zstack_list, function(x) {
+  df <- pp_ls[[x]] %>% as.data.frame()
+  df$stack <- x
+  return(df)
+}) %>% bind_rows()
+
+# select OD Mature cells
+pp_df_odmature <- pp_df_discrete[pp_df_discrete$marks == "OD Mature", ]
+
+ggplot(pp_df_odmature, aes(x, y, colour = marks)) +
+  geom_point(size = 0.5) +
+  facet_wrap(~stack, scales = "free") +
+  theme(aspect.ratio = 1)
+```
+
+Continuous marks can be compared as well, e.g. the expression of a gene across slices of a tissue.
+
+#### Correlation
+
+Correlation is a second order quantity that measures the dependence between points [@baddeleySpatialPointPatterns2015 pp. 199]. A famous way to measure this is with Ripley's $K$, which is a cumulative function that quantifies the "number of $r$-neighbours of a typical random point" [@baddeleySpatialPointPatterns2015, pp. 204; @ripleySecondOrderAnalysisStationary1976a].
+
+##### Global Measures
+
+Global correlation measures quantify the correlation in the entire window. Global Ripley's $K$ is defined as:
+
+$$
+\hat{K}(r) = \frac{|W|}{n(n-1)}\sum_{i=1}^n\sum_{j=1 \\j \neq i}^n\{d_{ij}\leq r\} e_{ij}(r)
+$$
+
+In the formula above we note a few things:
+
+-   The function is normalised by the number of points $n$ and the window size $|W|$
+
+-   the term $e_{ij}(r)$ is an edge correction, which is covered briefly below.
+
+Ripley's $K$ function can be variance-stabilized, which is referred to as Besag's $L$ [@caneteSpicyRSpatialAnalysis2022; @besag1977contribution]. The idea behind variance stabilisation is to "uncouple" the relationship between mean and variance. By taking the square root of the function in question, the variance is nearly constant across the function [@bartlettUseTransformations1947].
+
+$$
+L(r) = \sqrt{\frac{K(r)}{\pi}}
+$$
+
+```{r, message = FALSE, warning=FALSE, fig.height=5, fig.width=10, results='hide'}
+m <- calcMetricPerFov(spe, selection = 'OD Mature',
+                      subsetby = 'sample_id',
+                      fun = 'Kest',
+                      marks = 'cluster_id',
+                      by = c('sample_id'))
+
+head(m, 2)
+
+p <- plotMetricPerFov(m %>% subset(sample_id %in% c('-0.09', 
+                                                  '0.01', '0.21')), 
+                      correction = "border", 
+                      theo = TRUE, x = "r", 
+                      imageId = 'sample_id', 
+                      linewidth = 3)
+p
+```
+
+The strongest estimate of association between oligodendrocytes is found for the slices $0.01$. Slice $0.21$ does not show such a high degree of association at radii $\leq300$ as the other two slices. This means that the apparent clustering we see in the distribution of points is mainly due to an overall higher number of cells in slide $0.21$ and not a higher degree of association per se. The black line indicates the expected $K$ respectively $L$ function for a completely spatially random poisson process [@baddeleySpatialPointPatterns2015, pp. 132 ff.].
+
+
+::: {.callout-tip title="EXERCISE"}
+Try to compare the arrangement of `Ependymal` cells across these three sections. You can choose any function you might find in the documentation of `r BiocStyle::CRANpkg('spatstat.explore')`. For example, look for the **Summary statistics for a point pattern** section of the help page at `?spatstat.explore`.
+:::
+
+
+
+```{r, eval=FALSE}
+res <- calcMetricPerFov(...)
+```
+
+A similar analysis can be performed for continuous marks. As an exercise, try to calculated a mark-weighted correlation function `markcorr`. You can get more information on this function by typing `?markcorr`. The mark weighted correlation function is defined as:
+
+$$
+k_f(r) =  \frac{\mathbb{E}[f(m(u),m(v))|u,v \in X]}{\mathbb{E}[f(M,M')]}
+$$
+
+where the numerator is the conditional expectation of the marks at location $u,v$ separated by a radius $r$ and $f$ can be any function linking the two marks. The denominator is the expectation of two random marks $M,M'$ [@baddeleySpatialPointPatterns2015, pp. 603].
+
+```{r}
+genes <- c('Slc18a2', 'Esr1', 'Pgr')
+
+res <- calcMetricPerFov(
+  spe[,spe$sample_id == "-0.09"],
+  'OD Mature',
+  subsetby = genes,
+  fun = 'markcorr',
+  marks = genes,
+  rSeq = NULL,
+  by = 'sample_id',
+  continuous = TRUE
+)
+
+p <- plotMetricPerFov(
+  res,
+  correction = "iso",
+  theo = TRUE,
+  x = "r",
+  imageId = 'gene', linewidth = 3
+)
+p + theme(legend.position = "bottom")
+
+```
+
+We note that at very small radii the expression of the gene `Esr1` shows a high association with itself. Later on, the association is less pronounced than in the slices $-0.09$ and $0.01$.
+
+##### Local Measures
+
+Next to observation window metrics, we can calculate point level statistics as well. One such option is the local indicators of spatial association (LISA). This gives one curve *per point* in the field of view [@baddeleySpatialPointPatterns2015 pp. 247-248].
+
+```{r, message = FALSE, warning=FALSE, fig.height=5, fig.width=10, results='hide'}
+pp <- subset(pp_ls[["0.01"]], marks %in% "OD Mature")
+L_odmature_lisa <- localL(pp)
+
+# data.frame manipulation for plotting
+df <- as.data.frame(L_odmature_lisa)
+dfm <- reshape2::melt(df, "r")
+get_sel <- dfm %>%
+  filter(r > 200.5630 & r < 201.4388, variable != "theo") %>%
+  mutate(sel = value) %>%
+  select(variable, sel)
+dfm <- dfm %>% left_join(get_sel)
+
+p <- ggplot(dfm, aes(x = r, y = value, 
+                     group = variable, colour = sel)) +
+  geom_line(linewidth = 1) +
+  scale_color_continuous(type = "viridis") +
+  geom_vline(xintercept = 200) +
+  theme(legend.position = "none") +
+  ggtitle("LISA curves of slice 0.01")
+```
+
+```{r, fig.height=5, fig.width=10}
+p
+```
+
+It may be useful to compress these curves into something easier to interpret, such as plotting the first **functional** principal components from a functional PCA [@baddeleySpatialPointPatterns2015 pp. 247-248; @ramsayPrincipalComponentsAnalysis2005].
+
+```{r}
+
+# extract the functional response matrix
+mat <- df %>% select(!c(r, theo)) %>% t()
+
+dat <- data.frame(ID = rownames(mat))
+dat$Y <- mat
+dat$sel <- get_sel$sel
+
+# perform functional PCA
+res <- functionalPCA(dat, unique(df$r))
+
+scores_df <- res$scores %>% as.data.frame()
+
+p <- ggplot(scores_df, aes(scores_df[, 1], scores_df[, 2], 
+                       colour = (dat[['sel']]))) +
+  geom_point() +
+  coord_equal() +
+  theme_light() +
+  scale_color_continuous(type = "viridis") +
+  xlab('PC1') +
+  ylab('PC2')
+p
+
+```
+
+
+
+::: {.callout-tip title="EXERCISE"}
+1. Play with the scale of the curves (e.g., although we've used L, which is a variance-stabilized transform of the K function,  ); for example, consider `sqrt()` or `asinh(. / 50)` or similar. Recompute
+2. do the exploratory analysis the other way around; for each point, plot the value of the functional PC1 in the spatial context (above, we coloured by the value of the K curve at r=~200).
+:::
+
+
+
+
+### Cross Mark Comparison
+
+Similar to above, analyses can be performed *between* two celltypes. The corresponding functions are called cross functions [@baddeleySpatialPointPatterns2015 pp. 594 ff.]. As an exercise, try to implement (similar to the analyses above) a cross comparison between two cell types of interest. With the provided functions this is possible, just give a function you like as input and a vector with two cell types you wish to compare. You can look at functions in the documentation of `r BiocStyle::CRANpkg('spatstat.explore')`. We provide an example below:
+
+```{r, message = FALSE, warning=FALSE, fig.height=5, fig.width=10, results='hide'}
+resCross <- calcCrossMetricPerFov(
+  spe,
+  selection = c("OD Mature", "Microglia"),
+  subsetby = 'sample_id',
+  fun = 'Lcross.inhom',
+  marks = 'cluster_id',
+  rSeq = seq(0, 500, length.out = 100),
+  by = c('sample_id')
+)
+
+ps <- plotCrossMetricPerFov(
+  resCross,
+  theo = TRUE,
+  correction = "iso",
+  x = "r",
+  imageId = 'sample_id', linewidth = 3
+)
+ps[[2]]
+
+```
+
+We note that there is not a very strong co-localisation indicated by the $L$ curves between mature oligodendrocytes and microglia cells. If we look at their spatial distribution that makes sense since microglia cells are distributed more or less homogeneously in the respective slices.
+
+::: {.callout-tip title="EXERCISE"}
+Try to compare the colocalisation of `OD Mature` and `Ependymal` cells. Again, the documentation of `r BiocStyle::CRANpkg('spatstat.explore')` will help you to find good cross functions (look for the **Summary statistics for a multitype point pattern** section at `?spatstat.explore`) and `calcMetricPerFov` is a helper (wrapper) function that is useful to operate on `r BiocStyle::Biocpkg('SpatialExperiment')` objects.
+:::
+
+
+
+
+```{r, eval = FALSE}
+res <- calcMetricPerFov()
+```
+
+::: {.callout-tip title="EXERCISE"}
+1. Compute your "cross" function of choice for comparing `OD Mature`   and `Ependymal` cells.
+2. plot the curves
+:::
+
+
+::: {.callout-tip title="EXERCISE (advanced!)"}
+Above, you computed functional PCA of a set of local L curves (i.e., one curve for each cell). Perhaps more interesting is a curve for each field of view (FOV) across a larger set of FOVs and samples. Find a dataset of your choice (e.g., `r BiocStyle::Biocpkg('imcdatasets')`), compute a spatial statistics curve (of choice) for each FOV across samples. Explore the spatial heterogeneity across your dataset.
+:::
+
+
+
+
+
+### Edge effects and their corrections for spatial metrics
+
+Edge effects describe the phenomenon that not the entire point process is observed, but rather only the part within the window $W$. This means the value of various statistics could be biased along the edges [@baddeleySpatialPointPatterns2015, pp. 213].
+
+There are many corrections for edge effects that are briefly listed here [@baddeleySpatialPointPatterns2015, pp. 214-219]:
+
+Border correction:
+
+-   In border correction the summation of data points is restricted to $x_i$ for which $b(x_i,r)$ is completely in the window $W$.
+
+Isotropic correction:
+
+-   We can regard edge effect as a sampling bias. Larger distances (e.g. close to the edges) are less likely to be observed. This can be corrected for.
+
+Translation correction:
+
+-   A stationary point process $X$ is invariant to translations. So the entire point process can be shifted by a vector $s$ to be at the position $X+s$.
+
+## Summary and Considerations
+
+-   Point patterns are realisations of a point process. In the analysis, we make inferences about the point process.
+
+-   A point process assumes stochasticity. Therefore, low-resolution HTS-based approaches are not suitable for point pattern analysis.
+
+-   There are global metrics for the comparison within a celltype or between celltypes.
+
+-   There are corresponding metrics for single cells and their interactions.
+
+-   Point pattern analysis allows for the analysis of continuous gene expression marks as well.
+
+```{r}
+sessionInfo()
+```
