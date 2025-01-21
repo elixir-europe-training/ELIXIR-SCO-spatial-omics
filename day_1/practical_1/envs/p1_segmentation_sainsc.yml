@@ -9,5 +9,5 @@ dependencies:
   - scanpy=1.10
   - polars=1.12
   - pyarrow=18
+  - python-igraph
   - ipywidgets
-  
