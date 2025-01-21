@@ -5,6 +5,7 @@ project:
     - "*.qmd"
     - "!CONTRIBUTIONG.md"
     - "!LICENSE.md"
+    - "!day_3/practical_5/**"
 
 website:
   title: "Spatial Omics Data Analysis"
