@@ -2,4 +2,4 @@
 title: "Presentations"
 ---
 
-All slides used in this course can be found [here](https://sibcloud-my.sharepoint.com/:f:/g/personal/patricia_palagi_sib_swiss/EuoQy-s86xFJnWNBAND545sBGclBfiAqaoccD6OXUOS5BQ?e=jB57zV).
+All slides used in this course can be found [here](https://github.com/elixir-europe-training/ELIXIR-SCO-spatial-omics/tree/main/presentations).
