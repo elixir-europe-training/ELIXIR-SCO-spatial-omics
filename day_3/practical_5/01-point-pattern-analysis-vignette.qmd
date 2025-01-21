@@ -81,12 +81,10 @@ table(spe$sample_id)
 
 ```
 
-
 ::: {.callout-tip title="EXERCISE"}
-1. How many 'z' slices does the dataset have?
-2. how many cells are annotated as 'OD Mature' in each of the 3 slices used below (-0.09, 0.01, 0.21)?
+1.  How many 'z' slices does the dataset have?
+2.  how many cells are annotated as 'OD Mature' in each of the 3 slices used below (-0.09, 0.01, 0.21)?
 :::
-
 
 Next, we want to extract three 2D slices of this `r BiocStyle::Biocpkg('SpatialExperiment')` object and convert them into `ppp` objects. The `r BiocStyle::Biocpkg('spatialFDA')` package contains a function for this conversion: `spatialFDA:::.dfToppp`.
 
@@ -117,9 +115,8 @@ ggplot(pp_ls$`-0.09` %>% as.data.frame,
 ```
 
 ::: {.callout-tip title="EXERCISE"}
-1. Modify the ggplot to highlight `OD Mature` cells
+1.  Modify the ggplot to highlight `OD Mature` cells
 :::
-
 
 ### Windows
 
@@ -284,12 +281,9 @@ p
 
 The strongest estimate of association between oligodendrocytes is found for the slices $0.01$. Slice $0.21$ does not show such a high degree of association at radii $\leq300$ as the other two slices. This means that the apparent clustering we see in the distribution of points is mainly due to an overall higher number of cells in slide $0.21$ and not a higher degree of association per se. The black line indicates the expected $K$ respectively $L$ function for a completely spatially random poisson process [@baddeleySpatialPointPatterns2015, pp. 132 ff.].
 
-
 ::: {.callout-tip title="EXERCISE"}
 Try to compare the arrangement of `Ependymal` cells across these three sections. You can choose any function you might find in the documentation of `r BiocStyle::CRANpkg('spatstat.explore')`. For example, look for the **Summary statistics for a point pattern** section of the help page at `?spatstat.explore`.
 :::
-
-
 
 ```{r, eval=FALSE}
 res <- calcMetricPerFov(...)
@@ -388,15 +382,10 @@ p
 
 ```
 
-
-
 ::: {.callout-tip title="EXERCISE"}
-1. Play with the scale of the curves (e.g., although we've used L, which is a variance-stabilized transform of the K function,  ); for example, consider `sqrt()` or `asinh(. / 50)` or similar. Recompute
-2. do the exploratory analysis the other way around; for each point, plot the value of the functional PC1 in the spatial context (above, we coloured by the value of the K curve at r=~200).
+1.  Play with the scale of the curves (e.g., although we've used L, which is a variance-stabilized transform of the K function, it may not have fully resolved the mean-variance relationship); for example, consider `sqrt()` or `asinh(. / 50)` or similar. Recompute and plot the functional PC embeddings.
+2.  Do the exploratory analysis the other way around; for each point, plot the value of the functional PC1 in the spatial context (above, we coloured by the value of the K curve at r=\~200).
 :::
-
-
-
 
 ### Cross Mark Comparison
 
@@ -430,26 +419,18 @@ We note that there is not a very strong co-localisation indicated by the $L$ cur
 Try to compare the colocalisation of `OD Mature` and `Ependymal` cells. Again, the documentation of `r BiocStyle::CRANpkg('spatstat.explore')` will help you to find good cross functions (look for the **Summary statistics for a multitype point pattern** section at `?spatstat.explore`) and `calcMetricPerFov` is a helper (wrapper) function that is useful to operate on `r BiocStyle::Biocpkg('SpatialExperiment')` objects.
 :::
 
-
-
-
 ```{r, eval = FALSE}
 res <- calcMetricPerFov()
 ```
 
 ::: {.callout-tip title="EXERCISE"}
-1. Compute your "cross" function of choice for comparing `OD Mature`   and `Ependymal` cells.
-2. plot the curves
+1.  Compute your "cross" function of choice for comparing `OD Mature` and `Ependymal` cells.
+2.  plot the curves
 :::
-
 
 ::: {.callout-tip title="EXERCISE (advanced!)"}
 Above, you computed functional PCA of a set of local L curves (i.e., one curve for each cell). Perhaps more interesting is a curve for each field of view (FOV) across a larger set of FOVs and samples. Find a dataset of your choice (e.g., `r BiocStyle::Biocpkg('imcdatasets')`), compute a spatial statistics curve (of choice) for each FOV across samples. Explore the spatial heterogeneity across your dataset.
 :::
-
-
-
-
 
 ### Edge effects and their corrections for spatial metrics
 
