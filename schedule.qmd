@@ -9,10 +9,10 @@ title: "Schedule"
 | 12:00-13:00 	| Arrival and lunch                                                                                             	|                                	|
 | 13:00-13:15 	| Welcome and introduction                                                                                      	| Ahmed Mahfouz (LUMC, NL)       	|
 | 13:15-14:00 	| [Overview of SRT technologies](presentations/1_Day1_Technology_overview_LarsBorm_2025.pdf)                                                                                      	| Lars Borm (KU Leuven/VIB, BE) 	|
-| 14:00-14:45 	| [Imaging-based SRT data preprocessing](presentations/2_Day1_Imagingbased_SRT_preprocessing_HelenaCrowell_2025)                                                                                	| Helena Crowell (CNAG, ES)      	|
+| 14:00-14:45 	| [Imaging-based SRT data preprocessing](presentations/2_Day1_Imagingbased_SRT_preprocessing_HelenaCrowell_2025.pdf)                                                                                	| Helena Crowell (CNAG, ES)      	|
 | 14:45-15:15 	| Break                                                                                                         	|                                	|
-| 15:15-16:00 	| Practical 0: [SRT data formats](day_1\practical_0\workdir\p0_data_formats_spatialdata.ipynb)                                                                                     	| George Gavrilidis (CERTH, GR)     |
-| 16:00-17:00 	| Practical 1a: [Imaging-based SRT data preprocessing](day_1\practical_1\workdir\p1_qc_normalization.ipynb)                                                         	    | Rasool Saghaleyni (NBIS/SciLifeLab, SE)|
+| 15:15-16:00 	| Practical 0: [SRT data formats](day_1/practical_0/workdir/p0_data_formats_spatialdata.ipynb)                                                                                     	| George Gavrilidis (CERTH, GR)     |
+| 16:00-17:00 	| Practical 1a: [Imaging-based SRT data preprocessing](day_1/practical_1/workdir/p1_qc_normalization.ipynb)                                                         	    | Rasool Saghaleyni (NBIS/SciLifeLab, SE)|
 : {tbl-colwidths="[25,50,25]"}
 
 
@@ -20,28 +20,28 @@ title: "Schedule"
 
 | Time      	| Topic                                                                                             	    | Teacher               	|
 |-------------	|---------------------------------------------------------------------------------------------------------	|--------------------------	|
-| 09:00-09:45 	| Cell segmentation free analysis of SRT data                                                          	    | Naveed Ishaque (BIH, DE) 	|
-| 09:45-10:45 	| Practical 1b: Cell segmentation free analysis of SRT data & Practical 1c: Cell Segmentation (optional) 	| Rasool Saghaleyni (NBIS/SciLifeLab, SE)   |
+| 09:00-09:45 	| [Cell segmentation free analysis of SRT data](presentations/3_Day2_segmentation_free_analysis_NaveedIshaque_2025.pdf)                                                          	    | Naveed Ishaque (BIH, DE) 	|
+| 09:45-10:45 	| Practical 1b: [Cell segmentation free analysis of SRT data](day_1/practical_1/workdir/p1_segmentation_sainsc.ipynb) & Practical 1c: [Cell Segmentation](day_1/practical_1/workdir/p1_segmentation_cellpose.ipynb) | Rasool Saghaleyni (NBIS/SciLifeLab, SE)   |
 | 10:45-11:15 	| Break                                                                                                   	|                          	|
-| 11:15-12:00 	| Sequence-based SRT data preprocessing                                                                 	| Ahmed Mahfouz (LUMC, NL) 	|
+| 11:15-12:00 	| [Sequence-based SRT data preprocessing](presentations/4_Day2_seq_based_SRT_preprocessing_AhmedMahfouz_2025.pdf)                                                                 	| Ahmed Mahfouz (LUMC, NL) 	|
 | 12:00-13:30 	| Lunch                                                                                              	    |                          	|
-| 13:30-14:30 	| Practical 2: sequence-based data analysis                                                          	| George Gavrilidis (CERTH, GR) |
-| 14:30-15:15 	| SRT data integration                                                                               	| Ahmed Mahfouz (LUMC, NL) 	    |
+| 13:30-14:30 	| Practical 2: (Sequence-based data analysis)[day_2/practical_2/workdir/p_2_QC_Sequence_based_Visium_.ipynb]                                                          	| George Gavrilidis (CERTH, GR) |
+| 14:30-15:15 	| [SRT data integration](presentations/5_Day2_SRT_integration_AhmedMahfouz_2025.pdf)                                                                               	| Ahmed Mahfouz (LUMC, NL) 	    |
 | 15:15-15:45 	| Break                                                                                              	|                          	    |
-| 15:45-16:45 	| Practical 3: SRT data integration                                                                 	| Benedetta Manzato (LUMC, NL)  |
+| 15:45-16:45 	| Practical 3: [SRT data integration](day_2/practical_3/workdir/p1_integration_sc.ipynb)                                                                 	| Benedetta Manzato (LUMC, NL)  |
 : {tbl-colwidths="[25,50,25]"}
 
 ## Day 3 (January 23, 2025)
 
 | Time      	| Topic                                                     	| Teacher                           	|
 |-------------	|-------------------------------------------------------------	|------------------------------------	|
-| 09:00-09:45 	| Graph representations & Niche reconstruction                  	| Anna Schaar (Helmholtz Munich, DE) 	|
-| 09:45-10:30 	| Spatial domain identification                              	| Marco Varrone (UNIL, CH)           	|
+| 09:00-09:45 	| [Graph representations & Niche reconstruction](presentations/6_Day3_graphs_niches_AnnaSchaar_2025.pdf)                  	| Anna Schaar (Helmholtz Munich, DE) 	|
+| 09:45-10:30 	| [Spatial domain identification](presentations/7_Day3_spatial_domains_MarcoVarrone_2025.pdf)                              	| Marco Varrone (UNIL, CH)           	|
 | 10:30-11:00 	| Break                                                       	|                                    	|
-| 11:00-12:30 	| Practical 4: Niche reconstruction & domain identification 	| Francesca Drummer (Helmholtz Munich, DE) & Marco Varrone (UNIL, CH)|
+| 11:00-12:30 	| Practical 4: [Niche reconstruction & domain identification](day_3/practical_4/workdir/p4_niche_domain.ipynb) 	| Francesca Drummer (Helmholtz Munich, DE) & Marco Varrone (UNIL, CH)|
 | 12:30-14:00 	| Lunch                                                       	|                                    	|
-| 14:00-14:45 	| Spatial statistics                                          	| Mark Robinson (Uni Zurich, CH)     	|
-| 14:45-15:45 	| Practical 5: Spatial statistics                                  	| Mark Robinson (Uni Zurich, CH)                     	|
+| 14:00-14:45 	| [Spatial statistics](presentations/8_Day3_spatial_stats_MarkRobinson_2025.pdf)                                          	| Mark Robinson (Uni Zurich, CH)     	|
+| 14:45-15:45 	| Practical 5: Spatial statistics [Part A](day_3/practical_5/01-point-pattern-analysis-vignette.qmd) & [Part B](day_3/practical_5/02-lattice-data-analysis-vignette.qmd)                                 	| Mark Robinson (Uni Zurich, CH)                     	|
 | 15:45-16:15 	| Break                                                       	|                                    	|
 | 16:15-17:00 	| Guest lecture: Advanced Spatial Biology with AI                                             	| Maria Brbic (EPFL)                 	|
 : {tbl-colwidths="[25,50,25]"}
@@ -50,8 +50,8 @@ title: "Schedule"
 
 | Time      	| Topic                                                 	| Teacher                      	|
 |-------------	|---------------------------------------------------------	|-------------------------------	|
-| 09:00-09:45 	| Cell-cell communication                               	| Yvan Saeys (U Ghent/VIB, BE) 	|
-| 09:45-10:45 	| Practical 6: Cell-cell communication                     	| Francesca Drummer (Helmholtz Munich, DE) |
+| 09:00-09:45 	| [Cell-cell communication](presentations/9_Day4_CellCellCommuniation_YvanSaeys_2025.pdf)                               	| Yvan Saeys (U Ghent/VIB, BE) 	|
+| 09:45-10:45 	| Practical 6: [Cell-cell communication](day_4/practical_6/workdir/p6_ccc.ipynb)                     	| Francesca Drummer (Helmholtz Munich, DE) |
 | 10:45-11:15 	| Break                                                   	|                               	|
 | 11:15-11:45 	| Free practical time / Work on assignment 	                |                               	|
 | 11:45-12:00 	| Wrap-up                                                  	|                               	|
