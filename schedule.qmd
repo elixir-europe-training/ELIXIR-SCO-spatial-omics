@@ -43,7 +43,7 @@ title: "Schedule"
 | 14:00-14:45 	| Spatial statistics                                          	| Mark Robinson (Uni Zurich, CH)     	|
 | 14:45-15:45 	| Practical 5: Spatial statistics                                  	| Mark Robinson (Uni Zurich, CH)                     	|
 | 15:45-16:15 	| Break                                                       	|                                    	|
-| 16:15-17:00 	| Guest lecture: TBA                                             	| Maria Brbic (EPFL)                 	|
+| 16:15-17:00 	| Guest lecture: Advanced Spatial Biology with AI                                             	| Maria Brbic (EPFL)                 	|
 : {tbl-colwidths="[25,50,25]"}
 
 ## January 24, 2025
