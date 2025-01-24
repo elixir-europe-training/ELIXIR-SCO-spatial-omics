@@ -57,6 +57,7 @@ The course will feature the following lecturers and trainers:
 * Naveed Ishaque (Berlin Institute of Health (BIH), DE)
 * Ahmed Mahfouz (Leiden University Medical Center (LUMC), NL)
 * Benedetta Manzato (Leiden University Medical Center (LUMC), NL)
+* Niklas Müller-Bötticher (Berlin Institute of Health(BIH), DE)
 * Mark Robinson (University of Zurich (UZH) & SIB, CH)
 * Yvan Saeys (University of Ghent (UGent) & Vlaams Instituut voor Biotechnologie (VIB), BE)
 * Rasool Saghaleyni (NBIS / SciLifeLab, SE)
