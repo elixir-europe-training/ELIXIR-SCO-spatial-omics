@@ -2,21 +2,21 @@
 title: "Schedule"
 ---
 
-## January 21, 2025
+## Day 1 (January 21, 2025)
 
 | Time      	| Topic                                                                                                         	| Teacher                          	|
 |-------------	|---------------------------------------------------------------------------------------------------------------	|--------------------------------	|
 | 12:00-13:00 	| Arrival and lunch                                                                                             	|                                	|
-| 13:00-13:15 	| Welcome and course intro                                                                                      	| Ahmed Mahfouz (LUMC, NL)       	|
-| 13:15-14:00 	| Overview of technologies                                                                                      	| Lars Borm (KU Leuven/VIB, BE) 	|
-| 14:00-14:45 	| Imaging-based SRT data analysis                                                                                	| Helena Crowell (CNAG, ES)      	|
+| 13:00-13:15 	| Welcome and introduction                                                                                      	| Ahmed Mahfouz (LUMC, NL)       	|
+| 13:15-14:00 	| [Overview of SRT technologies](presentations/1_Day1_Technology_overview_LarsBorm_2025.pdf)                                                                                      	| Lars Borm (KU Leuven/VIB, BE) 	|
+| 14:00-14:45 	| [Imaging-based SRT data preprocessing](presentations/2_Day1_Imagingbased_SRT_preprocessing_HelenaCrowell_2025)                                                                                	| Helena Crowell (CNAG, ES)      	|
 | 14:45-15:15 	| Break                                                                                                         	|                                	|
-| 15:15-16:00 	| Practical 0: Data formats                                                                                     	| George Gavrilidis (CERTH, GR)     |
-| 16:00-17:00 	| Practical 1a: Imaging-based SRT data preprocessing                                                         	    | Rasool Saghaleyni (NBIS/SciLifeLab, SE)|
+| 15:15-16:00 	| Practical 0: [SRT data formats](day_1\practical_0\workdir\p0_data_formats_spatialdata.ipynb)                                                                                     	| George Gavrilidis (CERTH, GR)     |
+| 16:00-17:00 	| Practical 1a: [Imaging-based SRT data preprocessing](day_1\practical_1\workdir\p1_qc_normalization.ipynb)                                                         	    | Rasool Saghaleyni (NBIS/SciLifeLab, SE)|
 : {tbl-colwidths="[25,50,25]"}
 
 
-## January 22, 2025
+## Day 2 (January 22, 2025)
 
 | Time      	| Topic                                                                                             	    | Teacher               	|
 |-------------	|---------------------------------------------------------------------------------------------------------	|--------------------------	|
@@ -31,7 +31,7 @@ title: "Schedule"
 | 15:45-16:45 	| Practical 3: SRT data integration                                                                 	| Benedetta Manzato (LUMC, NL)  |
 : {tbl-colwidths="[25,50,25]"}
 
-## January 23, 2025
+## Day 3 (January 23, 2025)
 
 | Time      	| Topic                                                     	| Teacher                           	|
 |-------------	|-------------------------------------------------------------	|------------------------------------	|
@@ -46,7 +46,7 @@ title: "Schedule"
 | 16:15-17:00 	| Guest lecture: Advanced Spatial Biology with AI                                             	| Maria Brbic (EPFL)                 	|
 : {tbl-colwidths="[25,50,25]"}
 
-## January 24, 2025
+## Day 4 (January 24, 2025)
 
 | Time      	| Topic                                                 	| Teacher                      	|
 |-------------	|---------------------------------------------------------	|-------------------------------	|
